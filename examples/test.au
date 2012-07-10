@@ -1,0 +1,3276 @@
+GLOBAL CONST $GMEM_FIXED = 0 
+GLOBAL CONST $GMEM_MOVEABLE = 2 
+GLOBAL CONST $GMEM_NOCOMPACT = 16 
+GLOBAL CONST $GMEM_NODISCARD = 32 
+GLOBAL CONST $GMEM_ZEROINIT = 64 
+GLOBAL CONST $GMEM_MODIFY = 128 
+GLOBAL CONST $GMEM_DISCARDABLE = 256 
+GLOBAL CONST $GMEM_NOT_BANKED = 4096 
+GLOBAL CONST $GMEM_SHARE = 8192 
+GLOBAL CONST $GMEM_DDESHARE = 8192 
+GLOBAL CONST $GMEM_NOTIFY = 16384 
+GLOBAL CONST $GMEM_LOWER = 4096 
+GLOBAL CONST $GMEM_VALID_FLAGS = 32626 
+GLOBAL CONST $GMEM_INVALID_HANDLE = 32768 
+GLOBAL CONST $GPTR = $GMEM_FIXED + $GMEM_ZEROINIT 
+GLOBAL CONST $GHND = $GMEM_MOVEABLE + $GMEM_ZEROINIT 
+GLOBAL CONST $MEM_COMMIT = 4096 
+GLOBAL CONST $MEM_RESERVE = 8192 
+GLOBAL CONST $MEM_TOP_DOWN = 1048576 
+GLOBAL CONST $MEM_SHARED = 134217728 
+GLOBAL CONST $PAGE_NOACCESS = 1 
+GLOBAL CONST $PAGE_READONLY = 2 
+GLOBAL CONST $PAGE_READWRITE = 4 
+GLOBAL CONST $PAGE_EXECUTE = 16 
+GLOBAL CONST $PAGE_EXECUTE_READ = 32 
+GLOBAL CONST $PAGE_EXECUTE_READWRITE = 64 
+GLOBAL CONST $PAGE_GUARD = 256 
+GLOBAL CONST $PAGE_NOCACHE = 512 
+GLOBAL CONST $MEM_DECOMMIT = 16384 
+GLOBAL CONST $MEM_RELEASE = 32768 
+GLOBAL CONST $TAGPOINT = "struct;long X;long Y;endstruct" 
+GLOBAL CONST $TAGRECT = "struct;long Left;long Top;long Right;long Bottom;endstruct" 
+GLOBAL CONST $TAGSIZE = "struct;long X;long Y;endstruct" 
+GLOBAL CONST $TAGMARGINS = "int cxLeftWidth;int cxRightWidth;int cyTopHeight;int cyBottomHeight" 
+GLOBAL CONST $TAGFILETIME = "struct;dword Lo;dword Hi;endstruct" 
+GLOBAL CONST $TAGSYSTEMTIME = "struct;word Year;word Month;word Dow;word Day;word Hour;word Minute;word Second;word MSeconds;endstruct" 
+GLOBAL CONST $TAGTIME_ZONE_INFORMATION = "struct;long Bias;wchar StdName[32];word StdDate[8];long StdBias;wchar DayName[32];word DayDate[8];long DayBias;endstruct" 
+GLOBAL CONST $TAGNMHDR = "struct;hwnd hWndFrom;uint_ptr IDFrom;INT Code;endstruct" 
+GLOBAL CONST $TAGCOMBOBOXEXITEM = "uint Mask;int_ptr Item;ptr Text;int TextMax;int Image;int SelectedImage;int OverlayImage;" & "int Indent;lparam Param" 
+GLOBAL CONST $TAGNMCBEDRAGBEGIN = $TAGNMHDR & ";int ItemID;wchar szText[260]" 
+GLOBAL CONST $TAGNMCBEENDEDIT = $TAGNMHDR & ";bool fChanged;int NewSelection;wchar szText[260];int Why" 
+GLOBAL CONST $TAGNMCOMBOBOXEX = $TAGNMHDR & ";uint Mask;int_ptr Item;ptr Text;int TextMax;int Image;" & "int SelectedImage;int OverlayImage;int Indent;lparam Param" 
+GLOBAL CONST $TAGDTPRANGE = "word MinYear;word MinMonth;word MinDOW;word MinDay;word MinHour;word MinMinute;" & "word MinSecond;word MinMSecond;word MaxYear;word MaxMonth;word MaxDOW;word MaxDay;word MaxHour;" & "word MaxMinute;word MaxSecond;word MaxMSecond;bool MinValid;bool MaxValid" 
+GLOBAL CONST $TAGNMDATETIMECHANGE = $TAGNMHDR & ";dword Flag;" & $TAGSYSTEMTIME 
+GLOBAL CONST $TAGNMDATETIMEFORMAT = $TAGNMHDR & ";ptr Format;" & $TAGSYSTEMTIME & ";ptr pDisplay;wchar Display[64]" 
+GLOBAL CONST $TAGNMDATETIMEFORMATQUERY = $TAGNMHDR & ";ptr Format;struct;long SizeX;long SizeY;endstruct" 
+GLOBAL CONST $TAGNMDATETIMEKEYDOWN = $TAGNMHDR & ";int VirtKey;ptr Format;" & $TAGSYSTEMTIME 
+GLOBAL CONST $TAGNMDATETIMESTRING = $TAGNMHDR & ";ptr UserString;" & $TAGSYSTEMTIME & ";dword Flags" 
+GLOBAL CONST $TAGEVENTLOGRECORD = "dword Length;dword Reserved;dword RecordNumber;dword TimeGenerated;dword TimeWritten;dword EventID;" & "word EventType;word NumStrings;word EventCategory;word ReservedFlags;dword ClosingRecordNumber;dword StringOffset;" & "dword UserSidLength;dword UserSidOffset;dword DataLength;dword DataOffset" 
+GLOBAL CONST $TAGGDIPBITMAPDATA = "uint Width;uint Height;int Stride;int Format;ptr Scan0;uint_ptr Reserved" 
+GLOBAL CONST $TAGGDIPENCODERPARAM = "byte GUID[16];ulong Count;ulong Type;ptr Values" 
+GLOBAL CONST $TAGGDIPENCODERPARAMS = "uint Count;byte Params[1]" 
+GLOBAL CONST $TAGGDIPRECTF = "float X;float Y;float Width;float Height" 
+GLOBAL CONST $TAGGDIPSTARTUPINPUT = "uint Version;ptr Callback;bool NoThread;bool NoCodecs" 
+GLOBAL CONST $TAGGDIPSTARTUPOUTPUT = "ptr HookProc;ptr UnhookProc" 
+GLOBAL CONST $TAGGDIPIMAGECODECINFO = "byte CLSID[16];byte FormatID[16];ptr CodecName;ptr DllName;ptr FormatDesc;ptr FileExt;" & "ptr MimeType;dword Flags;dword Version;dword SigCount;dword SigSize;ptr SigPattern;ptr SigMask" 
+GLOBAL CONST $TAGGDIPPENCODERPARAMS = "uint Count;byte Params[1]" 
+GLOBAL CONST $TAGHDITEM = "uint Mask;int XY;ptr Text;handle hBMP;int TextMax;int Fmt;lparam Param;int Image;int Order;uint Type;ptr pFilter;uint State" 
+GLOBAL CONST $TAGNMHDDISPINFO = $TAGNMHDR & ";int Item;uint Mask;ptr Text;int TextMax;int Image;lparam lParam" 
+GLOBAL CONST $TAGNMHDFILTERBTNCLICK = $TAGNMHDR & ";int Item;" & $TAGRECT 
+GLOBAL CONST $TAGNMHEADER = $TAGNMHDR & ";int Item;int Button;ptr pItem" 
+GLOBAL CONST $TAGGETIPADDRESS = "byte Field4;byte Field3;byte Field2;byte Field1" 
+GLOBAL CONST $TAGNMIPADDRESS = $TAGNMHDR & ";int Field;int Value" 
+GLOBAL CONST $TAGLVFINDINFO = "struct;uint Flags;ptr Text;lparam Param;" & $TAGPOINT & ";uint Direction;endstruct" 
+GLOBAL CONST $TAGLVHITTESTINFO = $TAGPOINT & ";uint Flags;int Item;int SubItem;int iGroup" 
+GLOBAL CONST $TAGLVITEM = "struct;uint Mask;int Item;int SubItem;uint State;uint StateMask;ptr Text;int TextMax;int Image;lparam Param;" & "int Indent;int GroupID;uint Columns;ptr pColumns;ptr piColFmt;int iGroup;endstruct" 
+GLOBAL CONST $TAGNMLISTVIEW = $TAGNMHDR & ";int Item;int SubItem;uint NewState;uint OldState;uint Changed;" & "struct;long ActionX;long ActionY;endstruct;lparam Param" 
+GLOBAL CONST $TAGNMLVCUSTOMDRAW = "struct;" & $TAGNMHDR & ";dword dwDrawStage;handle hdc;" & $TAGRECT & ";dword_ptr dwItemSpec;uint uItemState;lparam lItemlParam;endstruct" & ";dword clrText;dword clrTextBk;int iSubItem;dword dwItemType;dword clrFace;int iIconEffect;" & "int iIconPhase;int iPartId;int iStateId;struct;long TextLeft;long TextTop;long TextRight;long TextBottom;endstruct;uint uAlign" 
+GLOBAL CONST $TAGNMLVDISPINFO = $TAGNMHDR & ";" & $TAGLVITEM 
+GLOBAL CONST $TAGNMLVFINDITEM = $TAGNMHDR & ";int Start;" & $TAGLVFINDINFO 
+GLOBAL CONST $TAGNMLVGETINFOTIP = $TAGNMHDR & ";dword Flags;ptr Text;int TextMax;int Item;int SubItem;lparam lParam" 
+GLOBAL CONST $TAGNMITEMACTIVATE = $TAGNMHDR & ";int Index;int SubItem;uint NewState;uint OldState;uint Changed;" & $TAGPOINT & ";lparam lParam;uint KeyFlags" 
+GLOBAL CONST $TAGNMLVKEYDOWN = "align 1;" & $TAGNMHDR & ";word VKey;uint Flags" 
+GLOBAL CONST $TAGNMLVSCROLL = $TAGNMHDR & ";int DX;int DY" 
+GLOBAL CONST $TAGMCHITTESTINFO = "uint Size;" & $TAGPOINT & ";uint Hit;" & $TAGSYSTEMTIME & ";" & $TAGRECT & ";int iOffset;int iRow;int iCol" 
+GLOBAL CONST $TAGMCMONTHRANGE = "word MinYear;word MinMonth;word MinDOW;word MinDay;word MinHour;word MinMinute;word MinSecond;" & "word MinMSeconds;word MaxYear;word MaxMonth;word MaxDOW;word MaxDay;word MaxHour;word MaxMinute;word MaxSecond;" & "word MaxMSeconds;short Span" 
+GLOBAL CONST $TAGMCRANGE = "word MinYear;word MinMonth;word MinDOW;word MinDay;word MinHour;word MinMinute;word MinSecond;" & "word MinMSeconds;word MaxYear;word MaxMonth;word MaxDOW;word MaxDay;word MaxHour;word MaxMinute;word MaxSecond;" & "word MaxMSeconds;short MinSet;short MaxSet" 
+GLOBAL CONST $TAGMCSELRANGE = "word MinYear;word MinMonth;word MinDOW;word MinDay;word MinHour;word MinMinute;word MinSecond;" & "word MinMSeconds;word MaxYear;word MaxMonth;word MaxDOW;word MaxDay;word MaxHour;word MaxMinute;word MaxSecond;" & "word MaxMSeconds" 
+GLOBAL CONST $TAGNMDAYSTATE = $TAGNMHDR & ";" & $TAGSYSTEMTIME & ";int DayState;ptr pDayState" 
+GLOBAL CONST $TAGNMSELCHANGE = $TAGNMHDR & ";struct;word BegYear;word BegMonth;word BegDOW;word BegDay;word BegHour;word BegMinute;word BegSecond;word BegMSeconds;endstruct;" & "struct;word EndYear;word EndMonth;word EndDOW;word EndDay;word EndHour;word EndMinute;word EndSecond;word EndMSeconds;endstruct" 
+GLOBAL CONST $TAGNMOBJECTNOTIFY = $TAGNMHDR & ";int Item;ptr piid;ptr pObject;long Result;dword dwFlags" 
+GLOBAL CONST $TAGNMTCKEYDOWN = "align 1;" & $TAGNMHDR & ";word VKey;uint Flags" 
+GLOBAL CONST $TAGTVITEM = "struct;uint Mask;handle hItem;uint State;uint StateMask;ptr Text;int TextMax;int Image;int SelectedImage;" & "int Children;lparam Param;endstruct" 
+GLOBAL CONST $TAGTVITEMEX = "struct;" & $TAGTVITEM & ";int Integral;uint uStateEx;hwnd hwnd;int iExpandedImage;int iReserved;endstruct" 
+GLOBAL CONST $TAGNMTREEVIEW = $TAGNMHDR & ";uint Action;" & "struct;uint OldMask;handle OldhItem;uint OldState;uint OldStateMask;" & "ptr OldText;int OldTextMax;int OldImage;int OldSelectedImage;int OldChildren;lparam OldParam;endstruct;" & "struct;uint NewMask;handle NewhItem;uint NewState;uint NewStateMask;" & "ptr NewText;int NewTextMax;int NewImage;int NewSelectedImage;int NewChildren;lparam NewParam;endstruct;" & "struct;long PointX;long PointY;endstruct" 
+GLOBAL CONST $TAGNMTVCUSTOMDRAW = "struct;" & $TAGNMHDR & ";dword DrawStage;handle HDC;" & $TAGRECT & ";dword_ptr ItemSpec;uint ItemState;lparam ItemParam;endstruct" & ";dword ClrText;dword ClrTextBk;int Level" 
+GLOBAL CONST $TAGNMTVDISPINFO = $TAGNMHDR & ";" & $TAGTVITEM 
+GLOBAL CONST $TAGNMTVGETINFOTIP = $TAGNMHDR & ";ptr Text;int TextMax;handle hItem;lparam lParam" 
+GLOBAL CONST $TAGTVHITTESTINFO = $TAGPOINT & ";uint Flags;handle Item" 
+GLOBAL CONST $TAGNMTVKEYDOWN = "align 1;" & $TAGNMHDR & ";word VKey;uint Flags" 
+GLOBAL CONST $TAGNMMOUSE = $TAGNMHDR & ";dword_ptr ItemSpec;dword_ptr ItemData;" & $TAGPOINT & ";lparam HitInfo" 
+GLOBAL CONST $TAGTOKEN_PRIVILEGES = "dword Count;align 4;int64 LUID;dword Attributes" 
+GLOBAL CONST $TAGIMAGEINFO = "handle hBitmap;handle hMask;int Unused1;int Unused2;" & $TAGRECT 
+GLOBAL CONST $TAGMENUINFO = "dword Size;INT Mask;dword Style;uint YMax;handle hBack;dword ContextHelpID;ulong_ptr MenuData" 
+GLOBAL CONST $TAGMENUITEMINFO = "uint Size;uint Mask;uint Type;uint State;uint ID;handle SubMenu;handle BmpChecked;handle BmpUnchecked;" & "ulong_ptr ItemData;ptr TypeData;uint CCH;handle BmpItem" 
+GLOBAL CONST $TAGREBARBANDINFO = "uint cbSize;uint fMask;uint fStyle;dword clrFore;dword clrBack;ptr lpText;uint cch;" & "int iImage;hwnd hwndChild;uint cxMinChild;uint cyMinChild;uint cx;handle hbmBack;uint wID;uint cyChild;uint cyMaxChild;" & "uint cyIntegral;uint cxIdeal;lparam lParam;uint cxHeader;" & $TAGRECT & ";uint uChevronState" 
+GLOBAL CONST $TAGNMREBARAUTOBREAK = $TAGNMHDR & ";uint uBand;uint wID;lparam lParam;uint uMsg;uint fStyleCurrent;bool fAutoBreak" 
+GLOBAL CONST $TAGNMRBAUTOSIZE = $TAGNMHDR & ";bool fChanged;" & "struct;long TargetLeft;long TargetTop;long TargetRight;long TargetBottom;endstruct;" & "struct;long ActualLeft;long ActualTop;long ActualRight;long ActualBottom;endstruct" 
+GLOBAL CONST $TAGNMREBAR = $TAGNMHDR & ";dword dwMask;uint uBand;uint fStyle;uint wID;lparam lParam" 
+GLOBAL CONST $TAGNMREBARCHEVRON = $TAGNMHDR & ";uint uBand;uint wID;lparam lParam;" & $TAGRECT & ";lparam lParamNM" 
+GLOBAL CONST $TAGNMREBARCHILDSIZE = $TAGNMHDR & ";uint uBand;uint wID;" & "struct;long CLeft;long CTop;long CRight;long CBottom;endstruct;" & "struct;long BLeft;long BTop;long BRight;long BBottom;endstruct" 
+GLOBAL CONST $TAGCOLORSCHEME = "dword Size;dword BtnHighlight;dword BtnShadow" 
+GLOBAL CONST $TAGNMTOOLBAR = $TAGNMHDR & ";int iItem;" & "struct;int iBitmap;int idCommand;byte fsState;byte fsStyle;dword_ptr dwData;int_ptr iString;endstruct" & ";int cchText;ptr pszText;" & $TAGRECT 
+GLOBAL CONST $TAGNMTBHOTITEM = $TAGNMHDR & ";int idOld;int idNew;dword dwFlags" 
+GLOBAL CONST $TAGTBBUTTON = "int Bitmap;int Command;byte State;byte Style;align;dword_ptr Param;int_ptr String" 
+GLOBAL CONST $TAGTBBUTTONINFO = "uint Size;dword Mask;int Command;int Image;byte State;byte Style;word CX;dword_ptr Param;ptr Text;int TextMax" 
+GLOBAL CONST $TAGNETRESOURCE = "dword Scope;dword Type;dword DisplayType;dword Usage;ptr LocalName;ptr RemoteName;ptr Comment;ptr Provider" 
+GLOBAL CONST $TAGOVERLAPPED = "ulong_ptr Internal;ulong_ptr InternalHigh;struct;dword Offset;dword OffsetHigh;endstruct;handle hEvent" 
+GLOBAL CONST $TAGOPENFILENAME = "dword StructSize;hwnd hwndOwner;handle hInstance;ptr lpstrFilter;ptr lpstrCustomFilter;" & "dword nMaxCustFilter;dword nFilterIndex;ptr lpstrFile;dword nMaxFile;ptr lpstrFileTitle;dword nMaxFileTitle;" & "ptr lpstrInitialDir;ptr lpstrTitle;dword Flags;word nFileOffset;word nFileExtension;ptr lpstrDefExt;lparam lCustData;" & "ptr lpfnHook;ptr lpTemplateName;ptr pvReserved;dword dwReserved;dword FlagsEx" 
+GLOBAL CONST $TAGBITMAPINFO = "struct;dword Size;long Width;long Height;word Planes;word BitCount;dword Compression;dword SizeImage;" & "long XPelsPerMeter;long YPelsPerMeter;dword ClrUsed;dword ClrImportant;endstruct;dword RGBQuad" 
+GLOBAL CONST $TAGBLENDFUNCTION = "byte Op;byte Flags;byte Alpha;byte Format" 
+GLOBAL CONST $TAGGUID = "ulong Data1;ushort Data2;ushort Data3;byte Data4[8]" 
+GLOBAL CONST $TAGWINDOWPLACEMENT = "uint length;uint flags;uint showCmd;long ptMinPosition[2];long ptMaxPosition[2];long rcNormalPosition[4]" 
+GLOBAL CONST $TAGWINDOWPOS = "hwnd hWnd;hwnd InsertAfter;int X;int Y;int CX;int CY;uint Flags" 
+GLOBAL CONST $TAGSCROLLINFO = "uint cbSize;uint fMask;int nMin;int nMax;uint nPage;int nPos;int nTrackPos" 
+GLOBAL CONST $TAGSCROLLBARINFO = "dword cbSize;" & $TAGRECT & ";int dxyLineButton;int xyThumbTop;" & "int xyThumbBottom;int reserved;dword rgstate[6]" 
+GLOBAL CONST $TAGLOGFONT = "long Height;long Width;long Escapement;long Orientation;long Weight;byte Italic;byte Underline;" & "byte Strikeout;byte CharSet;byte OutPrecision;byte ClipPrecision;byte Quality;byte PitchAndFamily;wchar FaceName[32]" 
+GLOBAL CONST $TAGKBDLLHOOKSTRUCT = "dword vkCode;dword scanCode;dword flags;dword time;ulong_ptr dwExtraInfo" 
+GLOBAL CONST $TAGPROCESS_INFORMATION = "handle hProcess;handle hThread;dword ProcessID;dword ThreadID" 
+GLOBAL CONST $TAGSTARTUPINFO = "dword Size;ptr Reserved1;ptr Desktop;ptr Title;dword X;dword Y;dword XSize;dword YSize;dword XCountChars;" & "dword YCountChars;dword FillAttribute;dword Flags;word ShowWindow;word Reserved2;ptr Reserved3;handle StdInput;" & "handle StdOutput;handle StdError" 
+GLOBAL CONST $TAGSECURITY_ATTRIBUTES = "dword Length;ptr Descriptor;bool InheritHandle" 
+GLOBAL CONST $TAGWIN32_FIND_DATA = "dword dwFileAttributes;dword ftCreationTime[2];dword ftLastAccessTime[2];dword ftLastWriteTime[2];dword nFileSizeHigh;dword nFileSizeLow;dword dwReserved0;dword dwReserved1;wchar cFileName[260];wchar cAlternateFileName[14]" 
+GLOBAL CONST $TAGTEXTMETRIC = "long tmHeight;long tmAscent;long tmDescent;long tmInternalLeading;long tmExternalLeading;" & "long tmAveCharWidth;long tmMaxCharWidth;long tmWeight;long tmOverhang;long tmDigitizedAspectX;long tmDigitizedAspectY;" & "wchar tmFirstChar;wchar tmLastChar;wchar tmDefaultChar;wchar tmBreakChar;byte tmItalic;byte tmUnderlined;byte tmStruckOut;" & "byte tmPitchAndFamily;byte tmCharSet" 
+GLOBAL CONST $PROCESS_TERMINATE = 1 
+GLOBAL CONST $PROCESS_CREATE_THREAD = 2 
+GLOBAL CONST $PROCESS_SET_SESSIONID = 4 
+GLOBAL CONST $PROCESS_VM_OPERATION = 8 
+GLOBAL CONST $PROCESS_VM_READ = 16 
+GLOBAL CONST $PROCESS_VM_WRITE = 32 
+GLOBAL CONST $PROCESS_DUP_HANDLE = 64 
+GLOBAL CONST $PROCESS_CREATE_PROCESS = 128 
+GLOBAL CONST $PROCESS_SET_QUOTA = 256 
+GLOBAL CONST $PROCESS_SET_INFORMATION = 512 
+GLOBAL CONST $PROCESS_QUERY_INFORMATION = 1024 
+GLOBAL CONST $PROCESS_SUSPEND_RESUME = 2048 
+GLOBAL CONST $PROCESS_ALL_ACCESS = 2035711 
+GLOBAL CONST $ERROR_NO_TOKEN = 1008 
+GLOBAL CONST $SE_ASSIGNPRIMARYTOKEN_NAME = "SeAssignPrimaryTokenPrivilege" 
+GLOBAL CONST $SE_AUDIT_NAME = "SeAuditPrivilege" 
+GLOBAL CONST $SE_BACKUP_NAME = "SeBackupPrivilege" 
+GLOBAL CONST $SE_CHANGE_NOTIFY_NAME = "SeChangeNotifyPrivilege" 
+GLOBAL CONST $SE_CREATE_GLOBAL_NAME = "SeCreateGlobalPrivilege" 
+GLOBAL CONST $SE_CREATE_PAGEFILE_NAME = "SeCreatePagefilePrivilege" 
+GLOBAL CONST $SE_CREATE_PERMANENT_NAME = "SeCreatePermanentPrivilege" 
+GLOBAL CONST $SE_CREATE_TOKEN_NAME = "SeCreateTokenPrivilege" 
+GLOBAL CONST $SE_DEBUG_NAME = "SeDebugPrivilege" 
+GLOBAL CONST $SE_ENABLE_DELEGATION_NAME = "SeEnableDelegationPrivilege" 
+GLOBAL CONST $SE_IMPERSONATE_NAME = "SeImpersonatePrivilege" 
+GLOBAL CONST $SE_INC_BASE_PRIORITY_NAME = "SeIncreaseBasePriorityPrivilege" 
+GLOBAL CONST $SE_INCREASE_QUOTA_NAME = "SeIncreaseQuotaPrivilege" 
+GLOBAL CONST $SE_LOAD_DRIVER_NAME = "SeLoadDriverPrivilege" 
+GLOBAL CONST $SE_LOCK_MEMORY_NAME = "SeLockMemoryPrivilege" 
+GLOBAL CONST $SE_MACHINE_ACCOUNT_NAME = "SeMachineAccountPrivilege" 
+GLOBAL CONST $SE_MANAGE_VOLUME_NAME = "SeManageVolumePrivilege" 
+GLOBAL CONST $SE_PROF_SINGLE_PROCESS_NAME = "SeProfileSingleProcessPrivilege" 
+GLOBAL CONST $SE_REMOTE_SHUTDOWN_NAME = "SeRemoteShutdownPrivilege" 
+GLOBAL CONST $SE_RESTORE_NAME = "SeRestorePrivilege" 
+GLOBAL CONST $SE_SECURITY_NAME = "SeSecurityPrivilege" 
+GLOBAL CONST $SE_SHUTDOWN_NAME = "SeShutdownPrivilege" 
+GLOBAL CONST $SE_SYNC_AGENT_NAME = "SeSyncAgentPrivilege" 
+GLOBAL CONST $SE_SYSTEM_ENVIRONMENT_NAME = "SeSystemEnvironmentPrivilege" 
+GLOBAL CONST $SE_SYSTEM_PROFILE_NAME = "SeSystemProfilePrivilege" 
+GLOBAL CONST $SE_SYSTEMTIME_NAME = "SeSystemtimePrivilege" 
+GLOBAL CONST $SE_TAKE_OWNERSHIP_NAME = "SeTakeOwnershipPrivilege" 
+GLOBAL CONST $SE_TCB_NAME = "SeTcbPrivilege" 
+GLOBAL CONST $SE_UNSOLICITED_INPUT_NAME = "SeUnsolicitedInputPrivilege" 
+GLOBAL CONST $SE_UNDOCK_NAME = "SeUndockPrivilege" 
+GLOBAL CONST $SE_PRIVILEGE_ENABLED_BY_DEFAULT = 1 
+GLOBAL CONST $SE_PRIVILEGE_ENABLED = 2 
+GLOBAL CONST $SE_PRIVILEGE_REMOVED = 4 
+GLOBAL CONST $SE_PRIVILEGE_USED_FOR_ACCESS = -2147483648 
+GLOBAL CONST $SE_GROUP_MANDATORY = 1 
+GLOBAL CONST $SE_GROUP_ENABLED_BY_DEFAULT = 2 
+GLOBAL CONST $SE_GROUP_ENABLED = 4 
+GLOBAL CONST $SE_GROUP_OWNER = 8 
+GLOBAL CONST $SE_GROUP_USE_FOR_DENY_ONLY = 16 
+GLOBAL CONST $SE_GROUP_INTEGRITY = 32 
+GLOBAL CONST $SE_GROUP_INTEGRITY_ENABLED = 64 
+GLOBAL CONST $SE_GROUP_RESOURCE = 536870912 
+GLOBAL CONST $SE_GROUP_LOGON_ID = -1073741824 
+GLOBAL ENUM $TOKENPRIMARY = 1 , $TOKENIMPERSONATION 
+GLOBAL ENUM $SECURITYANONYMOUS = 0 , $SECURITYIDENTIFICATION , $SECURITYIMPERSONATION , $SECURITYDELEGATION 
+GLOBAL ENUM $TOKENUSER = 1 , $TOKENGROUPS , $TOKENPRIVILEGES , $TOKENOWNER , $TOKENPRIMARYGROUP , $TOKENDEFAULTDACL , $TOKENSOURCE , $TOKENTYPE , $TOKENIMPERSONATIONLEVEL , $TOKENSTATISTICS , $TOKENRESTRICTEDSIDS , $TOKENSESSIONID , $TOKENGROUPSANDPRIVILEGES , $TOKENSESSIONREFERENCE , $TOKENSANDBOXINERT , $TOKENAUDITPOLICY , $TOKENORIGIN , $TOKENELEVATIONTYPE , $TOKENLINKEDTOKEN , $TOKENELEVATION , $TOKENHASRESTRICTIONS , $TOKENACCESSINFORMATION , $TOKENVIRTUALIZATIONALLOWED , $TOKENVIRTUALIZATIONENABLED , $TOKENINTEGRITYLEVEL , $TOKENUIACCESS , $TOKENMANDATORYPOLICY , $TOKENLOGONSID 
+GLOBAL CONST $TOKEN_ASSIGN_PRIMARY = 1 
+GLOBAL CONST $TOKEN_DUPLICATE = 2 
+GLOBAL CONST $TOKEN_IMPERSONATE = 4 
+GLOBAL CONST $TOKEN_QUERY = 8 
+GLOBAL CONST $TOKEN_QUERY_SOURCE = 16 
+GLOBAL CONST $TOKEN_ADJUST_PRIVILEGES = 32 
+GLOBAL CONST $TOKEN_ADJUST_GROUPS = 64 
+GLOBAL CONST $TOKEN_ADJUST_DEFAULT = 128 
+GLOBAL CONST $TOKEN_ADJUST_SESSIONID = 256 
+GLOBAL CONST $TOKEN_ALL_ACCESS = 983551 
+GLOBAL CONST $TOKEN_READ = 131080 
+GLOBAL CONST $TOKEN_WRITE = 131296 
+GLOBAL CONST $TOKEN_EXECUTE = 131072 
+GLOBAL CONST $TOKEN_HAS_TRAVERSE_PRIVILEGE = 1 
+GLOBAL CONST $TOKEN_HAS_BACKUP_PRIVILEGE = 2 
+GLOBAL CONST $TOKEN_HAS_RESTORE_PRIVILEGE = 4 
+GLOBAL CONST $TOKEN_HAS_ADMIN_GROUP = 8 
+GLOBAL CONST $TOKEN_IS_RESTRICTED = 16 
+GLOBAL CONST $TOKEN_SESSION_NOT_REFERENCED = 32 
+GLOBAL CONST $TOKEN_SANDBOX_INERT = 64 
+GLOBAL CONST $TOKEN_HAS_IMPERSONATE_PRIVILEGE = 128 
+GLOBAL CONST $RIGHTS_DELETE = 65536 
+GLOBAL CONST $READ_CONTROL = 131072 
+GLOBAL CONST $WRITE_DAC = 262144 
+GLOBAL CONST $WRITE_OWNER = 524288 
+GLOBAL CONST $SYNCHRONIZE = 1048576 
+GLOBAL CONST $STANDARD_RIGHTS_REQUIRED = 983040 
+GLOBAL CONST $STANDARD_RIGHTS_READ = $READ_CONTROL 
+GLOBAL CONST $STANDARD_RIGHTS_WRITE = $READ_CONTROL 
+GLOBAL CONST $STANDARD_RIGHTS_EXECUTE = $READ_CONTROL 
+GLOBAL CONST $STANDARD_RIGHTS_ALL = 2031616 
+GLOBAL CONST $SPECIFIC_RIGHTS_ALL = 65535 
+GLOBAL ENUM $NOT_USED_ACCESS = 0 , $GRANT_ACCESS , $SET_ACCESS , $DENY_ACCESS , $REVOKE_ACCESS , $SET_AUDIT_SUCCESS , $SET_AUDIT_FAILURE 
+GLOBAL ENUM $TRUSTEE_IS_UNKNOWN = 0 , $TRUSTEE_IS_USER , $TRUSTEE_IS_GROUP , $TRUSTEE_IS_DOMAIN , $TRUSTEE_IS_ALIAS , $TRUSTEE_IS_WELL_KNOWN_GROUP , $TRUSTEE_IS_DELETED , $TRUSTEE_IS_INVALID , $TRUSTEE_IS_COMPUTER 
+GLOBAL CONST $LOGON_WITH_PROFILE = 1 
+GLOBAL CONST $LOGON_NETCREDENTIALS_ONLY = 2 
+GLOBAL ENUM $SIDTYPEUSER = 1 , $SIDTYPEGROUP , $SIDTYPEDOMAIN , $SIDTYPEALIAS , $SIDTYPEWELLKNOWNGROUP , $SIDTYPEDELETEDACCOUNT , $SIDTYPEINVALID , $SIDTYPEUNKNOWN , $SIDTYPECOMPUTER , $SIDTYPELABEL 
+GLOBAL CONST $SID_ADMINISTRATORS = "S-1-5-32-544" 
+GLOBAL CONST $SID_USERS = "S-1-5-32-545" 
+GLOBAL CONST $SID_GUESTS = "S-1-5-32-546" 
+GLOBAL CONST $SID_ACCOUNT_OPERATORS = "S-1-5-32-548" 
+GLOBAL CONST $SID_SERVER_OPERATORS = "S-1-5-32-549" 
+GLOBAL CONST $SID_PRINT_OPERATORS = "S-1-5-32-550" 
+GLOBAL CONST $SID_BACKUP_OPERATORS = "S-1-5-32-551" 
+GLOBAL CONST $SID_REPLICATOR = "S-1-5-32-552" 
+GLOBAL CONST $SID_OWNER = "S-1-3-0" 
+GLOBAL CONST $SID_EVERYONE = "S-1-1-0" 
+GLOBAL CONST $SID_NETWORK = "S-1-5-2" 
+GLOBAL CONST $SID_INTERACTIVE = "S-1-5-4" 
+GLOBAL CONST $SID_SYSTEM = "S-1-5-18" 
+GLOBAL CONST $SID_AUTHENTICATED_USERS = "S-1-5-11" 
+GLOBAL CONST $SID_SCHANNEL_AUTHENTICATION = "S-1-5-64-14" 
+GLOBAL CONST $SID_DIGEST_AUTHENTICATION = "S-1-5-64-21" 
+GLOBAL CONST $SID_NT_SERVICE = "S-1-5-80" 
+GLOBAL CONST $SID_UNTRUSTED_MANDATORY_LEVEL = "S-1-16-0" 
+GLOBAL CONST $SID_LOW_MANDATORY_LEVEL = "S-1-16-4096" 
+GLOBAL CONST $SID_MEDIUM_MANDATORY_LEVEL = "S-1-16-8192" 
+GLOBAL CONST $SID_MEDIUM_PLUS_MANDATORY_LEVEL = "S-1-16-8448" 
+GLOBAL CONST $SID_HIGH_MANDATORY_LEVEL = "S-1-16-12288" 
+GLOBAL CONST $SID_SYSTEM_MANDATORY_LEVEL = "S-1-16-16384" 
+GLOBAL CONST $SID_PROTECTED_PROCESS_MANDATORY_LEVEL = "S-1-16-20480" 
+GLOBAL CONST $SID_SECURE_PROCESS_MANDATORY_LEVEL = "S-1-16-28672" 
+GLOBAL CONST $SID_ALL_SERVICES = "S-1-5-80-0" 
+FUNC _WINAPI_GETLASTERROR ( $CURERR = @ERROR , $CUREXT = @EXTENDED ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "GetLastError" ) 
+RETURN SETERROR ( $CURERR , $CUREXT , $ARESULT [ 0 ] ) 
+ENDFUNC 
+FUNC _WINAPI_SETLASTERROR ( $IERRCODE , $CURERR = @ERROR , $CUREXT = @EXTENDED ) 
+DLLCALL ( "kernel32.dll" , "none" , "SetLastError" , "dword" , $IERRCODE ) 
+RETURN SETERROR ( $CURERR , $CUREXT ) 
+ENDFUNC 
+GLOBAL CONST $FC_NOOVERWRITE = 0 
+GLOBAL CONST $FC_OVERWRITE = 1 
+GLOBAL CONST $FT_MODIFIED = 0 
+GLOBAL CONST $FT_CREATED = 1 
+GLOBAL CONST $FT_ACCESSED = 2 
+GLOBAL CONST $FO_READ = 0 
+GLOBAL CONST $FO_APPEND = 1 
+GLOBAL CONST $FO_OVERWRITE = 2 
+GLOBAL CONST $FO_BINARY = 16 
+GLOBAL CONST $FO_UNICODE = 32 
+GLOBAL CONST $FO_UTF16_LE = 32 
+GLOBAL CONST $FO_UTF16_BE = 64 
+GLOBAL CONST $FO_UTF8 = 128 
+GLOBAL CONST $FO_UTF8_NOBOM = 256 
+GLOBAL CONST $EOF = - 1 
+GLOBAL CONST $FD_FILEMUSTEXIST = 1 
+GLOBAL CONST $FD_PATHMUSTEXIST = 2 
+GLOBAL CONST $FD_MULTISELECT = 4 
+GLOBAL CONST $FD_PROMPTCREATENEW = 8 
+GLOBAL CONST $FD_PROMPTOVERWRITE = 16 
+GLOBAL CONST $CREATE_NEW = 1 
+GLOBAL CONST $CREATE_ALWAYS = 2 
+GLOBAL CONST $OPEN_EXISTING = 3 
+GLOBAL CONST $OPEN_ALWAYS = 4 
+GLOBAL CONST $TRUNCATE_EXISTING = 5 
+GLOBAL CONST $INVALID_SET_FILE_POINTER = - 1 
+GLOBAL CONST $FILE_BEGIN = 0 
+GLOBAL CONST $FILE_CURRENT = 1 
+GLOBAL CONST $FILE_END = 2 
+GLOBAL CONST $FILE_ATTRIBUTE_READONLY = 1 
+GLOBAL CONST $FILE_ATTRIBUTE_HIDDEN = 2 
+GLOBAL CONST $FILE_ATTRIBUTE_SYSTEM = 4 
+GLOBAL CONST $FILE_ATTRIBUTE_DIRECTORY = 16 
+GLOBAL CONST $FILE_ATTRIBUTE_ARCHIVE = 32 
+GLOBAL CONST $FILE_ATTRIBUTE_DEVICE = 64 
+GLOBAL CONST $FILE_ATTRIBUTE_NORMAL = 128 
+GLOBAL CONST $FILE_ATTRIBUTE_TEMPORARY = 256 
+GLOBAL CONST $FILE_ATTRIBUTE_SPARSE_FILE = 512 
+GLOBAL CONST $FILE_ATTRIBUTE_REPARSE_POINT = 1024 
+GLOBAL CONST $FILE_ATTRIBUTE_COMPRESSED = 2048 
+GLOBAL CONST $FILE_ATTRIBUTE_OFFLINE = 4096 
+GLOBAL CONST $FILE_ATTRIBUTE_NOT_CONTENT_INDEXED = 8192 
+GLOBAL CONST $FILE_ATTRIBUTE_ENCRYPTED = 16384 
+GLOBAL CONST $FILE_SHARE_READ = 1 
+GLOBAL CONST $FILE_SHARE_WRITE = 2 
+GLOBAL CONST $FILE_SHARE_DELETE = 4 
+GLOBAL CONST $GENERIC_ALL = 268435456 
+GLOBAL CONST $GENERIC_EXECUTE = 536870912 
+GLOBAL CONST $GENERIC_WRITE = 1073741824 
+GLOBAL CONST $GENERIC_READ = -2147483648 
+FUNC _SENDMESSAGE ( $HWND , $IMSG , $WPARAM = 0 , $LPARAM = 0 , $IRETURN = 0 , $WPARAMTYPE = "wparam" , $LPARAMTYPE = "lparam" , $SRETURNTYPE = "lresult" ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , $SRETURNTYPE , "SendMessageW" , "hwnd" , $HWND , "uint" , $IMSG , $WPARAMTYPE , $WPARAM , $LPARAMTYPE , $LPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $IRETURN >= 0 AND $IRETURN <= 4 THEN RETURN $ARESULT [ $IRETURN ] 
+RETURN $ARESULT 
+ENDFUNC 
+FUNC _SENDMESSAGEA ( $HWND , $IMSG , $WPARAM = 0 , $LPARAM = 0 , $IRETURN = 0 , $WPARAMTYPE = "wparam" , $LPARAMTYPE = "lparam" , $SRETURNTYPE = "lresult" ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , $SRETURNTYPE , "SendMessageA" , "hwnd" , $HWND , "uint" , $IMSG , $WPARAMTYPE , $WPARAM , $LPARAMTYPE , $LPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $IRETURN >= 0 AND $IRETURN <= 4 THEN RETURN $ARESULT [ $IRETURN ] 
+RETURN $ARESULT 
+ENDFUNC 
+GLOBAL $__GAINPROCESS_WINAPI [ 64 ] [ 2 ] = [ [ 0 , 0 ] ] 
+GLOBAL $__GAWINLIST_WINAPI [ 64 ] [ 2 ] = [ [ 0 , 0 ] ] 
+GLOBAL CONST $__WINAPICONSTANT_WM_SETFONT = 48 
+GLOBAL CONST $__WINAPICONSTANT_FW_NORMAL = 400 
+GLOBAL CONST $__WINAPICONSTANT_DEFAULT_CHARSET = 1 
+GLOBAL CONST $__WINAPICONSTANT_OUT_DEFAULT_PRECIS = 0 
+GLOBAL CONST $__WINAPICONSTANT_CLIP_DEFAULT_PRECIS = 0 
+GLOBAL CONST $__WINAPICONSTANT_DEFAULT_QUALITY = 0 
+GLOBAL CONST $__WINAPICONSTANT_FORMAT_MESSAGE_ALLOCATE_BUFFER = 256 
+GLOBAL CONST $__WINAPICONSTANT_FORMAT_MESSAGE_FROM_SYSTEM = 4096 
+GLOBAL CONST $__WINAPICONSTANT_LOGPIXELSX = 88 
+GLOBAL CONST $__WINAPICONSTANT_LOGPIXELSY = 90 
+GLOBAL CONST $HGDI_ERROR = PTR ( - 1 ) 
+GLOBAL CONST $INVALID_HANDLE_VALUE = PTR ( - 1 ) 
+GLOBAL CONST $CLR_INVALID = - 1 
+GLOBAL CONST $__WINAPICONSTANT_FLASHW_CAPTION = 1 
+GLOBAL CONST $__WINAPICONSTANT_FLASHW_TRAY = 2 
+GLOBAL CONST $__WINAPICONSTANT_FLASHW_TIMER = 4 
+GLOBAL CONST $__WINAPICONSTANT_FLASHW_TIMERNOFG = 12 
+GLOBAL CONST $__WINAPICONSTANT_GW_HWNDNEXT = 2 
+GLOBAL CONST $__WINAPICONSTANT_GW_CHILD = 5 
+GLOBAL CONST $__WINAPICONSTANT_DI_MASK = 1 
+GLOBAL CONST $__WINAPICONSTANT_DI_IMAGE = 2 
+GLOBAL CONST $__WINAPICONSTANT_DI_NORMAL = 3 
+GLOBAL CONST $__WINAPICONSTANT_DI_COMPAT = 4 
+GLOBAL CONST $__WINAPICONSTANT_DI_DEFAULTSIZE = 8 
+GLOBAL CONST $__WINAPICONSTANT_DI_NOMIRROR = 16 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_ATTACHED_TO_DESKTOP = 1 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_PRIMARY_DEVICE = 4 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_MIRRORING_DRIVER = 8 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_VGA_COMPATIBLE = 16 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_REMOVABLE = 32 
+GLOBAL CONST $__WINAPICONSTANT_DISPLAY_DEVICE_MODESPRUNED = 134217728 
+GLOBAL CONST $NULL_BRUSH = 5 
+GLOBAL CONST $NULL_PEN = 8 
+GLOBAL CONST $BLACK_BRUSH = 4 
+GLOBAL CONST $DKGRAY_BRUSH = 3 
+GLOBAL CONST $DC_BRUSH = 18 
+GLOBAL CONST $GRAY_BRUSH = 2 
+GLOBAL CONST $HOLLOW_BRUSH = $NULL_BRUSH 
+GLOBAL CONST $LTGRAY_BRUSH = 1 
+GLOBAL CONST $WHITE_BRUSH = 0 
+GLOBAL CONST $BLACK_PEN = 7 
+GLOBAL CONST $DC_PEN = 19 
+GLOBAL CONST $WHITE_PEN = 6 
+GLOBAL CONST $ANSI_FIXED_FONT = 11 
+GLOBAL CONST $ANSI_VAR_FONT = 12 
+GLOBAL CONST $DEVICE_DEFAULT_FONT = 14 
+GLOBAL CONST $DEFAULT_GUI_FONT = 17 
+GLOBAL CONST $OEM_FIXED_FONT = 10 
+GLOBAL CONST $SYSTEM_FONT = 13 
+GLOBAL CONST $SYSTEM_FIXED_FONT = 16 
+GLOBAL CONST $DEFAULT_PALETTE = 15 
+GLOBAL CONST $MB_PRECOMPOSED = 1 
+GLOBAL CONST $MB_COMPOSITE = 2 
+GLOBAL CONST $MB_USEGLYPHCHARS = 4 
+GLOBAL CONST $ULW_ALPHA = 2 
+GLOBAL CONST $ULW_COLORKEY = 1 
+GLOBAL CONST $ULW_OPAQUE = 4 
+GLOBAL CONST $WH_CALLWNDPROC = 4 
+GLOBAL CONST $WH_CALLWNDPROCRET = 12 
+GLOBAL CONST $WH_CBT = 5 
+GLOBAL CONST $WH_DEBUG = 9 
+GLOBAL CONST $WH_FOREGROUNDIDLE = 11 
+GLOBAL CONST $WH_GETMESSAGE = 3 
+GLOBAL CONST $WH_JOURNALPLAYBACK = 1 
+GLOBAL CONST $WH_JOURNALRECORD = 0 
+GLOBAL CONST $WH_KEYBOARD = 2 
+GLOBAL CONST $WH_KEYBOARD_LL = 13 
+GLOBAL CONST $WH_MOUSE = 7 
+GLOBAL CONST $WH_MOUSE_LL = 14 
+GLOBAL CONST $WH_MSGFILTER = - 1 
+GLOBAL CONST $WH_SHELL = 10 
+GLOBAL CONST $WH_SYSMSGFILTER = 6 
+GLOBAL CONST $WPF_ASYNCWINDOWPLACEMENT = 4 
+GLOBAL CONST $WPF_RESTORETOMAXIMIZED = 2 
+GLOBAL CONST $WPF_SETMINPOSITION = 1 
+GLOBAL CONST $KF_EXTENDED = 256 
+GLOBAL CONST $KF_ALTDOWN = 8192 
+GLOBAL CONST $KF_UP = 32768 
+GLOBAL CONST $LLKHF_EXTENDED = BITSHIFT ( $KF_EXTENDED , 8 ) 
+GLOBAL CONST $LLKHF_INJECTED = 16 
+GLOBAL CONST $LLKHF_ALTDOWN = BITSHIFT ( $KF_ALTDOWN , 8 ) 
+GLOBAL CONST $LLKHF_UP = BITSHIFT ( $KF_UP , 8 ) 
+GLOBAL CONST $OFN_ALLOWMULTISELECT = 512 
+GLOBAL CONST $OFN_CREATEPROMPT = 8192 
+GLOBAL CONST $OFN_DONTADDTORECENT = 33554432 
+GLOBAL CONST $OFN_ENABLEHOOK = 32 
+GLOBAL CONST $OFN_ENABLEINCLUDENOTIFY = 4194304 
+GLOBAL CONST $OFN_ENABLESIZING = 8388608 
+GLOBAL CONST $OFN_ENABLETEMPLATE = 64 
+GLOBAL CONST $OFN_ENABLETEMPLATEHANDLE = 128 
+GLOBAL CONST $OFN_EXPLORER = 524288 
+GLOBAL CONST $OFN_EXTENSIONDIFFERENT = 1024 
+GLOBAL CONST $OFN_FILEMUSTEXIST = 4096 
+GLOBAL CONST $OFN_FORCESHOWHIDDEN = 268435456 
+GLOBAL CONST $OFN_HIDEREADONLY = 4 
+GLOBAL CONST $OFN_LONGNAMES = 2097152 
+GLOBAL CONST $OFN_NOCHANGEDIR = 8 
+GLOBAL CONST $OFN_NODEREFERENCELINKS = 1048576 
+GLOBAL CONST $OFN_NOLONGNAMES = 262144 
+GLOBAL CONST $OFN_NONETWORKBUTTON = 131072 
+GLOBAL CONST $OFN_NOREADONLYRETURN = 32768 
+GLOBAL CONST $OFN_NOTESTFILECREATE = 65536 
+GLOBAL CONST $OFN_NOVALIDATE = 256 
+GLOBAL CONST $OFN_OVERWRITEPROMPT = 2 
+GLOBAL CONST $OFN_PATHMUSTEXIST = 2048 
+GLOBAL CONST $OFN_READONLY = 1 
+GLOBAL CONST $OFN_SHAREAWARE = 16384 
+GLOBAL CONST $OFN_SHOWHELP = 16 
+GLOBAL CONST $OFN_EX_NOPLACESBAR = 1 
+GLOBAL CONST $TMPF_FIXED_PITCH = 1 
+GLOBAL CONST $TMPF_VECTOR = 2 
+GLOBAL CONST $TMPF_TRUETYPE = 4 
+GLOBAL CONST $TMPF_DEVICE = 8 
+GLOBAL CONST $DUPLICATE_CLOSE_SOURCE = 1 
+GLOBAL CONST $DUPLICATE_SAME_ACCESS = 2 
+GLOBAL CONST $TAGCURSORINFO = "dword Size;dword Flags;handle hCursor;" & $TAGPOINT 
+GLOBAL CONST $TAGDISPLAY_DEVICE = "dword Size;wchar Name[32];wchar String[128];dword Flags;wchar ID[128];wchar Key[128]" 
+GLOBAL CONST $TAGFLASHWINFO = "uint Size;hwnd hWnd;dword Flags;uint Count;dword TimeOut" 
+GLOBAL CONST $TAGICONINFO = "bool Icon;dword XHotSpot;dword YHotSpot;handle hMask;handle hColor" 
+GLOBAL CONST $TAGMEMORYSTATUSEX = "dword Length;dword MemoryLoad;" & "uint64 TotalPhys;uint64 AvailPhys;uint64 TotalPageFile;uint64 AvailPageFile;" & "uint64 TotalVirtual;uint64 AvailVirtual;uint64 AvailExtendedVirtual" 
+FUNC _WINAPI_ATTACHCONSOLE ( $IPROCESSID = - 1 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "AttachConsole" , "dword" , $IPROCESSID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_ATTACHTHREADINPUT ( $IATTACH , $IATTACHTO , $FATTACH ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "AttachThreadInput" , "dword" , $IATTACH , "dword" , $IATTACHTO , "bool" , $FATTACH ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_BEEP ( $IFREQ = 500 , $IDURATION = 1000 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "Beep" , "dword" , $IFREQ , "dword" , $IDURATION ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_BITBLT ( $HDESTDC , $IXDEST , $IYDEST , $IWIDTH , $IHEIGHT , $HSRCDC , $IXSRC , $IYSRC , $IROP ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "bool" , "BitBlt" , "handle" , $HDESTDC , "int" , $IXDEST , "int" , $IYDEST , "int" , $IWIDTH , "int" , $IHEIGHT , "handle" , $HSRCDC , "int" , $IXSRC , "int" , $IYSRC , "dword" , $IROP ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CALLNEXTHOOKEX ( $HHK , $ICODE , $WPARAM , $LPARAM ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "lresult" , "CallNextHookEx" , "handle" , $HHK , "int" , $ICODE , "wparam" , $WPARAM , "lparam" , $LPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CALLWINDOWPROC ( $LPPREVWNDFUNC , $HWND , $MSG , $WPARAM , $LPARAM ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "lresult" , "CallWindowProc" , "ptr" , $LPPREVWNDFUNC , "hwnd" , $HWND , "uint" , $MSG , "wparam" , $WPARAM , "lparam" , $LPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CLIENTTOSCREEN ( $HWND , BYREF $TPOINT ) 
+DLLCALL ( "user32.dll" , "bool" , "ClientToScreen" , "hwnd" , $HWND , "struct*" , $TPOINT ) 
+RETURN SETERROR ( @ERROR , @EXTENDED , $TPOINT ) 
+ENDFUNC 
+FUNC _WINAPI_CLOSEHANDLE ( $HOBJECT ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "CloseHandle" , "handle" , $HOBJECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_COMBINERGN ( $HRGNDEST , $HRGNSRC1 , $HRGNSRC2 , $ICOMBINEMODE ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "CombineRgn" , "handle" , $HRGNDEST , "handle" , $HRGNSRC1 , "handle" , $HRGNSRC2 , "int" , $ICOMBINEMODE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_COMMDLGEXTENDEDERROR ( ) 
+LOCAL CONST $CDERR_DIALOGFAILURE = 65535 
+LOCAL CONST $CDERR_FINDRESFAILURE = 6 
+LOCAL CONST $CDERR_INITIALIZATION = 2 
+LOCAL CONST $CDERR_LOADRESFAILURE = 7 
+LOCAL CONST $CDERR_LOADSTRFAILURE = 5 
+LOCAL CONST $CDERR_LOCKRESFAILURE = 8 
+LOCAL CONST $CDERR_MEMALLOCFAILURE = 9 
+LOCAL CONST $CDERR_MEMLOCKFAILURE = 10 
+LOCAL CONST $CDERR_NOHINSTANCE = 4 
+LOCAL CONST $CDERR_NOHOOK = 11 
+LOCAL CONST $CDERR_NOTEMPLATE = 3 
+LOCAL CONST $CDERR_REGISTERMSGFAIL = 12 
+LOCAL CONST $CDERR_STRUCTSIZE = 1 
+LOCAL CONST $FNERR_BUFFERTOOSMALL = 12291 
+LOCAL CONST $FNERR_INVALIDFILENAME = 12290 
+LOCAL CONST $FNERR_SUBCLASSFAILURE = 12289 
+LOCAL $ARESULT = DLLCALL ( "comdlg32.dll" , "dword" , "CommDlgExtendedError" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+SWITCH $ARESULT [ 0 ] 
+CASE $CDERR_DIALOGFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The dialog box could not be created." & @LF & "The common dialog box function's call to the DialogBox function failed." & @LF & "For example, this error occurs if the common dialog box call specifies an invalid window handle." ) 
+CASE $CDERR_FINDRESFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function failed to find a specified resource." ) 
+CASE $CDERR_INITIALIZATION 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function failed during initialization." & @LF & "This error often occurs when sufficient memory is not available." ) 
+CASE $CDERR_LOADRESFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function failed to load a specified resource." ) 
+CASE $CDERR_LOADSTRFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function failed to load a specified string." ) 
+CASE $CDERR_LOCKRESFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function failed to lock a specified resource." ) 
+CASE $CDERR_MEMALLOCFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function was unable to allocate memory for internal structures." ) 
+CASE $CDERR_MEMLOCKFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The common dialog box function was unable to lock the memory associated with a handle." ) 
+CASE $CDERR_NOHINSTANCE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The ENABLETEMPLATE flag was set in the Flags member of the initialization structure for the corresponding common dialog box," & @LF & "but you failed to provide a corresponding instance handle." ) 
+CASE $CDERR_NOHOOK 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The ENABLEHOOK flag was set in the Flags member of the initialization structure for the corresponding common dialog box," & @LF & "but you failed to provide a pointer to a corresponding hook procedure." ) 
+CASE $CDERR_NOTEMPLATE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The ENABLETEMPLATE flag was set in the Flags member of the initialization structure for the corresponding common dialog box," & @LF & "but you failed to provide a corresponding template." ) 
+CASE $CDERR_REGISTERMSGFAIL 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The RegisterWindowMessage function returned an error code when it was called by the common dialog box function." ) 
+CASE $CDERR_STRUCTSIZE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The lStructSize member of the initialization structure for the corresponding common dialog box is invalid" ) 
+CASE $FNERR_BUFFERTOOSMALL 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "The buffer pointed to by the lpstrFile member of the OPENFILENAME structure is too small for the file name specified by the user." & @LF & "The first two bytes of the lpstrFile buffer contain an integer value specifying the size, in TCHARs, required to receive the full name." ) 
+CASE $FNERR_INVALIDFILENAME 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "A file name is invalid." ) 
+CASE $FNERR_SUBCLASSFAILURE 
+RETURN SETERROR ( $ARESULT [ 0 ] , 0 , "An attempt to subclass a list box failed because sufficient memory was not available." ) 
+ENDSWITCH 
+RETURN HEX ( $ARESULT [ 0 ] ) 
+ENDFUNC 
+FUNC _WINAPI_COPYICON ( $HICON ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "CopyIcon" , "handle" , $HICON ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEBITMAP ( $IWIDTH , $IHEIGHT , $IPLANES = 1 , $IBITSPERPEL = 1 , $PBITS = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateBitmap" , "int" , $IWIDTH , "int" , $IHEIGHT , "uint" , $IPLANES , "uint" , $IBITSPERPEL , "ptr" , $PBITS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATECOMPATIBLEBITMAP ( $HDC , $IWIDTH , $IHEIGHT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateCompatibleBitmap" , "handle" , $HDC , "int" , $IWIDTH , "int" , $IHEIGHT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATECOMPATIBLEDC ( $HDC ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateCompatibleDC" , "handle" , $HDC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEEVENT ( $PATTRIBUTES = 0 , $FMANUALRESET = TRUE , $FINITIALSTATE = TRUE , $SNAME = "" ) 
+LOCAL $SNAMETYPE = "wstr" 
+IF $SNAME = "" THEN 
+$SNAME = 0 
+$SNAMETYPE = "ptr" 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "CreateEventW" , "ptr" , $PATTRIBUTES , "bool" , $FMANUALRESET , "bool" , $FINITIALSTATE , $SNAMETYPE , $SNAME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEFILE ( $SFILENAME , $ICREATION , $IACCESS = 4 , $ISHARE = 0 , $IATTRIBUTES = 0 , $PSECURITY = 0 ) 
+LOCAL $IDA = 0 , $ISM = 0 , $ICD = 0 , $IFA = 0 
+IF BITAND ( $IACCESS , 1 ) <> 0 THEN $IDA = BITOR ( $IDA , $GENERIC_EXECUTE ) 
+IF BITAND ( $IACCESS , 2 ) <> 0 THEN $IDA = BITOR ( $IDA , $GENERIC_READ ) 
+IF BITAND ( $IACCESS , 4 ) <> 0 THEN $IDA = BITOR ( $IDA , $GENERIC_WRITE ) 
+IF BITAND ( $ISHARE , 1 ) <> 0 THEN $ISM = BITOR ( $ISM , $FILE_SHARE_DELETE ) 
+IF BITAND ( $ISHARE , 2 ) <> 0 THEN $ISM = BITOR ( $ISM , $FILE_SHARE_READ ) 
+IF BITAND ( $ISHARE , 4 ) <> 0 THEN $ISM = BITOR ( $ISM , $FILE_SHARE_WRITE ) 
+SWITCH $ICREATION 
+CASE 0 
+$ICD = $CREATE_NEW 
+CASE 1 
+$ICD = $CREATE_ALWAYS 
+CASE 2 
+$ICD = $OPEN_EXISTING 
+CASE 3 
+$ICD = $OPEN_ALWAYS 
+CASE 4 
+$ICD = $TRUNCATE_EXISTING 
+ENDSWITCH 
+IF BITAND ( $IATTRIBUTES , 1 ) <> 0 THEN $IFA = BITOR ( $IFA , $FILE_ATTRIBUTE_ARCHIVE ) 
+IF BITAND ( $IATTRIBUTES , 2 ) <> 0 THEN $IFA = BITOR ( $IFA , $FILE_ATTRIBUTE_HIDDEN ) 
+IF BITAND ( $IATTRIBUTES , 4 ) <> 0 THEN $IFA = BITOR ( $IFA , $FILE_ATTRIBUTE_READONLY ) 
+IF BITAND ( $IATTRIBUTES , 8 ) <> 0 THEN $IFA = BITOR ( $IFA , $FILE_ATTRIBUTE_SYSTEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "CreateFileW" , "wstr" , $SFILENAME , "dword" , $IDA , "dword" , $ISM , "ptr" , $PSECURITY , "dword" , $ICD , "dword" , $IFA , "ptr" , 0 ) 
+IF @ERROR OR $ARESULT [ 0 ] = PTR ( - 1 ) THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEFONT ( $NHEIGHT , $NWIDTH , $NESCAPE = 0 , $NORIENTN = 0 , $FNWEIGHT = $__WINAPICONSTANT_FW_NORMAL , $BITALIC = FALSE , $BUNDERLINE = FALSE , $BSTRIKEOUT = FALSE , $NCHARSET = $__WINAPICONSTANT_DEFAULT_CHARSET , $NOUTPUTPREC = $__WINAPICONSTANT_OUT_DEFAULT_PRECIS , $NCLIPPREC = $__WINAPICONSTANT_CLIP_DEFAULT_PRECIS , $NQUALITY = $__WINAPICONSTANT_DEFAULT_QUALITY , $NPITCH = 0 , $SZFACE = "Arial" ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateFontW" , "int" , $NHEIGHT , "int" , $NWIDTH , "int" , $NESCAPE , "int" , $NORIENTN , "int" , $FNWEIGHT , "dword" , $BITALIC , "dword" , $BUNDERLINE , "dword" , $BSTRIKEOUT , "dword" , $NCHARSET , "dword" , $NOUTPUTPREC , "dword" , $NCLIPPREC , "dword" , $NQUALITY , "dword" , $NPITCH , "wstr" , $SZFACE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEFONTINDIRECT ( $TLOGFONT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateFontIndirectW" , "struct*" , $TLOGFONT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEPEN ( $IPENSTYLE , $IWIDTH , $NCOLOR ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreatePen" , "int" , $IPENSTYLE , "int" , $IWIDTH , "dword" , $NCOLOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEPROCESS ( $SAPPNAME , $SCOMMAND , $PSECURITY , $PTHREAD , $FINHERIT , $IFLAGS , $PENVIRON , $SDIR , $PSTARTUPINFO , $PPROCESS ) 
+LOCAL $TCOMMAND = 0 
+LOCAL $SAPPNAMETYPE = "wstr" , $SDIRTYPE = "wstr" 
+IF $SAPPNAME = "" THEN 
+$SAPPNAMETYPE = "ptr" 
+$SAPPNAME = 0 
+ENDIF 
+IF $SCOMMAND <> "" THEN 
+$TCOMMAND = DLLSTRUCTCREATE ( "wchar Text[" & 260 + 1 & "]" ) 
+DLLSTRUCTSETDATA ( $TCOMMAND , "Text" , $SCOMMAND ) 
+ENDIF 
+IF $SDIR = "" THEN 
+$SDIRTYPE = "ptr" 
+$SDIR = 0 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "CreateProcessW" , $SAPPNAMETYPE , $SAPPNAME , "struct*" , $TCOMMAND , "ptr" , $PSECURITY , "ptr" , $PTHREAD , "bool" , $FINHERIT , "dword" , $IFLAGS , "ptr" , $PENVIRON , $SDIRTYPE , $SDIR , "ptr" , $PSTARTUPINFO , "ptr" , $PPROCESS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATERECTRGN ( $ILEFTRECT , $ITOPRECT , $IRIGHTRECT , $IBOTTOMRECT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateRectRgn" , "int" , $ILEFTRECT , "int" , $ITOPRECT , "int" , $IRIGHTRECT , "int" , $IBOTTOMRECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEROUNDRECTRGN ( $ILEFTRECT , $ITOPRECT , $IRIGHTRECT , $IBOTTOMRECT , $IWIDTHELLIPSE , $IHEIGHTELLIPSE ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateRoundRectRgn" , "int" , $ILEFTRECT , "int" , $ITOPRECT , "int" , $IRIGHTRECT , "int" , $IBOTTOMRECT , "int" , $IWIDTHELLIPSE , "int" , $IHEIGHTELLIPSE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATESOLIDBITMAP ( $HWND , $ICOLOR , $IWIDTH , $IHEIGHT , $BRGB = 1 ) 
+LOCAL $HDC = _WINAPI_GETDC ( $HWND ) 
+LOCAL $HDESTDC = _WINAPI_CREATECOMPATIBLEDC ( $HDC ) 
+LOCAL $HBITMAP = _WINAPI_CREATECOMPATIBLEBITMAP ( $HDC , $IWIDTH , $IHEIGHT ) 
+LOCAL $HOLD = _WINAPI_SELECTOBJECT ( $HDESTDC , $HBITMAP ) 
+LOCAL $TRECT = DLLSTRUCTCREATE ( $TAGRECT ) 
+DLLSTRUCTSETDATA ( $TRECT , 1 , 0 ) 
+DLLSTRUCTSETDATA ( $TRECT , 2 , 0 ) 
+DLLSTRUCTSETDATA ( $TRECT , 3 , $IWIDTH ) 
+DLLSTRUCTSETDATA ( $TRECT , 4 , $IHEIGHT ) 
+IF $BRGB THEN 
+$ICOLOR = BITOR ( BITAND ( $ICOLOR , 65280 ) , BITSHIFT ( BITAND ( $ICOLOR , 255 ) , - 16 ) , BITSHIFT ( BITAND ( $ICOLOR , 16711680 ) , 16 ) ) 
+ENDIF 
+LOCAL $HBRUSH = _WINAPI_CREATESOLIDBRUSH ( $ICOLOR ) 
+_WINAPI_FILLRECT ( $HDESTDC , $TRECT , $HBRUSH ) 
+IF @ERROR THEN 
+_WINAPI_DELETEOBJECT ( $HBITMAP ) 
+$HBITMAP = 0 
+ENDIF 
+_WINAPI_DELETEOBJECT ( $HBRUSH ) 
+_WINAPI_RELEASEDC ( $HWND , $HDC ) 
+_WINAPI_SELECTOBJECT ( $HDESTDC , $HOLD ) 
+_WINAPI_DELETEDC ( $HDESTDC ) 
+IF NOT $HBITMAP THEN RETURN SETERROR ( 1 , 0 , 0 ) 
+RETURN $HBITMAP 
+ENDFUNC 
+FUNC _WINAPI_CREATESOLIDBRUSH ( $NCOLOR ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "CreateSolidBrush" , "dword" , $NCOLOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_CREATEWINDOWEX ( $IEXSTYLE , $SCLASS , $SNAME , $ISTYLE , $IX , $IY , $IWIDTH , $IHEIGHT , $HPARENT , $HMENU = 0 , $HINSTANCE = 0 , $PPARAM = 0 ) 
+IF $HINSTANCE = 0 THEN $HINSTANCE = _WINAPI_GETMODULEHANDLE ( "" ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "CreateWindowExW" , "dword" , $IEXSTYLE , "wstr" , $SCLASS , "wstr" , $SNAME , "dword" , $ISTYLE , "int" , $IX , "int" , $IY , "int" , $IWIDTH , "int" , $IHEIGHT , "hwnd" , $HPARENT , "handle" , $HMENU , "handle" , $HINSTANCE , "ptr" , $PPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DEFWINDOWPROC ( $HWND , $IMSG , $IWPARAM , $ILPARAM ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "lresult" , "DefWindowProc" , "hwnd" , $HWND , "uint" , $IMSG , "wparam" , $IWPARAM , "lparam" , $ILPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DELETEDC ( $HDC ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "bool" , "DeleteDC" , "handle" , $HDC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DELETEOBJECT ( $HOBJECT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "bool" , "DeleteObject" , "handle" , $HOBJECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DESTROYICON ( $HICON ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DestroyIcon" , "handle" , $HICON ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DESTROYWINDOW ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DestroyWindow" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DRAWEDGE ( $HDC , $PTRRECT , $NEDGETYPE , $GRFFLAGS ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DrawEdge" , "handle" , $HDC , "ptr" , $PTRRECT , "uint" , $NEDGETYPE , "uint" , $GRFFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DRAWFRAMECONTROL ( $HDC , $PTRRECT , $NTYPE , $NSTATE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DrawFrameControl" , "handle" , $HDC , "ptr" , $PTRRECT , "uint" , $NTYPE , "uint" , $NSTATE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DRAWICON ( $HDC , $IX , $IY , $HICON ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DrawIcon" , "handle" , $HDC , "int" , $IX , "int" , $IY , "handle" , $HICON ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DRAWICONEX ( $HDC , $IX , $IY , $HICON , $IWIDTH = 0 , $IHEIGHT = 0 , $ISTEP = 0 , $HBRUSH = 0 , $IFLAGS = 3 ) 
+LOCAL $IOPTIONS 
+SWITCH $IFLAGS 
+CASE 1 
+$IOPTIONS = $__WINAPICONSTANT_DI_MASK 
+CASE 2 
+$IOPTIONS = $__WINAPICONSTANT_DI_IMAGE 
+CASE 3 
+$IOPTIONS = $__WINAPICONSTANT_DI_NORMAL 
+CASE 4 
+$IOPTIONS = $__WINAPICONSTANT_DI_COMPAT 
+CASE 5 
+$IOPTIONS = $__WINAPICONSTANT_DI_DEFAULTSIZE 
+CASE ELSE 
+$IOPTIONS = $__WINAPICONSTANT_DI_NOMIRROR 
+ENDSWITCH 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "DrawIconEx" , "handle" , $HDC , "int" , $IX , "int" , $IY , "handle" , $HICON , "int" , $IWIDTH , "int" , $IHEIGHT , "uint" , $ISTEP , "handle" , $HBRUSH , "uint" , $IOPTIONS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DRAWLINE ( $HDC , $IX1 , $IY1 , $IX2 , $IY2 ) 
+_WINAPI_MOVETO ( $HDC , $IX1 , $IY1 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+_WINAPI_LINETO ( $HDC , $IX2 , $IY2 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN TRUE 
+ENDFUNC 
+FUNC _WINAPI_DRAWTEXT ( $HDC , $STEXT , BYREF $TRECT , $IFLAGS ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "DrawTextW" , "handle" , $HDC , "wstr" , $STEXT , "int" , - 1 , "struct*" , $TRECT , "uint" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_DUPLICATEHANDLE ( $HSOURCEPROCESSHANDLE , $HSOURCEHANDLE , $HTARGETPROCESSHANDLE , $IDESIREDACCESS , $FINHERITHANDLE , $IOPTIONS ) 
+LOCAL $ACALL = DLLCALL ( "kernel32.dll" , "bool" , "DuplicateHandle" , "handle" , $HSOURCEPROCESSHANDLE , "handle" , $HSOURCEHANDLE , "handle" , $HTARGETPROCESSHANDLE , "handle*" , 0 , "dword" , $IDESIREDACCESS , "bool" , $FINHERITHANDLE , "dword" , $IOPTIONS ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 4 ] 
+ENDFUNC 
+FUNC _WINAPI_ENABLEWINDOW ( $HWND , $FENABLE = TRUE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "EnableWindow" , "hwnd" , $HWND , "bool" , $FENABLE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_ENUMDISPLAYDEVICES ( $SDEVICE , $IDEVNUM ) 
+LOCAL $TNAME = 0 , $IFLAGS = 0 , $ADEVICE [ 5 ] 
+IF $SDEVICE <> "" THEN 
+$TNAME = DLLSTRUCTCREATE ( "wchar Text[" & STRINGLEN ( $SDEVICE ) + 1 & "]" ) 
+DLLSTRUCTSETDATA ( $TNAME , "Text" , $SDEVICE ) 
+ENDIF 
+LOCAL $TDEVICE = DLLSTRUCTCREATE ( $TAGDISPLAY_DEVICE ) 
+LOCAL $IDEVICE = DLLSTRUCTGETSIZE ( $TDEVICE ) 
+DLLSTRUCTSETDATA ( $TDEVICE , "Size" , $IDEVICE ) 
+DLLCALL ( "user32.dll" , "bool" , "EnumDisplayDevicesW" , "struct*" , $TNAME , "dword" , $IDEVNUM , "struct*" , $TDEVICE , "dword" , 1 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $IN = DLLSTRUCTGETDATA ( $TDEVICE , "Flags" ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_ATTACHED_TO_DESKTOP ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 1 ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_PRIMARY_DEVICE ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 2 ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_MIRRORING_DRIVER ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 4 ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_VGA_COMPATIBLE ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 8 ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_REMOVABLE ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 16 ) 
+IF BITAND ( $IN , $__WINAPICONSTANT_DISPLAY_DEVICE_MODESPRUNED ) <> 0 THEN $IFLAGS = BITOR ( $IFLAGS , 32 ) 
+$ADEVICE [ 0 ] = TRUE 
+$ADEVICE [ 1 ] = DLLSTRUCTGETDATA ( $TDEVICE , "Name" ) 
+$ADEVICE [ 2 ] = DLLSTRUCTGETDATA ( $TDEVICE , "String" ) 
+$ADEVICE [ 3 ] = $IFLAGS 
+$ADEVICE [ 4 ] = DLLSTRUCTGETDATA ( $TDEVICE , "ID" ) 
+RETURN $ADEVICE 
+ENDFUNC 
+FUNC _WINAPI_ENUMWINDOWS ( $FVISIBLE = TRUE , $HWND = DEFAULT ) 
+__WINAPI_ENUMWINDOWSINIT ( ) 
+IF $HWND = DEFAULT THEN $HWND = _WINAPI_GETDESKTOPWINDOW ( ) 
+__WINAPI_ENUMWINDOWSCHILD ( $HWND , $FVISIBLE ) 
+RETURN $__GAWINLIST_WINAPI 
+ENDFUNC 
+FUNC __WINAPI_ENUMWINDOWSADD ( $HWND , $SCLASS = "" ) 
+IF $SCLASS = "" THEN $SCLASS = _WINAPI_GETCLASSNAME ( $HWND ) 
+$__GAWINLIST_WINAPI [ 0 ] [ 0 ] += 1 
+LOCAL $ICOUNT = $__GAWINLIST_WINAPI [ 0 ] [ 0 ] 
+IF $ICOUNT >= $__GAWINLIST_WINAPI [ 0 ] [ 1 ] THEN 
+REDIM $__GAWINLIST_WINAPI [ $ICOUNT + 64 ] [ 2 ] 
+$__GAWINLIST_WINAPI [ 0 ] [ 1 ] += 64 
+ENDIF 
+$__GAWINLIST_WINAPI [ $ICOUNT ] [ 0 ] = $HWND 
+$__GAWINLIST_WINAPI [ $ICOUNT ] [ 1 ] = $SCLASS 
+ENDFUNC 
+FUNC __WINAPI_ENUMWINDOWSCHILD ( $HWND , $FVISIBLE = TRUE ) 
+$HWND = _WINAPI_GETWINDOW ( $HWND , $__WINAPICONSTANT_GW_CHILD ) 
+WHILE $HWND <> 0 
+IF ( NOT $FVISIBLE ) OR _WINAPI_ISWINDOWVISIBLE ( $HWND ) THEN 
+__WINAPI_ENUMWINDOWSCHILD ( $HWND , $FVISIBLE ) 
+__WINAPI_ENUMWINDOWSADD ( $HWND ) 
+ENDIF 
+$HWND = _WINAPI_GETWINDOW ( $HWND , $__WINAPICONSTANT_GW_HWNDNEXT ) 
+WEND 
+ENDFUNC 
+FUNC __WINAPI_ENUMWINDOWSINIT ( ) 
+REDIM $__GAWINLIST_WINAPI [ 64 ] [ 2 ] 
+$__GAWINLIST_WINAPI [ 0 ] [ 0 ] = 0 
+$__GAWINLIST_WINAPI [ 0 ] [ 1 ] = 64 
+ENDFUNC 
+FUNC _WINAPI_ENUMWINDOWSPOPUP ( ) 
+__WINAPI_ENUMWINDOWSINIT ( ) 
+LOCAL $HWND = _WINAPI_GETWINDOW ( _WINAPI_GETDESKTOPWINDOW ( ) , $__WINAPICONSTANT_GW_CHILD ) 
+LOCAL $SCLASS 
+WHILE $HWND <> 0 
+IF _WINAPI_ISWINDOWVISIBLE ( $HWND ) THEN 
+$SCLASS = _WINAPI_GETCLASSNAME ( $HWND ) 
+IF $SCLASS = "#32768" THEN 
+__WINAPI_ENUMWINDOWSADD ( $HWND ) 
+ELSEIF $SCLASS = "ToolbarWindow32" THEN 
+__WINAPI_ENUMWINDOWSADD ( $HWND ) 
+ELSEIF $SCLASS = "ToolTips_Class32" THEN 
+__WINAPI_ENUMWINDOWSADD ( $HWND ) 
+ELSEIF $SCLASS = "BaseBar" THEN 
+__WINAPI_ENUMWINDOWSCHILD ( $HWND ) 
+ENDIF 
+ENDIF 
+$HWND = _WINAPI_GETWINDOW ( $HWND , $__WINAPICONSTANT_GW_HWNDNEXT ) 
+WEND 
+RETURN $__GAWINLIST_WINAPI 
+ENDFUNC 
+FUNC _WINAPI_ENUMWINDOWSTOP ( ) 
+__WINAPI_ENUMWINDOWSINIT ( ) 
+LOCAL $HWND = _WINAPI_GETWINDOW ( _WINAPI_GETDESKTOPWINDOW ( ) , $__WINAPICONSTANT_GW_CHILD ) 
+WHILE $HWND <> 0 
+IF _WINAPI_ISWINDOWVISIBLE ( $HWND ) THEN __WINAPI_ENUMWINDOWSADD ( $HWND ) 
+$HWND = _WINAPI_GETWINDOW ( $HWND , $__WINAPICONSTANT_GW_HWNDNEXT ) 
+WEND 
+RETURN $__GAWINLIST_WINAPI 
+ENDFUNC 
+FUNC _WINAPI_EXPANDENVIRONMENTSTRINGS ( $SSTRING ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "ExpandEnvironmentStringsW" , "wstr" , $SSTRING , "wstr" , "" , "dword" , 4096 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+RETURN $ARESULT [ 2 ] 
+ENDFUNC 
+FUNC _WINAPI_EXTRACTICONEX ( $SFILE , $IINDEX , $PLARGE , $PSMALL , $IICONS ) 
+LOCAL $ARESULT = DLLCALL ( "shell32.dll" , "uint" , "ExtractIconExW" , "wstr" , $SFILE , "int" , $IINDEX , "struct*" , $PLARGE , "struct*" , $PSMALL , "uint" , $IICONS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FATALAPPEXIT ( $SMESSAGE ) 
+DLLCALL ( "kernel32.dll" , "none" , "FatalAppExitW" , "uint" , 0 , "wstr" , $SMESSAGE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED ) 
+ENDFUNC 
+FUNC _WINAPI_FILLRECT ( $HDC , $PTRRECT , $HBRUSH ) 
+LOCAL $ARESULT 
+IF ISPTR ( $HBRUSH ) THEN 
+$ARESULT = DLLCALL ( "user32.dll" , "int" , "FillRect" , "handle" , $HDC , "struct*" , $PTRRECT , "handle" , $HBRUSH ) 
+ELSE 
+$ARESULT = DLLCALL ( "user32.dll" , "int" , "FillRect" , "handle" , $HDC , "struct*" , $PTRRECT , "dword_ptr" , $HBRUSH ) 
+ENDIF 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FINDEXECUTABLE ( $SFILENAME , $SDIRECTORY = "" ) 
+LOCAL $ARESULT = DLLCALL ( "shell32.dll" , "INT" , "FindExecutableW" , "wstr" , $SFILENAME , "wstr" , $SDIRECTORY , "wstr" , "" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ARESULT [ 3 ] ) 
+ENDFUNC 
+FUNC _WINAPI_FINDWINDOW ( $SCLASSNAME , $SWINDOWNAME ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "FindWindowW" , "wstr" , $SCLASSNAME , "wstr" , $SWINDOWNAME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FLASHWINDOW ( $HWND , $FINVERT = TRUE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "FlashWindow" , "hwnd" , $HWND , "bool" , $FINVERT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FLASHWINDOWEX ( $HWND , $IFLAGS = 3 , $ICOUNT = 3 , $ITIMEOUT = 0 ) 
+LOCAL $TFLASH = DLLSTRUCTCREATE ( $TAGFLASHWINFO ) 
+LOCAL $IFLASH = DLLSTRUCTGETSIZE ( $TFLASH ) 
+LOCAL $IMODE = 0 
+IF BITAND ( $IFLAGS , 1 ) <> 0 THEN $IMODE = BITOR ( $IMODE , $__WINAPICONSTANT_FLASHW_CAPTION ) 
+IF BITAND ( $IFLAGS , 2 ) <> 0 THEN $IMODE = BITOR ( $IMODE , $__WINAPICONSTANT_FLASHW_TRAY ) 
+IF BITAND ( $IFLAGS , 4 ) <> 0 THEN $IMODE = BITOR ( $IMODE , $__WINAPICONSTANT_FLASHW_TIMER ) 
+IF BITAND ( $IFLAGS , 8 ) <> 0 THEN $IMODE = BITOR ( $IMODE , $__WINAPICONSTANT_FLASHW_TIMERNOFG ) 
+DLLSTRUCTSETDATA ( $TFLASH , "Size" , $IFLASH ) 
+DLLSTRUCTSETDATA ( $TFLASH , "hWnd" , $HWND ) 
+DLLSTRUCTSETDATA ( $TFLASH , "Flags" , $IMODE ) 
+DLLSTRUCTSETDATA ( $TFLASH , "Count" , $ICOUNT ) 
+DLLSTRUCTSETDATA ( $TFLASH , "Timeout" , $ITIMEOUT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "FlashWindowEx" , "struct*" , $TFLASH ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FLOATTOINT ( $NFLOAT ) 
+LOCAL $TFLOAT = DLLSTRUCTCREATE ( "float" ) 
+LOCAL $TINT = DLLSTRUCTCREATE ( "int" , DLLSTRUCTGETPTR ( $TFLOAT ) ) 
+DLLSTRUCTSETDATA ( $TFLOAT , 1 , $NFLOAT ) 
+RETURN DLLSTRUCTGETDATA ( $TINT , 1 ) 
+ENDFUNC 
+FUNC _WINAPI_FLUSHFILEBUFFERS ( $HFILE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "FlushFileBuffers" , "handle" , $HFILE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FORMATMESSAGE ( $IFLAGS , $PSOURCE , $IMESSAGEID , $ILANGUAGEID , BYREF $PBUFFER , $ISIZE , $VARGUMENTS ) 
+LOCAL $SBUFFERTYPE = "struct*" 
+IF ISSTRING ( $PBUFFER ) THEN $SBUFFERTYPE = "wstr" 
+LOCAL $ARESULT = DLLCALL ( "Kernel32.dll" , "dword" , "FormatMessageW" , "dword" , $IFLAGS , "ptr" , $PSOURCE , "dword" , $IMESSAGEID , "dword" , $ILANGUAGEID , $SBUFFERTYPE , $PBUFFER , "dword" , $ISIZE , "ptr" , $VARGUMENTS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF $SBUFFERTYPE = "wstr" THEN $PBUFFER = $ARESULT [ 5 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FRAMERECT ( $HDC , $PTRRECT , $HBRUSH ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "FrameRect" , "handle" , $HDC , "ptr" , $PTRRECT , "handle" , $HBRUSH ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_FREELIBRARY ( $HMODULE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "FreeLibrary" , "handle" , $HMODULE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETANCESTOR ( $HWND , $IFLAGS = 1 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetAncestor" , "hwnd" , $HWND , "uint" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETASYNCKEYSTATE ( $IKEY ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "short" , "GetAsyncKeyState" , "int" , $IKEY ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETBKMODE ( $HDC ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "GetBkMode" , "handle" , $HDC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETCLASSNAME ( $HWND ) 
+IF NOT ISHWND ( $HWND ) THEN $HWND = GUICTRLGETHANDLE ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "GetClassNameW" , "hwnd" , $HWND , "wstr" , "" , "int" , 4096 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ARESULT [ 2 ] ) 
+ENDFUNC 
+FUNC _WINAPI_GETCLIENTHEIGHT ( $HWND ) 
+LOCAL $TRECT = _WINAPI_GETCLIENTRECT ( $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TRECT , "Bottom" ) - DLLSTRUCTGETDATA ( $TRECT , "Top" ) 
+ENDFUNC 
+FUNC _WINAPI_GETCLIENTWIDTH ( $HWND ) 
+LOCAL $TRECT = _WINAPI_GETCLIENTRECT ( $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TRECT , "Right" ) - DLLSTRUCTGETDATA ( $TRECT , "Left" ) 
+ENDFUNC 
+FUNC _WINAPI_GETCLIENTRECT ( $HWND ) 
+LOCAL $TRECT = DLLSTRUCTCREATE ( $TAGRECT ) 
+DLLCALL ( "user32.dll" , "bool" , "GetClientRect" , "hwnd" , $HWND , "struct*" , $TRECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TRECT 
+ENDFUNC 
+FUNC _WINAPI_GETCURRENTPROCESS ( ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "GetCurrentProcess" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETCURRENTPROCESSID ( ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "GetCurrentProcessId" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETCURRENTTHREAD ( ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "GetCurrentThread" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETCURRENTTHREADID ( ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "GetCurrentThreadId" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETCURSORINFO ( ) 
+LOCAL $TCURSOR = DLLSTRUCTCREATE ( $TAGCURSORINFO ) 
+LOCAL $ICURSOR = DLLSTRUCTGETSIZE ( $TCURSOR ) 
+DLLSTRUCTSETDATA ( $TCURSOR , "Size" , $ICURSOR ) 
+DLLCALL ( "user32.dll" , "bool" , "GetCursorInfo" , "struct*" , $TCURSOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $ACURSOR [ 5 ] 
+$ACURSOR [ 0 ] = TRUE 
+$ACURSOR [ 1 ] = DLLSTRUCTGETDATA ( $TCURSOR , "Flags" ) <> 0 
+$ACURSOR [ 2 ] = DLLSTRUCTGETDATA ( $TCURSOR , "hCursor" ) 
+$ACURSOR [ 3 ] = DLLSTRUCTGETDATA ( $TCURSOR , "X" ) 
+$ACURSOR [ 4 ] = DLLSTRUCTGETDATA ( $TCURSOR , "Y" ) 
+RETURN $ACURSOR 
+ENDFUNC 
+FUNC _WINAPI_GETDC ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "GetDC" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETDESKTOPWINDOW ( ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetDesktopWindow" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETDEVICECAPS ( $HDC , $IINDEX ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "GetDeviceCaps" , "handle" , $HDC , "int" , $IINDEX ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETDIBITS ( $HDC , $HBMP , $ISTARTSCAN , $ISCANLINES , $PBITS , $PBI , $IUSAGE ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "GetDIBits" , "handle" , $HDC , "handle" , $HBMP , "uint" , $ISTARTSCAN , "uint" , $ISCANLINES , "ptr" , $PBITS , "ptr" , $PBI , "uint" , $IUSAGE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETDLGCTRLID ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "GetDlgCtrlID" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETDLGITEM ( $HWND , $IITEMID ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetDlgItem" , "hwnd" , $HWND , "int" , $IITEMID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETFOCUS ( ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetFocus" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETFOREGROUNDWINDOW ( ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetForegroundWindow" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETGUIRESOURCES ( $IFLAG = 0 , $HPROCESS = - 1 ) 
+IF $HPROCESS = - 1 THEN $HPROCESS = _WINAPI_GETCURRENTPROCESS ( ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "dword" , "GetGuiResources" , "handle" , $HPROCESS , "dword" , $IFLAG ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETICONINFO ( $HICON ) 
+LOCAL $TINFO = DLLSTRUCTCREATE ( $TAGICONINFO ) 
+DLLCALL ( "user32.dll" , "bool" , "GetIconInfo" , "handle" , $HICON , "struct*" , $TINFO ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $AICON [ 6 ] 
+$AICON [ 0 ] = TRUE 
+$AICON [ 1 ] = DLLSTRUCTGETDATA ( $TINFO , "Icon" ) <> 0 
+$AICON [ 2 ] = DLLSTRUCTGETDATA ( $TINFO , "XHotSpot" ) 
+$AICON [ 3 ] = DLLSTRUCTGETDATA ( $TINFO , "YHotSpot" ) 
+$AICON [ 4 ] = DLLSTRUCTGETDATA ( $TINFO , "hMask" ) 
+$AICON [ 5 ] = DLLSTRUCTGETDATA ( $TINFO , "hColor" ) 
+RETURN $AICON 
+ENDFUNC 
+FUNC _WINAPI_GETFILESIZEEX ( $HFILE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GetFileSizeEx" , "handle" , $HFILE , "int64*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 2 ] 
+ENDFUNC 
+FUNC _WINAPI_GETLASTERRORMESSAGE ( ) 
+LOCAL $TBUFFERPTR = DLLSTRUCTCREATE ( "ptr" ) 
+LOCAL $NCOUNT = _WINAPI_FORMATMESSAGE ( BITOR ( $__WINAPICONSTANT_FORMAT_MESSAGE_ALLOCATE_BUFFER , $__WINAPICONSTANT_FORMAT_MESSAGE_FROM_SYSTEM ) , 0 , _WINAPI_GETLASTERROR ( ) , 0 , $TBUFFERPTR , 0 , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , 0 , "" ) 
+LOCAL $STEXT = "" 
+LOCAL $PBUFFER = DLLSTRUCTGETDATA ( $TBUFFERPTR , 1 ) 
+IF $PBUFFER THEN 
+IF $NCOUNT > 0 THEN 
+LOCAL $TBUFFER = DLLSTRUCTCREATE ( "wchar[" & ( $NCOUNT + 1 ) & "]" , $PBUFFER ) 
+$STEXT = DLLSTRUCTGETDATA ( $TBUFFER , 1 ) 
+ENDIF 
+_WINAPI_LOCALFREE ( $PBUFFER ) 
+ENDIF 
+RETURN $STEXT 
+ENDFUNC 
+FUNC _WINAPI_GETLAYEREDWINDOWATTRIBUTES ( $HWND , BYREF $I_TRANSCOLOR , BYREF $TRANSPARENCY , $ASCOLORREF = FALSE ) 
+$I_TRANSCOLOR = - 1 
+$TRANSPARENCY = - 1 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "GetLayeredWindowAttributes" , "hwnd" , $HWND , "dword*" , $I_TRANSCOLOR , "byte*" , $TRANSPARENCY , "dword*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF NOT $ASCOLORREF THEN 
+$ARESULT [ 2 ] = INT ( BINARYMID ( $ARESULT [ 2 ] , 3 , 1 ) & BINARYMID ( $ARESULT [ 2 ] , 2 , 1 ) & BINARYMID ( $ARESULT [ 2 ] , 1 , 1 ) ) 
+ENDIF 
+$I_TRANSCOLOR = $ARESULT [ 2 ] 
+$TRANSPARENCY = $ARESULT [ 3 ] 
+RETURN $ARESULT [ 4 ] 
+ENDFUNC 
+FUNC _WINAPI_GETMODULEHANDLE ( $SMODULENAME ) 
+LOCAL $SMODULENAMETYPE = "wstr" 
+IF $SMODULENAME = "" THEN 
+$SMODULENAME = 0 
+$SMODULENAMETYPE = "ptr" 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "GetModuleHandleW" , $SMODULENAMETYPE , $SMODULENAME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETMOUSEPOS ( $FTOCLIENT = FALSE , $HWND = 0 ) 
+LOCAL $IMODE = OPT ( "MouseCoordMode" , 1 ) 
+LOCAL $APOS = MOUSEGETPOS ( ) 
+OPT ( "MouseCoordMode" , $IMODE ) 
+LOCAL $TPOINT = DLLSTRUCTCREATE ( $TAGPOINT ) 
+DLLSTRUCTSETDATA ( $TPOINT , "X" , $APOS [ 0 ] ) 
+DLLSTRUCTSETDATA ( $TPOINT , "Y" , $APOS [ 1 ] ) 
+IF $FTOCLIENT THEN 
+_WINAPI_SCREENTOCLIENT ( $HWND , $TPOINT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+ENDIF 
+RETURN $TPOINT 
+ENDFUNC 
+FUNC _WINAPI_GETMOUSEPOSX ( $FTOCLIENT = FALSE , $HWND = 0 ) 
+LOCAL $TPOINT = _WINAPI_GETMOUSEPOS ( $FTOCLIENT , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TPOINT , "X" ) 
+ENDFUNC 
+FUNC _WINAPI_GETMOUSEPOSY ( $FTOCLIENT = FALSE , $HWND = 0 ) 
+LOCAL $TPOINT = _WINAPI_GETMOUSEPOS ( $FTOCLIENT , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TPOINT , "Y" ) 
+ENDFUNC 
+FUNC _WINAPI_GETOBJECT ( $HOBJECT , $ISIZE , $POBJECT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "GetObjectW" , "handle" , $HOBJECT , "int" , $ISIZE , "ptr" , $POBJECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETOPENFILENAME ( $STITLE = "" , $SFILTER = "All files (*.*)" , $SINITALDIR = "." , $SDEFAULTFILE = "" , $SDEFAULTEXT = "" , $IFILTERINDEX = 1 , $IFLAGS = 0 , $IFLAGSEX = 0 , $HWNDOWNER = 0 ) 
+LOCAL $IPATHLEN = 4096 
+LOCAL $INULLS = 0 
+LOCAL $TOFN = DLLSTRUCTCREATE ( $TAGOPENFILENAME ) 
+LOCAL $AFILES [ 1 ] = [ 0 ] 
+LOCAL $IFLAG = $IFLAGS 
+LOCAL $ASFLINES = STRINGSPLIT ( $SFILTER , "|" ) 
+LOCAL $ASFILTER [ $ASFLINES [ 0 ] * 2 + 1 ] 
+LOCAL $ISTART , $IFINAL , $STFILTER 
+$ASFILTER [ 0 ] = $ASFLINES [ 0 ] * 2 
+FOR $I = 1 TO $ASFLINES [ 0 ] 
+$ISTART = STRINGINSTR ( $ASFLINES [ $I ] , "(" , 0 , 1 ) 
+$IFINAL = STRINGINSTR ( $ASFLINES [ $I ] , ")" , 0 , - 1 ) 
+$ASFILTER [ $I * 2 - 1 ] = STRINGSTRIPWS ( STRINGLEFT ( $ASFLINES [ $I ] , $ISTART - 1 ) , 3 ) 
+$ASFILTER [ $I * 2 ] = STRINGSTRIPWS ( STRINGTRIMRIGHT ( STRINGTRIMLEFT ( $ASFLINES [ $I ] , $ISTART ) , STRINGLEN ( $ASFLINES [ $I ] ) - $IFINAL + 1 ) , 3 ) 
+$STFILTER &= "wchar[" & STRINGLEN ( $ASFILTER [ $I * 2 - 1 ] ) + 1 & "];wchar[" & STRINGLEN ( $ASFILTER [ $I * 2 ] ) + 1 & "];" 
+NEXT 
+LOCAL $TTITLE = DLLSTRUCTCREATE ( "wchar Title[" & STRINGLEN ( $STITLE ) + 1 & "]" ) 
+LOCAL $TINITIALDIR = DLLSTRUCTCREATE ( "wchar InitDir[" & STRINGLEN ( $SINITALDIR ) + 1 & "]" ) 
+LOCAL $TFILTER = DLLSTRUCTCREATE ( $STFILTER & "wchar" ) 
+LOCAL $TPATH = DLLSTRUCTCREATE ( "wchar Path[" & $IPATHLEN & "]" ) 
+LOCAL $TEXTN = DLLSTRUCTCREATE ( "wchar Extension[" & STRINGLEN ( $SDEFAULTEXT ) + 1 & "]" ) 
+FOR $I = 1 TO $ASFILTER [ 0 ] 
+DLLSTRUCTSETDATA ( $TFILTER , $I , $ASFILTER [ $I ] ) 
+NEXT 
+DLLSTRUCTSETDATA ( $TTITLE , "Title" , $STITLE ) 
+DLLSTRUCTSETDATA ( $TINITIALDIR , "InitDir" , $SINITALDIR ) 
+DLLSTRUCTSETDATA ( $TPATH , "Path" , $SDEFAULTFILE ) 
+DLLSTRUCTSETDATA ( $TEXTN , "Extension" , $SDEFAULTEXT ) 
+DLLSTRUCTSETDATA ( $TOFN , "StructSize" , DLLSTRUCTGETSIZE ( $TOFN ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "hwndOwner" , $HWNDOWNER ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrFilter" , DLLSTRUCTGETPTR ( $TFILTER ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "nFilterIndex" , $IFILTERINDEX ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrFile" , DLLSTRUCTGETPTR ( $TPATH ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "nMaxFile" , $IPATHLEN ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrInitialDir" , DLLSTRUCTGETPTR ( $TINITIALDIR ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrTitle" , DLLSTRUCTGETPTR ( $TTITLE ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "Flags" , $IFLAG ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrDefExt" , DLLSTRUCTGETPTR ( $TEXTN ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "FlagsEx" , $IFLAGSEX ) 
+DLLCALL ( "comdlg32.dll" , "bool" , "GetOpenFileNameW" , "struct*" , $TOFN ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , $AFILES ) 
+IF BITAND ( $IFLAGS , $OFN_ALLOWMULTISELECT ) = $OFN_ALLOWMULTISELECT AND BITAND ( $IFLAGS , $OFN_EXPLORER ) = $OFN_EXPLORER THEN 
+FOR $X = 1 TO $IPATHLEN 
+IF DLLSTRUCTGETDATA ( $TPATH , "Path" , $X ) = CHR ( 0 ) THEN 
+DLLSTRUCTSETDATA ( $TPATH , "Path" , "|" , $X ) 
+$INULLS += 1 
+ELSE 
+$INULLS = 0 
+ENDIF 
+IF $INULLS = 2 THEN EXITLOOP 
+NEXT 
+DLLSTRUCTSETDATA ( $TPATH , "Path" , CHR ( 0 ) , $X - 1 ) 
+$AFILES = STRINGSPLIT ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) , "|" ) 
+IF $AFILES [ 0 ] = 1 THEN RETURN __WINAPI_PARSEFILEDIALOGPATH ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) ) 
+RETURN STRINGSPLIT ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) , "|" ) 
+ELSEIF BITAND ( $IFLAGS , $OFN_ALLOWMULTISELECT ) = $OFN_ALLOWMULTISELECT THEN 
+$AFILES = STRINGSPLIT ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) , " " ) 
+IF $AFILES [ 0 ] = 1 THEN RETURN __WINAPI_PARSEFILEDIALOGPATH ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) ) 
+RETURN STRINGSPLIT ( STRINGREPLACE ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) , " " , "|" ) , "|" ) 
+ELSE 
+RETURN __WINAPI_PARSEFILEDIALOGPATH ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) ) 
+ENDIF 
+ENDFUNC 
+FUNC _WINAPI_GETOVERLAPPEDRESULT ( $HFILE , $POVERLAPPED , BYREF $IBYTES , $FWAIT = FALSE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GetOverlappedResult" , "handle" , $HFILE , "ptr" , $POVERLAPPED , "dword*" , 0 , "bool" , $FWAIT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$IBYTES = $ARESULT [ 3 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETPARENT ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetParent" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETPROCESSAFFINITYMASK ( $HPROCESS ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GetProcessAffinityMask" , "handle" , $HPROCESS , "dword_ptr*" , 0 , "dword_ptr*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $AMASK [ 3 ] 
+$AMASK [ 0 ] = TRUE 
+$AMASK [ 1 ] = $ARESULT [ 2 ] 
+$AMASK [ 2 ] = $ARESULT [ 3 ] 
+RETURN $AMASK 
+ENDFUNC 
+FUNC _WINAPI_GETSAVEFILENAME ( $STITLE = "" , $SFILTER = "All files (*.*)" , $SINITALDIR = "." , $SDEFAULTFILE = "" , $SDEFAULTEXT = "" , $IFILTERINDEX = 1 , $IFLAGS = 0 , $IFLAGSEX = 0 , $HWNDOWNER = 0 ) 
+LOCAL $IPATHLEN = 4096 
+LOCAL $TOFN = DLLSTRUCTCREATE ( $TAGOPENFILENAME ) 
+LOCAL $AFILES [ 1 ] = [ 0 ] 
+LOCAL $IFLAG = $IFLAGS 
+LOCAL $ASFLINES = STRINGSPLIT ( $SFILTER , "|" ) 
+LOCAL $ASFILTER [ $ASFLINES [ 0 ] * 2 + 1 ] 
+LOCAL $ISTART , $IFINAL , $STFILTER 
+$ASFILTER [ 0 ] = $ASFLINES [ 0 ] * 2 
+FOR $I = 1 TO $ASFLINES [ 0 ] 
+$ISTART = STRINGINSTR ( $ASFLINES [ $I ] , "(" , 0 , 1 ) 
+$IFINAL = STRINGINSTR ( $ASFLINES [ $I ] , ")" , 0 , - 1 ) 
+$ASFILTER [ $I * 2 - 1 ] = STRINGSTRIPWS ( STRINGLEFT ( $ASFLINES [ $I ] , $ISTART - 1 ) , 3 ) 
+$ASFILTER [ $I * 2 ] = STRINGSTRIPWS ( STRINGTRIMRIGHT ( STRINGTRIMLEFT ( $ASFLINES [ $I ] , $ISTART ) , STRINGLEN ( $ASFLINES [ $I ] ) - $IFINAL + 1 ) , 3 ) 
+$STFILTER &= "wchar[" & STRINGLEN ( $ASFILTER [ $I * 2 - 1 ] ) + 1 & "];wchar[" & STRINGLEN ( $ASFILTER [ $I * 2 ] ) + 1 & "];" 
+NEXT 
+LOCAL $TTITLE = DLLSTRUCTCREATE ( "wchar Title[" & STRINGLEN ( $STITLE ) + 1 & "]" ) 
+LOCAL $TINITIALDIR = DLLSTRUCTCREATE ( "wchar InitDir[" & STRINGLEN ( $SINITALDIR ) + 1 & "]" ) 
+LOCAL $TFILTER = DLLSTRUCTCREATE ( $STFILTER & "wchar" ) 
+LOCAL $TPATH = DLLSTRUCTCREATE ( "wchar Path[" & $IPATHLEN & "]" ) 
+LOCAL $TEXTN = DLLSTRUCTCREATE ( "wchar Extension[" & STRINGLEN ( $SDEFAULTEXT ) + 1 & "]" ) 
+FOR $I = 1 TO $ASFILTER [ 0 ] 
+DLLSTRUCTSETDATA ( $TFILTER , $I , $ASFILTER [ $I ] ) 
+NEXT 
+DLLSTRUCTSETDATA ( $TTITLE , "Title" , $STITLE ) 
+DLLSTRUCTSETDATA ( $TINITIALDIR , "InitDir" , $SINITALDIR ) 
+DLLSTRUCTSETDATA ( $TPATH , "Path" , $SDEFAULTFILE ) 
+DLLSTRUCTSETDATA ( $TEXTN , "Extension" , $SDEFAULTEXT ) 
+DLLSTRUCTSETDATA ( $TOFN , "StructSize" , DLLSTRUCTGETSIZE ( $TOFN ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "hwndOwner" , $HWNDOWNER ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrFilter" , DLLSTRUCTGETPTR ( $TFILTER ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "nFilterIndex" , $IFILTERINDEX ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrFile" , DLLSTRUCTGETPTR ( $TPATH ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "nMaxFile" , $IPATHLEN ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrInitialDir" , DLLSTRUCTGETPTR ( $TINITIALDIR ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrTitle" , DLLSTRUCTGETPTR ( $TTITLE ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "Flags" , $IFLAG ) 
+DLLSTRUCTSETDATA ( $TOFN , "lpstrDefExt" , DLLSTRUCTGETPTR ( $TEXTN ) ) 
+DLLSTRUCTSETDATA ( $TOFN , "FlagsEx" , $IFLAGSEX ) 
+DLLCALL ( "comdlg32.dll" , "bool" , "GetSaveFileNameW" , "struct*" , $TOFN ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , $AFILES ) 
+RETURN __WINAPI_PARSEFILEDIALOGPATH ( DLLSTRUCTGETDATA ( $TPATH , "Path" ) ) 
+ENDFUNC 
+FUNC _WINAPI_GETSTOCKOBJECT ( $IOBJECT ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "GetStockObject" , "int" , $IOBJECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETSTDHANDLE ( $ISTDHANDLE ) 
+IF $ISTDHANDLE < 0 OR $ISTDHANDLE > 2 THEN RETURN SETERROR ( 2 , 0 , - 1 ) 
+LOCAL CONST $AHANDLE [ 3 ] = [ - 10 , - 11 , - 12 ] 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "GetStdHandle" , "dword" , $AHANDLE [ $ISTDHANDLE ] ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETSYSCOLOR ( $IINDEX ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "dword" , "GetSysColor" , "int" , $IINDEX ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETSYSCOLORBRUSH ( $IINDEX ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "GetSysColorBrush" , "int" , $IINDEX ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETSYSTEMMETRICS ( $IINDEX ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "GetSystemMetrics" , "int" , $IINDEX ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETTEXTEXTENTPOINT32 ( $HDC , $STEXT ) 
+LOCAL $TSIZE = DLLSTRUCTCREATE ( $TAGSIZE ) 
+LOCAL $ISIZE = STRINGLEN ( $STEXT ) 
+DLLCALL ( "gdi32.dll" , "bool" , "GetTextExtentPoint32W" , "handle" , $HDC , "wstr" , $STEXT , "int" , $ISIZE , "struct*" , $TSIZE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TSIZE 
+ENDFUNC 
+FUNC _WINAPI_GETTEXTMETRICS ( $HDC ) 
+LOCAL $TTEXTMETRIC = DLLSTRUCTCREATE ( $TAGTEXTMETRIC ) 
+LOCAL $RET = DLLCALL ( "gdi32.dll" , "bool" , "GetTextMetricsW" , "handle" , $HDC , "struct*" , $TTEXTMETRIC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF NOT $RET [ 0 ] THEN RETURN SETERROR ( - 1 , 0 , 0 ) 
+RETURN $TTEXTMETRIC 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOW ( $HWND , $ICMD ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "GetWindow" , "hwnd" , $HWND , "uint" , $ICMD ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWDC ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "GetWindowDC" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWHEIGHT ( $HWND ) 
+LOCAL $TRECT = _WINAPI_GETWINDOWRECT ( $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TRECT , "Bottom" ) - DLLSTRUCTGETDATA ( $TRECT , "Top" ) 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWLONG ( $HWND , $IINDEX ) 
+LOCAL $SFUNCNAME = "GetWindowLongW" 
+IF @AUTOITX64 THEN $SFUNCNAME = "GetWindowLongPtrW" 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "long_ptr" , $SFUNCNAME , "hwnd" , $HWND , "int" , $IINDEX ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWPLACEMENT ( $HWND ) 
+LOCAL $TWINDOWPLACEMENT = DLLSTRUCTCREATE ( $TAGWINDOWPLACEMENT ) 
+DLLSTRUCTSETDATA ( $TWINDOWPLACEMENT , "length" , DLLSTRUCTGETSIZE ( $TWINDOWPLACEMENT ) ) 
+DLLCALL ( "user32.dll" , "bool" , "GetWindowPlacement" , "hwnd" , $HWND , "struct*" , $TWINDOWPLACEMENT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TWINDOWPLACEMENT 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWRECT ( $HWND ) 
+LOCAL $TRECT = DLLSTRUCTCREATE ( $TAGRECT ) 
+DLLCALL ( "user32.dll" , "bool" , "GetWindowRect" , "hwnd" , $HWND , "struct*" , $TRECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TRECT 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWRGN ( $HWND , $HRGN ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "GetWindowRgn" , "hwnd" , $HWND , "handle" , $HRGN ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWTEXT ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "GetWindowTextW" , "hwnd" , $HWND , "wstr" , "" , "int" , 4096 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ARESULT [ 2 ] ) 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWTHREADPROCESSID ( $HWND , BYREF $IPID ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "dword" , "GetWindowThreadProcessId" , "hwnd" , $HWND , "dword*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+$IPID = $ARESULT [ 2 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_GETWINDOWWIDTH ( $HWND ) 
+LOCAL $TRECT = _WINAPI_GETWINDOWRECT ( $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TRECT , "Right" ) - DLLSTRUCTGETDATA ( $TRECT , "Left" ) 
+ENDFUNC 
+FUNC _WINAPI_GETXYFROMPOINT ( BYREF $TPOINT , BYREF $IX , BYREF $IY ) 
+$IX = DLLSTRUCTGETDATA ( $TPOINT , "X" ) 
+$IY = DLLSTRUCTGETDATA ( $TPOINT , "Y" ) 
+ENDFUNC 
+FUNC _WINAPI_GLOBALMEMORYSTATUS ( ) 
+LOCAL $TMEM = DLLSTRUCTCREATE ( $TAGMEMORYSTATUSEX ) 
+LOCAL $IMEM = DLLSTRUCTGETSIZE ( $TMEM ) 
+DLLSTRUCTSETDATA ( $TMEM , 1 , $IMEM ) 
+DLLCALL ( "kernel32.dll" , "none" , "GlobalMemoryStatusEx" , "ptr" , $TMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $AMEM [ 7 ] 
+$AMEM [ 0 ] = DLLSTRUCTGETDATA ( $TMEM , 2 ) 
+$AMEM [ 1 ] = DLLSTRUCTGETDATA ( $TMEM , 3 ) 
+$AMEM [ 2 ] = DLLSTRUCTGETDATA ( $TMEM , 4 ) 
+$AMEM [ 3 ] = DLLSTRUCTGETDATA ( $TMEM , 5 ) 
+$AMEM [ 4 ] = DLLSTRUCTGETDATA ( $TMEM , 6 ) 
+$AMEM [ 5 ] = DLLSTRUCTGETDATA ( $TMEM , 7 ) 
+$AMEM [ 6 ] = DLLSTRUCTGETDATA ( $TMEM , 8 ) 
+RETURN $AMEM 
+ENDFUNC 
+FUNC _WINAPI_GUIDFROMSTRING ( $SGUID ) 
+LOCAL $TGUID = DLLSTRUCTCREATE ( $TAGGUID ) 
+_WINAPI_GUIDFROMSTRINGEX ( $SGUID , $TGUID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TGUID 
+ENDFUNC 
+FUNC _WINAPI_GUIDFROMSTRINGEX ( $SGUID , $PGUID ) 
+LOCAL $ARESULT = DLLCALL ( "ole32.dll" , "long" , "CLSIDFromString" , "wstr" , $SGUID , "struct*" , $PGUID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_HIWORD ( $ILONG ) 
+RETURN BITSHIFT ( $ILONG , 16 ) 
+ENDFUNC 
+FUNC _WINAPI_INPROCESS ( $HWND , BYREF $HLASTWND ) 
+IF $HWND = $HLASTWND THEN RETURN TRUE 
+FOR $II = $__GAINPROCESS_WINAPI [ 0 ] [ 0 ] TO 1 STEP - 1 
+IF $HWND = $__GAINPROCESS_WINAPI [ $II ] [ 0 ] THEN 
+IF $__GAINPROCESS_WINAPI [ $II ] [ 1 ] THEN 
+$HLASTWND = $HWND 
+RETURN TRUE 
+ELSE 
+RETURN FALSE 
+ENDIF 
+ENDIF 
+NEXT 
+LOCAL $IPROCESSID 
+_WINAPI_GETWINDOWTHREADPROCESSID ( $HWND , $IPROCESSID ) 
+LOCAL $ICOUNT = $__GAINPROCESS_WINAPI [ 0 ] [ 0 ] + 1 
+IF $ICOUNT >= 64 THEN $ICOUNT = 1 
+$__GAINPROCESS_WINAPI [ 0 ] [ 0 ] = $ICOUNT 
+$__GAINPROCESS_WINAPI [ $ICOUNT ] [ 0 ] = $HWND 
+$__GAINPROCESS_WINAPI [ $ICOUNT ] [ 1 ] = ( $IPROCESSID = @AUTOITPID ) 
+RETURN $__GAINPROCESS_WINAPI [ $ICOUNT ] [ 1 ] 
+ENDFUNC 
+FUNC _WINAPI_INTTOFLOAT ( $IINT ) 
+LOCAL $TINT = DLLSTRUCTCREATE ( "int" ) 
+LOCAL $TFLOAT = DLLSTRUCTCREATE ( "float" , DLLSTRUCTGETPTR ( $TINT ) ) 
+DLLSTRUCTSETDATA ( $TINT , 1 , $IINT ) 
+RETURN DLLSTRUCTGETDATA ( $TFLOAT , 1 ) 
+ENDFUNC 
+FUNC _WINAPI_ISCLASSNAME ( $HWND , $SCLASSNAME ) 
+LOCAL $SSEPARATOR = OPT ( "GUIDataSeparatorChar" ) 
+LOCAL $ACLASSNAME = STRINGSPLIT ( $SCLASSNAME , $SSEPARATOR ) 
+IF NOT ISHWND ( $HWND ) THEN $HWND = GUICTRLGETHANDLE ( $HWND ) 
+LOCAL $SCLASSCHECK = _WINAPI_GETCLASSNAME ( $HWND ) 
+FOR $X = 1 TO UBOUND ( $ACLASSNAME ) - 1 
+IF STRINGUPPER ( STRINGMID ( $SCLASSCHECK , 1 , STRINGLEN ( $ACLASSNAME [ $X ] ) ) ) = STRINGUPPER ( $ACLASSNAME [ $X ] ) THEN RETURN TRUE 
+NEXT 
+RETURN FALSE 
+ENDFUNC 
+FUNC _WINAPI_ISWINDOW ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "IsWindow" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_ISWINDOWVISIBLE ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "IsWindowVisible" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_INVALIDATERECT ( $HWND , $TRECT = 0 , $FERASE = TRUE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "InvalidateRect" , "hwnd" , $HWND , "struct*" , $TRECT , "bool" , $FERASE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LINETO ( $HDC , $IX , $IY ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "bool" , "LineTo" , "handle" , $HDC , "int" , $IX , "int" , $IY ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOADBITMAP ( $HINSTANCE , $SBITMAP ) 
+LOCAL $SBITMAPTYPE = "int" 
+IF ISSTRING ( $SBITMAP ) THEN $SBITMAPTYPE = "wstr" 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "LoadBitmapW" , "handle" , $HINSTANCE , $SBITMAPTYPE , $SBITMAP ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOADIMAGE ( $HINSTANCE , $SIMAGE , $ITYPE , $IXDESIRED , $IYDESIRED , $ILOAD ) 
+LOCAL $ARESULT , $SIMAGETYPE = "int" 
+IF ISSTRING ( $SIMAGE ) THEN $SIMAGETYPE = "wstr" 
+$ARESULT = DLLCALL ( "user32.dll" , "handle" , "LoadImageW" , "handle" , $HINSTANCE , $SIMAGETYPE , $SIMAGE , "uint" , $ITYPE , "int" , $IXDESIRED , "int" , $IYDESIRED , "uint" , $ILOAD ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOADLIBRARY ( $SFILENAME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "LoadLibraryW" , "wstr" , $SFILENAME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOADLIBRARYEX ( $SFILENAME , $IFLAGS = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "LoadLibraryExW" , "wstr" , $SFILENAME , "ptr" , 0 , "dword" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOADSHELL32ICON ( $IICONID ) 
+LOCAL $TICONS = DLLSTRUCTCREATE ( "ptr Data" ) 
+LOCAL $IICONS = _WINAPI_EXTRACTICONEX ( "shell32.dll" , $IICONID , 0 , $TICONS , 1 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF $IICONS <= 0 THEN RETURN SETERROR ( 1 , 0 , 0 ) 
+RETURN DLLSTRUCTGETDATA ( $TICONS , "Data" ) 
+ENDFUNC 
+FUNC _WINAPI_LOADSTRING ( $HINSTANCE , $ISTRINGID ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "LoadStringW" , "handle" , $HINSTANCE , "uint" , $ISTRINGID , "wstr" , "" , "int" , 4096 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ARESULT [ 3 ] ) 
+ENDFUNC 
+FUNC _WINAPI_LOCALFREE ( $HMEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "LocalFree" , "handle" , $HMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_LOWORD ( $ILONG ) 
+RETURN BITAND ( $ILONG , 65535 ) 
+ENDFUNC 
+FUNC _WINAPI_MAKELANGID ( $LGIDPRIMARY , $LGIDSUB ) 
+RETURN BITOR ( BITSHIFT ( $LGIDSUB , - 10 ) , $LGIDPRIMARY ) 
+ENDFUNC 
+FUNC _WINAPI_MAKELCID ( $LGID , $SRTID ) 
+RETURN BITOR ( BITSHIFT ( $SRTID , - 16 ) , $LGID ) 
+ENDFUNC 
+FUNC _WINAPI_MAKELONG ( $ILO , $IHI ) 
+RETURN BITOR ( BITSHIFT ( $IHI , - 16 ) , BITAND ( $ILO , 65535 ) ) 
+ENDFUNC 
+FUNC _WINAPI_MAKEQWORD ( $LODWORD , $HIDWORD ) 
+LOCAL $TINT64 = DLLSTRUCTCREATE ( "uint64" ) 
+LOCAL $TDWORDS = DLLSTRUCTCREATE ( "dword;dword" , DLLSTRUCTGETPTR ( $TINT64 ) ) 
+DLLSTRUCTSETDATA ( $TDWORDS , 1 , $LODWORD ) 
+DLLSTRUCTSETDATA ( $TDWORDS , 2 , $HIDWORD ) 
+RETURN DLLSTRUCTGETDATA ( $TINT64 , 1 ) 
+ENDFUNC 
+FUNC _WINAPI_MESSAGEBEEP ( $ITYPE = 1 ) 
+LOCAL $ISOUND 
+SWITCH $ITYPE 
+CASE 1 
+$ISOUND = 0 
+CASE 2 
+$ISOUND = 16 
+CASE 3 
+$ISOUND = 32 
+CASE 4 
+$ISOUND = 48 
+CASE 5 
+$ISOUND = 64 
+CASE ELSE 
+$ISOUND = - 1 
+ENDSWITCH 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "MessageBeep" , "uint" , $ISOUND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_MSGBOX ( $IFLAGS , $STITLE , $STEXT ) 
+BLOCKINPUT ( 0 ) 
+MSGBOX ( $IFLAGS , $STITLE , $STEXT & "      " ) 
+ENDFUNC 
+FUNC _WINAPI_MOUSE_EVENT ( $IFLAGS , $IX = 0 , $IY = 0 , $IDATA = 0 , $IEXTRAINFO = 0 ) 
+DLLCALL ( "user32.dll" , "none" , "mouse_event" , "dword" , $IFLAGS , "dword" , $IX , "dword" , $IY , "dword" , $IDATA , "ulong_ptr" , $IEXTRAINFO ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED ) 
+ENDFUNC 
+FUNC _WINAPI_MOVETO ( $HDC , $IX , $IY ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "bool" , "MoveToEx" , "handle" , $HDC , "int" , $IX , "int" , $IY , "ptr" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_MOVEWINDOW ( $HWND , $IX , $IY , $IWIDTH , $IHEIGHT , $FREPAINT = TRUE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "MoveWindow" , "hwnd" , $HWND , "int" , $IX , "int" , $IY , "int" , $IWIDTH , "int" , $IHEIGHT , "bool" , $FREPAINT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_MULDIV ( $INUMBER , $INUMERATOR , $IDENOMINATOR ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "int" , "MulDiv" , "int" , $INUMBER , "int" , $INUMERATOR , "int" , $IDENOMINATOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_MULTIBYTETOWIDECHAR ( $STEXT , $ICODEPAGE = 0 , $IFLAGS = 0 , $BRETSTRING = FALSE ) 
+LOCAL $STEXTTYPE = "str" 
+IF NOT ISSTRING ( $STEXT ) THEN $STEXTTYPE = "struct*" 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "int" , "MultiByteToWideChar" , "uint" , $ICODEPAGE , "dword" , $IFLAGS , $STEXTTYPE , $STEXT , "int" , - 1 , "ptr" , 0 , "int" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $IOUT = $ARESULT [ 0 ] 
+LOCAL $TOUT = DLLSTRUCTCREATE ( "wchar[" & $IOUT & "]" ) 
+$ARESULT = DLLCALL ( "kernel32.dll" , "int" , "MultiByteToWideChar" , "uint" , $ICODEPAGE , "dword" , $IFLAGS , $STEXTTYPE , $STEXT , "int" , - 1 , "struct*" , $TOUT , "int" , $IOUT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF $BRETSTRING THEN RETURN DLLSTRUCTGETDATA ( $TOUT , 1 ) 
+RETURN $TOUT 
+ENDFUNC 
+FUNC _WINAPI_MULTIBYTETOWIDECHAREX ( $STEXT , $PTEXT , $ICODEPAGE = 0 , $IFLAGS = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "int" , "MultiByteToWideChar" , "uint" , $ICODEPAGE , "dword" , $IFLAGS , "STR" , $STEXT , "int" , - 1 , "struct*" , $PTEXT , "int" , ( STRINGLEN ( $STEXT ) + 1 ) * 2 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_OPENPROCESS ( $IACCESS , $FINHERIT , $IPROCESSID , $FDEBUGPRIV = FALSE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "OpenProcess" , "dword" , $IACCESS , "bool" , $FINHERIT , "dword" , $IPROCESSID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF $ARESULT [ 0 ] THEN RETURN $ARESULT [ 0 ] 
+IF NOT $FDEBUGPRIV THEN RETURN 0 
+LOCAL $HTOKEN = _SECURITY__OPENTHREADTOKENEX ( BITOR ( $TOKEN_ADJUST_PRIVILEGES , $TOKEN_QUERY ) ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeDebugPrivilege" , TRUE ) 
+LOCAL $IERROR = @ERROR 
+LOCAL $ILASTERROR = @EXTENDED 
+LOCAL $IRET = 0 
+IF NOT @ERROR THEN 
+$ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "OpenProcess" , "dword" , $IACCESS , "bool" , $FINHERIT , "dword" , $IPROCESSID ) 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+IF $ARESULT [ 0 ] THEN $IRET = $ARESULT [ 0 ] 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeDebugPrivilege" , FALSE ) 
+IF @ERROR THEN 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+ENDIF 
+ENDIF 
+_WINAPI_CLOSEHANDLE ( $HTOKEN ) 
+RETURN SETERROR ( $IERROR , $ILASTERROR , $IRET ) 
+ENDFUNC 
+FUNC __WINAPI_PARSEFILEDIALOGPATH ( $SPATH ) 
+LOCAL $AFILES [ 3 ] 
+$AFILES [ 0 ] = 2 
+LOCAL $STEMP = STRINGMID ( $SPATH , 1 , STRINGINSTR ( $SPATH , "\" , 0 , - 1 ) - 1 ) 
+$AFILES [ 1 ] = $STEMP 
+$AFILES [ 2 ] = STRINGMID ( $SPATH , STRINGINSTR ( $SPATH , "\" , 0 , - 1 ) + 1 ) 
+RETURN $AFILES 
+ENDFUNC 
+FUNC _WINAPI_PATHFINDONPATH ( CONST $SZFILE , $AEXTRAPATHS = "" , CONST $SZPATHDELIMITER = @LF ) 
+LOCAL $IEXTRACOUNT = 0 
+IF ISSTRING ( $AEXTRAPATHS ) THEN 
+IF STRINGLEN ( $AEXTRAPATHS ) THEN 
+$AEXTRAPATHS = STRINGSPLIT ( $AEXTRAPATHS , $SZPATHDELIMITER , 1 + 2 ) 
+$IEXTRACOUNT = UBOUND ( $AEXTRAPATHS , 1 ) 
+ENDIF 
+ELSEIF ISARRAY ( $AEXTRAPATHS ) THEN 
+$IEXTRACOUNT = UBOUND ( $AEXTRAPATHS ) 
+ENDIF 
+LOCAL $TPATHS , $TPATHPTRS 
+IF $IEXTRACOUNT THEN 
+LOCAL $SZSTRUCT = "" 
+FOR $PATH IN $AEXTRAPATHS 
+$SZSTRUCT &= "wchar[" & STRINGLEN ( $PATH ) + 1 & "];" 
+NEXT 
+$TPATHS = DLLSTRUCTCREATE ( $SZSTRUCT ) 
+$TPATHPTRS = DLLSTRUCTCREATE ( "ptr[" & $IEXTRACOUNT + 1 & "]" ) 
+FOR $I = 1 TO $IEXTRACOUNT 
+DLLSTRUCTSETDATA ( $TPATHS , $I , $AEXTRAPATHS [ $I - 1 ] ) 
+DLLSTRUCTSETDATA ( $TPATHPTRS , 1 , DLLSTRUCTGETPTR ( $TPATHS , $I ) , $I ) 
+NEXT 
+DLLSTRUCTSETDATA ( $TPATHPTRS , 1 , PTR ( 0 ) , $IEXTRACOUNT + 1 ) 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "shlwapi.dll" , "bool" , "PathFindOnPathW" , "wstr" , $SZFILE , "struct*" , $TPATHPTRS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+IF $ARESULT [ 0 ] = 0 THEN RETURN SETERROR ( 1 , 0 , $SZFILE ) 
+RETURN $ARESULT [ 1 ] 
+ENDFUNC 
+FUNC _WINAPI_POINTFROMRECT ( BYREF $TRECT , $FCENTER = TRUE ) 
+LOCAL $IX1 = DLLSTRUCTGETDATA ( $TRECT , "Left" ) 
+LOCAL $IY1 = DLLSTRUCTGETDATA ( $TRECT , "Top" ) 
+LOCAL $IX2 = DLLSTRUCTGETDATA ( $TRECT , "Right" ) 
+LOCAL $IY2 = DLLSTRUCTGETDATA ( $TRECT , "Bottom" ) 
+IF $FCENTER THEN 
+$IX1 = $IX1 + ( ( $IX2 - $IX1 ) / 2 ) 
+$IY1 = $IY1 + ( ( $IY2 - $IY1 ) / 2 ) 
+ENDIF 
+LOCAL $TPOINT = DLLSTRUCTCREATE ( $TAGPOINT ) 
+DLLSTRUCTSETDATA ( $TPOINT , "X" , $IX1 ) 
+DLLSTRUCTSETDATA ( $TPOINT , "Y" , $IY1 ) 
+RETURN $TPOINT 
+ENDFUNC 
+FUNC _WINAPI_POSTMESSAGE ( $HWND , $IMSG , $IWPARAM , $ILPARAM ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "PostMessage" , "hwnd" , $HWND , "uint" , $IMSG , "wparam" , $IWPARAM , "lparam" , $ILPARAM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_PRIMARYLANGID ( $LGID ) 
+RETURN BITAND ( $LGID , 1023 ) 
+ENDFUNC 
+FUNC _WINAPI_PTINRECT ( BYREF $TRECT , BYREF $TPOINT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "PtInRect" , "struct*" , $TRECT , "struct" , $TPOINT ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN NOT ( $ARESULT [ 0 ] = 0 ) 
+ENDFUNC 
+FUNC _WINAPI_READFILE ( $HFILE , $PBUFFER , $ITOREAD , BYREF $IREAD , $POVERLAPPED = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "ReadFile" , "handle" , $HFILE , "ptr" , $PBUFFER , "dword" , $ITOREAD , "dword*" , 0 , "ptr" , $POVERLAPPED ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$IREAD = $ARESULT [ 4 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_READPROCESSMEMORY ( $HPROCESS , $PBASEADDRESS , $PBUFFER , $ISIZE , BYREF $IREAD ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "ReadProcessMemory" , "handle" , $HPROCESS , "ptr" , $PBASEADDRESS , "ptr" , $PBUFFER , "ulong_ptr" , $ISIZE , "ulong_ptr*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$IREAD = $ARESULT [ 5 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_RECTISEMPTY ( BYREF $TRECT ) 
+RETURN ( DLLSTRUCTGETDATA ( $TRECT , "Left" ) = 0 ) AND ( DLLSTRUCTGETDATA ( $TRECT , "Top" ) = 0 ) AND ( DLLSTRUCTGETDATA ( $TRECT , "Right" ) = 0 ) AND ( DLLSTRUCTGETDATA ( $TRECT , "Bottom" ) = 0 ) 
+ENDFUNC 
+FUNC _WINAPI_REDRAWWINDOW ( $HWND , $TRECT = 0 , $HREGION = 0 , $IFLAGS = 5 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "RedrawWindow" , "hwnd" , $HWND , "struct*" , $TRECT , "handle" , $HREGION , "uint" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_REGISTERWINDOWMESSAGE ( $SMESSAGE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "uint" , "RegisterWindowMessageW" , "wstr" , $SMESSAGE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_RELEASECAPTURE ( ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "ReleaseCapture" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_RELEASEDC ( $HWND , $HDC ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "ReleaseDC" , "hwnd" , $HWND , "handle" , $HDC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SCREENTOCLIENT ( $HWND , BYREF $TPOINT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "ScreenToClient" , "hwnd" , $HWND , "struct*" , $TPOINT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SELECTOBJECT ( $HDC , $HGDIOBJ ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "handle" , "SelectObject" , "handle" , $HDC , "handle" , $HGDIOBJ ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETBKCOLOR ( $HDC , $ICOLOR ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "INT" , "SetBkColor" , "handle" , $HDC , "dword" , $ICOLOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETBKMODE ( $HDC , $IBKMODE ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "SetBkMode" , "handle" , $HDC , "int" , $IBKMODE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETCAPTURE ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "SetCapture" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETCURSOR ( $HCURSOR ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "SetCursor" , "handle" , $HCURSOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETDEFAULTPRINTER ( $SPRINTER ) 
+LOCAL $ARESULT = DLLCALL ( "winspool.drv" , "bool" , "SetDefaultPrinterW" , "wstr" , $SPRINTER ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETDIBITS ( $HDC , $HBMP , $ISTARTSCAN , $ISCANLINES , $PBITS , $PBMI , $ICOLORUSE = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "int" , "SetDIBits" , "handle" , $HDC , "handle" , $HBMP , "uint" , $ISTARTSCAN , "uint" , $ISCANLINES , "ptr" , $PBITS , "ptr" , $PBMI , "uint" , $ICOLORUSE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETENDOFFILE ( $HFILE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetEndOfFile" , "handle" , $HFILE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETEVENT ( $HEVENT ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetEvent" , "handle" , $HEVENT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETFILEPOINTER ( $HFILE , $IPOS , $IMETHOD = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "INT" , "SetFilePointer" , "handle" , $HFILE , "long" , $IPOS , "ptr" , 0 , "long" , $IMETHOD ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETFOCUS ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "SetFocus" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETFONT ( $HWND , $HFONT , $FREDRAW = TRUE ) 
+_SENDMESSAGE ( $HWND , $__WINAPICONSTANT_WM_SETFONT , $HFONT , $FREDRAW , 0 , "hwnd" ) 
+ENDFUNC 
+FUNC _WINAPI_SETHANDLEINFORMATION ( $HOBJECT , $IMASK , $IFLAGS ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetHandleInformation" , "handle" , $HOBJECT , "dword" , $IMASK , "dword" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETLAYEREDWINDOWATTRIBUTES ( $HWND , $I_TRANSCOLOR , $TRANSPARENCY = 255 , $DWFLAGS = 3 , $ISCOLORREF = FALSE ) 
+IF $DWFLAGS = DEFAULT OR $DWFLAGS = "" OR $DWFLAGS < 0 THEN $DWFLAGS = 3 
+IF NOT $ISCOLORREF THEN 
+$I_TRANSCOLOR = INT ( BINARYMID ( $I_TRANSCOLOR , 3 , 1 ) & BINARYMID ( $I_TRANSCOLOR , 2 , 1 ) & BINARYMID ( $I_TRANSCOLOR , 1 , 1 ) ) 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SetLayeredWindowAttributes" , "hwnd" , $HWND , "dword" , $I_TRANSCOLOR , "byte" , $TRANSPARENCY , "dword" , $DWFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETPARENT ( $HWNDCHILD , $HWNDPARENT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "SetParent" , "hwnd" , $HWNDCHILD , "hwnd" , $HWNDPARENT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETPROCESSAFFINITYMASK ( $HPROCESS , $IMASK ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetProcessAffinityMask" , "handle" , $HPROCESS , "ulong_ptr" , $IMASK ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETSYSCOLORS ( $VELEMENTS , $VCOLORS ) 
+LOCAL $ISEARRAY = ISARRAY ( $VELEMENTS ) , $ISCARRAY = ISARRAY ( $VCOLORS ) 
+LOCAL $IELEMENTNUM 
+IF NOT $ISCARRAY AND NOT $ISEARRAY THEN 
+$IELEMENTNUM = 1 
+ELSEIF $ISCARRAY OR $ISEARRAY THEN 
+IF NOT $ISCARRAY OR NOT $ISEARRAY THEN RETURN SETERROR ( - 1 , - 1 , FALSE ) 
+IF UBOUND ( $VELEMENTS ) <> UBOUND ( $VCOLORS ) THEN RETURN SETERROR ( - 1 , - 1 , FALSE ) 
+$IELEMENTNUM = UBOUND ( $VELEMENTS ) 
+ENDIF 
+LOCAL $TELEMENTS = DLLSTRUCTCREATE ( "int Element[" & $IELEMENTNUM & "]" ) 
+LOCAL $TCOLORS = DLLSTRUCTCREATE ( "dword NewColor[" & $IELEMENTNUM & "]" ) 
+IF NOT $ISEARRAY THEN 
+DLLSTRUCTSETDATA ( $TELEMENTS , "Element" , $VELEMENTS , 1 ) 
+ELSE 
+FOR $X = 0 TO $IELEMENTNUM - 1 
+DLLSTRUCTSETDATA ( $TELEMENTS , "Element" , $VELEMENTS [ $X ] , $X + 1 ) 
+NEXT 
+ENDIF 
+IF NOT $ISCARRAY THEN 
+DLLSTRUCTSETDATA ( $TCOLORS , "NewColor" , $VCOLORS , 1 ) 
+ELSE 
+FOR $X = 0 TO $IELEMENTNUM - 1 
+DLLSTRUCTSETDATA ( $TCOLORS , "NewColor" , $VCOLORS [ $X ] , $X + 1 ) 
+NEXT 
+ENDIF 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SetSysColors" , "int" , $IELEMENTNUM , "struct*" , $TELEMENTS , "struct*" , $TCOLORS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETTEXTCOLOR ( $HDC , $ICOLOR ) 
+LOCAL $ARESULT = DLLCALL ( "gdi32.dll" , "INT" , "SetTextColor" , "handle" , $HDC , "dword" , $ICOLOR ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWLONG ( $HWND , $IINDEX , $IVALUE ) 
+_WINAPI_SETLASTERROR ( 0 ) 
+LOCAL $SFUNCNAME = "SetWindowLongW" 
+IF @AUTOITX64 THEN $SFUNCNAME = "SetWindowLongPtrW" 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "long_ptr" , $SFUNCNAME , "hwnd" , $HWND , "int" , $IINDEX , "long_ptr" , $IVALUE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWPLACEMENT ( $HWND , $PWINDOWPLACEMENT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SetWindowPlacement" , "hwnd" , $HWND , "ptr" , $PWINDOWPLACEMENT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWPOS ( $HWND , $HAFTER , $IX , $IY , $ICX , $ICY , $IFLAGS ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SetWindowPos" , "hwnd" , $HWND , "hwnd" , $HAFTER , "int" , $IX , "int" , $IY , "int" , $ICX , "int" , $ICY , "uint" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWRGN ( $HWND , $HRGN , $BREDRAW = TRUE ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "SetWindowRgn" , "hwnd" , $HWND , "handle" , $HRGN , "bool" , $BREDRAW ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWSHOOKEX ( $IDHOOK , $LPFN , $HMOD , $DWTHREADID = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "handle" , "SetWindowsHookEx" , "int" , $IDHOOK , "ptr" , $LPFN , "handle" , $HMOD , "dword" , $DWTHREADID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SETWINDOWTEXT ( $HWND , $STEXT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SetWindowTextW" , "hwnd" , $HWND , "wstr" , $STEXT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SHOWCURSOR ( $FSHOW ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "int" , "ShowCursor" , "bool" , $FSHOW ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SHOWERROR ( $STEXT , $FEXIT = TRUE ) 
+_WINAPI_MSGBOX ( 266256 , "Error" , $STEXT ) 
+IF $FEXIT THEN EXIT 
+ENDFUNC 
+FUNC _WINAPI_SHOWMSG ( $STEXT ) 
+_WINAPI_MSGBOX ( 64 + 4096 , "Information" , $STEXT ) 
+ENDFUNC 
+FUNC _WINAPI_SHOWWINDOW ( $HWND , $ICMDSHOW = 5 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "ShowWindow" , "hwnd" , $HWND , "int" , $ICMDSHOW ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_STRINGFROMGUID ( $PGUID ) 
+LOCAL $ARESULT = DLLCALL ( "ole32.dll" , "int" , "StringFromGUID2" , "struct*" , $PGUID , "wstr" , "" , "int" , 40 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ARESULT [ 2 ] ) 
+ENDFUNC 
+FUNC _WINAPI_STRINGLENA ( $VSTRING ) 
+LOCAL $ACALL = DLLCALL ( "kernel32.dll" , "int" , "lstrlenA" , "struct*" , $VSTRING ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_STRINGLENW ( $VSTRING ) 
+LOCAL $ACALL = DLLCALL ( "kernel32.dll" , "int" , "lstrlenW" , "struct*" , $VSTRING ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_SUBLANGID ( $LGID ) 
+RETURN BITSHIFT ( $LGID , 10 ) 
+ENDFUNC 
+FUNC _WINAPI_SYSTEMPARAMETERSINFO ( $IACTION , $IPARAM = 0 , $VPARAM = 0 , $IWININI = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "SystemParametersInfoW" , "uint" , $IACTION , "uint" , $IPARAM , "ptr" , $VPARAM , "uint" , $IWININI ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_TWIPSPERPIXELX ( ) 
+LOCAL $LNGDC , $TWIPSPERPIXELX 
+$LNGDC = _WINAPI_GETDC ( 0 ) 
+$TWIPSPERPIXELX = 1440 / _WINAPI_GETDEVICECAPS ( $LNGDC , $__WINAPICONSTANT_LOGPIXELSX ) 
+_WINAPI_RELEASEDC ( 0 , $LNGDC ) 
+RETURN $TWIPSPERPIXELX 
+ENDFUNC 
+FUNC _WINAPI_TWIPSPERPIXELY ( ) 
+LOCAL $LNGDC , $TWIPSPERPIXELY 
+$LNGDC = _WINAPI_GETDC ( 0 ) 
+$TWIPSPERPIXELY = 1440 / _WINAPI_GETDEVICECAPS ( $LNGDC , $__WINAPICONSTANT_LOGPIXELSY ) 
+_WINAPI_RELEASEDC ( 0 , $LNGDC ) 
+RETURN $TWIPSPERPIXELY 
+ENDFUNC 
+FUNC _WINAPI_UNHOOKWINDOWSHOOKEX ( $HHK ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "UnhookWindowsHookEx" , "handle" , $HHK ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_UPDATELAYEREDWINDOW ( $HWND , $HDCDEST , $PPTDEST , $PSIZE , $HDCSRCE , $PPTSRCE , $IRGB , $PBLEND , $IFLAGS ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "UpdateLayeredWindow" , "hwnd" , $HWND , "handle" , $HDCDEST , "ptr" , $PPTDEST , "ptr" , $PSIZE , "handle" , $HDCSRCE , "ptr" , $PPTSRCE , "dword" , $IRGB , "ptr" , $PBLEND , "dword" , $IFLAGS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_UPDATEWINDOW ( $HWND ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "bool" , "UpdateWindow" , "hwnd" , $HWND ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WAITFORINPUTIDLE ( $HPROCESS , $ITIMEOUT = - 1 ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "dword" , "WaitForInputIdle" , "handle" , $HPROCESS , "dword" , $ITIMEOUT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WAITFORMULTIPLEOBJECTS ( $ICOUNT , $PHANDLES , $FWAITALL = FALSE , $ITIMEOUT = - 1 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "INT" , "WaitForMultipleObjects" , "dword" , $ICOUNT , "ptr" , $PHANDLES , "bool" , $FWAITALL , "dword" , $ITIMEOUT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WAITFORSINGLEOBJECT ( $HHANDLE , $ITIMEOUT = - 1 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "INT" , "WaitForSingleObject" , "handle" , $HHANDLE , "dword" , $ITIMEOUT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , - 1 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WIDECHARTOMULTIBYTE ( $PUNICODE , $ICODEPAGE = 0 , $BRETSTRING = TRUE ) 
+LOCAL $SUNICODETYPE = "wstr" 
+IF NOT ISSTRING ( $PUNICODE ) THEN $SUNICODETYPE = "struct*" 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "int" , "WideCharToMultiByte" , "uint" , $ICODEPAGE , "dword" , 0 , $SUNICODETYPE , $PUNICODE , "int" , - 1 , "ptr" , 0 , "int" , 0 , "ptr" , 0 , "ptr" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+LOCAL $TMULTIBYTE = DLLSTRUCTCREATE ( "char[" & $ARESULT [ 0 ] & "]" ) 
+$ARESULT = DLLCALL ( "kernel32.dll" , "int" , "WideCharToMultiByte" , "uint" , $ICODEPAGE , "dword" , 0 , $SUNICODETYPE , $PUNICODE , "int" , - 1 , "struct*" , $TMULTIBYTE , "int" , $ARESULT [ 0 ] , "ptr" , 0 , "ptr" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $BRETSTRING THEN RETURN DLLSTRUCTGETDATA ( $TMULTIBYTE , 1 ) 
+RETURN $TMULTIBYTE 
+ENDFUNC 
+FUNC _WINAPI_WINDOWFROMPOINT ( BYREF $TPOINT ) 
+LOCAL $ARESULT = DLLCALL ( "user32.dll" , "hwnd" , "WindowFromPoint" , "struct" , $TPOINT ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WRITECONSOLE ( $HCONSOLE , $STEXT ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "WriteConsoleW" , "handle" , $HCONSOLE , "wstr" , $STEXT , "dword" , STRINGLEN ( $STEXT ) , "dword*" , 0 , "ptr" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WRITEFILE ( $HFILE , $PBUFFER , $ITOWRITE , BYREF $IWRITTEN , $POVERLAPPED = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "WriteFile" , "handle" , $HFILE , "ptr" , $PBUFFER , "dword" , $ITOWRITE , "dword*" , 0 , "ptr" , $POVERLAPPED ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$IWRITTEN = $ARESULT [ 4 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _WINAPI_WRITEPROCESSMEMORY ( $HPROCESS , $PBASEADDRESS , $PBUFFER , $ISIZE , BYREF $IWRITTEN , $SBUFFER = "ptr" ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "WriteProcessMemory" , "handle" , $HPROCESS , "ptr" , $PBASEADDRESS , $SBUFFER , $PBUFFER , "ulong_ptr" , $ISIZE , "ulong_ptr*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$IWRITTEN = $ARESULT [ 5 ] 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _SECURITY__ADJUSTTOKENPRIVILEGES ( $HTOKEN , $FDISABLEALL , $PNEWSTATE , $IBUFFERLEN , $PPREVSTATE = 0 , $PREQUIRED = 0 ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "AdjustTokenPrivileges" , "handle" , $HTOKEN , "bool" , $FDISABLEALL , "struct*" , $PNEWSTATE , "dword" , $IBUFFERLEN , "struct*" , $PPREVSTATE , "struct*" , $PREQUIRED ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN NOT ( $ACALL [ 0 ] = 0 ) 
+ENDFUNC 
+FUNC _SECURITY__CREATEPROCESSWITHTOKEN ( $HTOKEN , $ILOGONFLAGS , $SCOMMANDLINE , $ICREATIONFLAGS , $SCURDIR , $TSTARTUPINFO , $TPROCESS_INFORMATION ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "CreateProcessWithTokenW" , "handle" , $HTOKEN , "dword" , $ILOGONFLAGS , "ptr" , 0 , "wstr" , $SCOMMANDLINE , "dword" , $ICREATIONFLAGS , "struct*" , 0 , "wstr" , $SCURDIR , "struct*" , $TSTARTUPINFO , "struct*" , $TPROCESS_INFORMATION ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN TRUE 
+ENDFUNC 
+FUNC _SECURITY__DUPLICATETOKENEX ( $HEXISTINGTOKEN , $IDESIREDACCESS , $IIMPERSONATIONLEVEL , $ITOKENTYPE ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "DuplicateTokenEx" , "handle" , $HEXISTINGTOKEN , "dword" , $IDESIREDACCESS , "struct*" , 0 , "int" , $IIMPERSONATIONLEVEL , "int" , $ITOKENTYPE , "handle*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 6 ] 
+ENDFUNC 
+FUNC _SECURITY__GETACCOUNTSID ( $SACCOUNT , $SSYSTEM = "" ) 
+LOCAL $AACCT = _SECURITY__LOOKUPACCOUNTNAME ( $SACCOUNT , $SSYSTEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF ISARRAY ( $AACCT ) THEN RETURN _SECURITY__STRINGSIDTOSID ( $AACCT [ 0 ] ) 
+RETURN "" 
+ENDFUNC 
+FUNC _SECURITY__GETLENGTHSID ( $PSID ) 
+IF NOT _SECURITY__ISVALIDSID ( $PSID ) THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "dword" , "GetLengthSid" , "struct*" , $PSID ) 
+IF @ERROR THEN RETURN SETERROR ( 2 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 0 ] 
+ENDFUNC 
+FUNC _SECURITY__GETTOKENINFORMATION ( $HTOKEN , $ICLASS ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "GetTokenInformation" , "handle" , $HTOKEN , "int" , $ICLASS , "struct*" , 0 , "dword" , 0 , "dword*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 5 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $ILEN = $ACALL [ 5 ] 
+LOCAL $TBUFFER = DLLSTRUCTCREATE ( "byte[" & $ILEN & "]" ) 
+$ACALL = DLLCALL ( "advapi32.dll" , "bool" , "GetTokenInformation" , "handle" , $HTOKEN , "int" , $ICLASS , "struct*" , $TBUFFER , "dword" , DLLSTRUCTGETSIZE ( $TBUFFER ) , "dword*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 2 , @EXTENDED , 0 ) 
+RETURN $TBUFFER 
+ENDFUNC 
+FUNC _SECURITY__IMPERSONATESELF ( $ILEVEL = $SECURITYIMPERSONATION ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "ImpersonateSelf" , "int" , $ILEVEL ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN NOT ( $ACALL [ 0 ] = 0 ) 
+ENDFUNC 
+FUNC _SECURITY__ISVALIDSID ( $PSID ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "IsValidSid" , "struct*" , $PSID ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN NOT ( $ACALL [ 0 ] = 0 ) 
+ENDFUNC 
+FUNC _SECURITY__LOOKUPACCOUNTNAME ( $SACCOUNT , $SSYSTEM = "" ) 
+LOCAL $TDATA = DLLSTRUCTCREATE ( "byte SID[256]" ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "LookupAccountNameW" , "wstr" , $SSYSTEM , "wstr" , $SACCOUNT , "struct*" , $TDATA , "dword*" , DLLSTRUCTGETSIZE ( $TDATA ) , "wstr" , "" , "dword*" , DLLSTRUCTGETSIZE ( $TDATA ) , "int*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $AACCT [ 3 ] 
+$AACCT [ 0 ] = _SECURITY__SIDTOSTRINGSID ( DLLSTRUCTGETPTR ( $TDATA , "SID" ) ) 
+$AACCT [ 1 ] = $ACALL [ 5 ] 
+$AACCT [ 2 ] = $ACALL [ 7 ] 
+RETURN $AACCT 
+ENDFUNC 
+FUNC _SECURITY__LOOKUPACCOUNTSID ( $VSID , $SSYSTEM = "" ) 
+LOCAL $PSID , $AACCT [ 3 ] 
+IF ISSTRING ( $VSID ) THEN 
+$PSID = _SECURITY__STRINGSIDTOSID ( $VSID ) 
+ELSE 
+$PSID = $VSID 
+ENDIF 
+IF NOT _SECURITY__ISVALIDSID ( $PSID ) THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $TYPESYSTEM = "ptr" 
+IF $SSYSTEM THEN $TYPESYSTEM = "wstr" 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "LookupAccountSidW" , $TYPESYSTEM , $SSYSTEM , "struct*" , $PSID , "wstr" , "" , "dword*" , 65536 , "wstr" , "" , "dword*" , 65536 , "int*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 2 , @EXTENDED , 0 ) 
+LOCAL $AACCT [ 3 ] 
+$AACCT [ 0 ] = $ACALL [ 3 ] 
+$AACCT [ 1 ] = $ACALL [ 5 ] 
+$AACCT [ 2 ] = $ACALL [ 7 ] 
+RETURN $AACCT 
+ENDFUNC 
+FUNC _SECURITY__LOOKUPPRIVILEGEVALUE ( $SSYSTEM , $SNAME ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "LookupPrivilegeValueW" , "wstr" , $SSYSTEM , "wstr" , $SNAME , "int64*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 3 ] 
+ENDFUNC 
+FUNC _SECURITY__OPENPROCESSTOKEN ( $HPROCESS , $IACCESS ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "OpenProcessToken" , "handle" , $HPROCESS , "dword" , $IACCESS , "handle*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 3 ] 
+ENDFUNC 
+FUNC _SECURITY__OPENTHREADTOKEN ( $IACCESS , $HTHREAD = 0 , $FOPENASSELF = FALSE ) 
+IF $HTHREAD = 0 THEN $HTHREAD = _WINAPI_GETCURRENTTHREAD ( ) 
+IF @ERROR THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "OpenThreadToken" , "handle" , $HTHREAD , "dword" , $IACCESS , "bool" , $FOPENASSELF , "handle*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 2 , @EXTENDED , 0 ) 
+RETURN $ACALL [ 4 ] 
+ENDFUNC 
+FUNC _SECURITY__OPENTHREADTOKENEX ( $IACCESS , $HTHREAD = 0 , $FOPENASSELF = FALSE ) 
+LOCAL $HTOKEN = _SECURITY__OPENTHREADTOKEN ( $IACCESS , $HTHREAD , $FOPENASSELF ) 
+IF $HTOKEN = 0 THEN 
+IF _WINAPI_GETLASTERROR ( ) <> $ERROR_NO_TOKEN THEN RETURN SETERROR ( 3 , _WINAPI_GETLASTERROR ( ) , 0 ) 
+IF NOT _SECURITY__IMPERSONATESELF ( ) THEN RETURN SETERROR ( 1 , _WINAPI_GETLASTERROR ( ) , 0 ) 
+$HTOKEN = _SECURITY__OPENTHREADTOKEN ( $IACCESS , $HTHREAD , $FOPENASSELF ) 
+IF $HTOKEN = 0 THEN RETURN SETERROR ( 2 , _WINAPI_GETLASTERROR ( ) , 0 ) 
+ENDIF 
+RETURN $HTOKEN 
+ENDFUNC 
+FUNC _SECURITY__SETPRIVILEGE ( $HTOKEN , $SPRIVILEGE , $FENABLE ) 
+LOCAL $ILUID = _SECURITY__LOOKUPPRIVILEGEVALUE ( "" , $SPRIVILEGE ) 
+IF $ILUID = 0 THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+LOCAL $TCURRSTATE = DLLSTRUCTCREATE ( $TAGTOKEN_PRIVILEGES ) 
+LOCAL $ICURRSTATE = DLLSTRUCTGETSIZE ( $TCURRSTATE ) 
+LOCAL $TPREVSTATE = DLLSTRUCTCREATE ( $TAGTOKEN_PRIVILEGES ) 
+LOCAL $IPREVSTATE = DLLSTRUCTGETSIZE ( $TPREVSTATE ) 
+LOCAL $TREQUIRED = DLLSTRUCTCREATE ( "int Data" ) 
+DLLSTRUCTSETDATA ( $TCURRSTATE , "Count" , 1 ) 
+DLLSTRUCTSETDATA ( $TCURRSTATE , "LUID" , $ILUID ) 
+IF NOT _SECURITY__ADJUSTTOKENPRIVILEGES ( $HTOKEN , FALSE , $TCURRSTATE , $ICURRSTATE , $TPREVSTATE , $TREQUIRED ) THEN RETURN SETERROR ( 2 , @ERROR , FALSE ) 
+DLLSTRUCTSETDATA ( $TPREVSTATE , "Count" , 1 ) 
+DLLSTRUCTSETDATA ( $TPREVSTATE , "LUID" , $ILUID ) 
+LOCAL $IATTRIBUTES = DLLSTRUCTGETDATA ( $TPREVSTATE , "Attributes" ) 
+IF $FENABLE THEN 
+$IATTRIBUTES = BITOR ( $IATTRIBUTES , $SE_PRIVILEGE_ENABLED ) 
+ELSE 
+$IATTRIBUTES = BITAND ( $IATTRIBUTES , BITNOT ( $SE_PRIVILEGE_ENABLED ) ) 
+ENDIF 
+DLLSTRUCTSETDATA ( $TPREVSTATE , "Attributes" , $IATTRIBUTES ) 
+IF NOT _SECURITY__ADJUSTTOKENPRIVILEGES ( $HTOKEN , FALSE , $TPREVSTATE , $IPREVSTATE , $TCURRSTATE , $TREQUIRED ) THEN RETURN SETERROR ( 3 , @ERROR , FALSE ) 
+RETURN TRUE 
+ENDFUNC 
+FUNC _SECURITY__SETTOKENINFORMATION ( $HTOKEN , $ITOKENINFORMATION , $VTOKENINFORMATION , $ITOKENINFORMATIONLENGTH ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "SetTokenInformation" , "handle" , $HTOKEN , "int" , $ITOKENINFORMATION , "struct*" , $VTOKENINFORMATION , "dword" , $ITOKENINFORMATIONLENGTH ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , FALSE ) 
+RETURN TRUE 
+ENDFUNC 
+FUNC _SECURITY__SIDTOSTRINGSID ( $PSID ) 
+IF NOT _SECURITY__ISVALIDSID ( $PSID ) THEN RETURN SETERROR ( 1 , 0 , "" ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "ConvertSidToStringSidW" , "struct*" , $PSID , "ptr*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 2 , @EXTENDED , "" ) 
+LOCAL $PSTRINGSID = $ACALL [ 2 ] 
+LOCAL $SSID = DLLSTRUCTGETDATA ( DLLSTRUCTCREATE ( "wchar Text[" & _WINAPI_STRINGLENW ( $PSTRINGSID ) + 1 & "]" , $PSTRINGSID ) , "Text" ) 
+_WINAPI_LOCALFREE ( $PSTRINGSID ) 
+RETURN $SSID 
+ENDFUNC 
+FUNC _SECURITY__SIDTYPESTR ( $ITYPE ) 
+SWITCH $ITYPE 
+CASE $SIDTYPEUSER 
+RETURN "User" 
+CASE $SIDTYPEGROUP 
+RETURN "Group" 
+CASE $SIDTYPEDOMAIN 
+RETURN "Domain" 
+CASE $SIDTYPEALIAS 
+RETURN "Alias" 
+CASE $SIDTYPEWELLKNOWNGROUP 
+RETURN "Well Known Group" 
+CASE $SIDTYPEDELETEDACCOUNT 
+RETURN "Deleted Account" 
+CASE $SIDTYPEINVALID 
+RETURN "Invalid" 
+CASE $SIDTYPEUNKNOWN 
+RETURN "Unknown Type" 
+CASE $SIDTYPECOMPUTER 
+RETURN "Computer" 
+CASE $SIDTYPELABEL 
+RETURN "A mandatory integrity label SID" 
+CASE ELSE 
+RETURN "Unknown SID Type" 
+ENDSWITCH 
+ENDFUNC 
+FUNC _SECURITY__STRINGSIDTOSID ( $SSID ) 
+LOCAL $ACALL = DLLCALL ( "advapi32.dll" , "bool" , "ConvertStringSidToSidW" , "wstr" , $SSID , "ptr*" , 0 ) 
+IF @ERROR OR NOT $ACALL [ 0 ] THEN RETURN SETERROR ( 1 , @EXTENDED , 0 ) 
+LOCAL $PSID = $ACALL [ 2 ] 
+LOCAL $TBUFFER = DLLSTRUCTCREATE ( "byte Data[" & _SECURITY__GETLENGTHSID ( $PSID ) & "]" , $PSID ) 
+LOCAL $TSID = DLLSTRUCTCREATE ( "byte Data[" & DLLSTRUCTGETSIZE ( $TBUFFER ) & "]" ) 
+DLLSTRUCTSETDATA ( $TSID , "Data" , DLLSTRUCTGETDATA ( $TBUFFER , "Data" ) ) 
+_WINAPI_LOCALFREE ( $PSID ) 
+RETURN $TSID 
+ENDFUNC 
+GLOBAL CONST $TAGMEMMAP = "handle hProc;ulong_ptr Size;ptr Mem" 
+FUNC _MEMFREE ( BYREF $TMEMMAP ) 
+LOCAL $PMEMORY = DLLSTRUCTGETDATA ( $TMEMMAP , "Mem" ) 
+LOCAL $HPROCESS = DLLSTRUCTGETDATA ( $TMEMMAP , "hProc" ) 
+LOCAL $BRESULT = _MEMVIRTUALFREEEX ( $HPROCESS , $PMEMORY , 0 , $MEM_RELEASE ) 
+DLLCALL ( "kernel32.dll" , "bool" , "CloseHandle" , "handle" , $HPROCESS ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $BRESULT 
+ENDFUNC 
+FUNC _MEMGLOBALALLOC ( $IBYTES , $IFLAGS = 0 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "GlobalAlloc" , "uint" , $IFLAGS , "ulong_ptr" , $IBYTES ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMGLOBALFREE ( $HMEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ptr" , "GlobalFree" , "handle" , $HMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMGLOBALLOCK ( $HMEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ptr" , "GlobalLock" , "handle" , $HMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMGLOBALSIZE ( $HMEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ulong_ptr" , "GlobalSize" , "handle" , $HMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMGLOBALUNLOCK ( $HMEM ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GlobalUnlock" , "handle" , $HMEM ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMINIT ( $HWND , $ISIZE , BYREF $TMEMMAP ) 
+LOCAL $ARESULT = DLLCALL ( "User32.dll" , "dword" , "GetWindowThreadProcessId" , "hwnd" , $HWND , "dword*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $IPROCESSID = $ARESULT [ 2 ] 
+IF $IPROCESSID = 0 THEN RETURN SETERROR ( 1 , 0 , 0 ) 
+LOCAL $IACCESS = BITOR ( $PROCESS_VM_OPERATION , $PROCESS_VM_READ , $PROCESS_VM_WRITE ) 
+LOCAL $HPROCESS = __MEM_OPENPROCESS ( $IACCESS , FALSE , $IPROCESSID , TRUE ) 
+LOCAL $IALLOC = BITOR ( $MEM_RESERVE , $MEM_COMMIT ) 
+LOCAL $PMEMORY = _MEMVIRTUALALLOCEX ( $HPROCESS , 0 , $ISIZE , $IALLOC , $PAGE_READWRITE ) 
+IF $PMEMORY = 0 THEN RETURN SETERROR ( 2 , 0 , 0 ) 
+$TMEMMAP = DLLSTRUCTCREATE ( $TAGMEMMAP ) 
+DLLSTRUCTSETDATA ( $TMEMMAP , "hProc" , $HPROCESS ) 
+DLLSTRUCTSETDATA ( $TMEMMAP , "Size" , $ISIZE ) 
+DLLSTRUCTSETDATA ( $TMEMMAP , "Mem" , $PMEMORY ) 
+RETURN $PMEMORY 
+ENDFUNC 
+FUNC _MEMMOVEMEMORY ( $PSOURCE , $PDEST , $ILENGTH ) 
+DLLCALL ( "kernel32.dll" , "none" , "RtlMoveMemory" , "struct*" , $PDEST , "struct*" , $PSOURCE , "ulong_ptr" , $ILENGTH ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED ) 
+ENDFUNC 
+FUNC _MEMREAD ( BYREF $TMEMMAP , $PSRCE , $PDEST , $ISIZE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "ReadProcessMemory" , "handle" , DLLSTRUCTGETDATA ( $TMEMMAP , "hProc" ) , "ptr" , $PSRCE , "struct*" , $PDEST , "ulong_ptr" , $ISIZE , "ulong_ptr*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMWRITE ( BYREF $TMEMMAP , $PSRCE , $PDEST = 0 , $ISIZE = 0 , $SSRCE = "struct*" ) 
+IF $PDEST = 0 THEN $PDEST = DLLSTRUCTGETDATA ( $TMEMMAP , "Mem" ) 
+IF $ISIZE = 0 THEN $ISIZE = DLLSTRUCTGETDATA ( $TMEMMAP , "Size" ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "WriteProcessMemory" , "handle" , DLLSTRUCTGETDATA ( $TMEMMAP , "hProc" ) , "ptr" , $PDEST , $SSRCE , $PSRCE , "ulong_ptr" , $ISIZE , "ulong_ptr*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMVIRTUALALLOC ( $PADDRESS , $ISIZE , $IALLOCATION , $IPROTECT ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ptr" , "VirtualAlloc" , "ptr" , $PADDRESS , "ulong_ptr" , $ISIZE , "dword" , $IALLOCATION , "dword" , $IPROTECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMVIRTUALALLOCEX ( $HPROCESS , $PADDRESS , $ISIZE , $IALLOCATION , $IPROTECT ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ptr" , "VirtualAllocEx" , "handle" , $HPROCESS , "ptr" , $PADDRESS , "ulong_ptr" , $ISIZE , "dword" , $IALLOCATION , "dword" , $IPROTECT ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMVIRTUALFREE ( $PADDRESS , $ISIZE , $IFREETYPE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "VirtualFree" , "ptr" , $PADDRESS , "ulong_ptr" , $ISIZE , "dword" , $IFREETYPE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _MEMVIRTUALFREEEX ( $HPROCESS , $PADDRESS , $ISIZE , $IFREETYPE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "VirtualFreeEx" , "handle" , $HPROCESS , "ptr" , $PADDRESS , "ulong_ptr" , $ISIZE , "dword" , $IFREETYPE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC __MEM_OPENPROCESS ( $IACCESS , $FINHERIT , $IPROCESSID , $FDEBUGPRIV = FALSE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "OpenProcess" , "dword" , $IACCESS , "bool" , $FINHERIT , "dword" , $IPROCESSID ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+IF $ARESULT [ 0 ] THEN RETURN $ARESULT [ 0 ] 
+IF NOT $FDEBUGPRIV THEN RETURN 0 
+LOCAL $HTOKEN = _SECURITY__OPENTHREADTOKENEX ( BITOR ( $TOKEN_ADJUST_PRIVILEGES , $TOKEN_QUERY ) ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeDebugPrivilege" , TRUE ) 
+LOCAL $IERROR = @ERROR 
+LOCAL $ILASTERROR = @EXTENDED 
+LOCAL $IRET = 0 
+IF NOT @ERROR THEN 
+$ARESULT = DLLCALL ( "kernel32.dll" , "handle" , "OpenProcess" , "dword" , $IACCESS , "bool" , $FINHERIT , "dword" , $IPROCESSID ) 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+IF $ARESULT [ 0 ] THEN $IRET = $ARESULT [ 0 ] 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeDebugPrivilege" , FALSE ) 
+IF @ERROR THEN 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+ENDIF 
+ENDIF 
+DLLCALL ( "kernel32.dll" , "bool" , "CloseHandle" , "handle" , $HTOKEN ) 
+RETURN SETERROR ( $IERROR , $ILASTERROR , $IRET ) 
+ENDFUNC 
+FUNC _DATEADD ( $STYPE , $IVALTOADD , $SDATE ) 
+LOCAL $ASTIMEPART [ 4 ] 
+LOCAL $ASDATEPART [ 4 ] 
+LOCAL $IJULIANDATE 
+$STYPE = STRINGLEFT ( $STYPE , 1 ) 
+IF STRINGINSTR ( "D,M,Y,w,h,n,s" , $STYPE ) = 0 OR $STYPE = "" THEN 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDIF 
+IF NOT STRINGISINT ( $IVALTOADD ) THEN 
+RETURN SETERROR ( 2 , 0 , 0 ) 
+ENDIF 
+IF NOT _DATEISVALID ( $SDATE ) THEN 
+RETURN SETERROR ( 3 , 0 , 0 ) 
+ENDIF 
+_DATETIMESPLIT ( $SDATE , $ASDATEPART , $ASTIMEPART ) 
+IF $STYPE = "d" OR $STYPE = "w" THEN 
+IF $STYPE = "w" THEN $IVALTOADD = $IVALTOADD * 7 
+$IJULIANDATE = _DATETODAYVALUE ( $ASDATEPART [ 1 ] , $ASDATEPART [ 2 ] , $ASDATEPART [ 3 ] ) + $IVALTOADD 
+_DAYVALUETODATE ( $IJULIANDATE , $ASDATEPART [ 1 ] , $ASDATEPART [ 2 ] , $ASDATEPART [ 3 ] ) 
+ENDIF 
+IF $STYPE = "m" THEN 
+$ASDATEPART [ 2 ] = $ASDATEPART [ 2 ] + $IVALTOADD 
+WHILE $ASDATEPART [ 2 ] > 12 
+$ASDATEPART [ 2 ] = $ASDATEPART [ 2 ] - 12 
+$ASDATEPART [ 1 ] = $ASDATEPART [ 1 ] + 1 
+WEND 
+WHILE $ASDATEPART [ 2 ] < 1 
+$ASDATEPART [ 2 ] = $ASDATEPART [ 2 ] + 12 
+$ASDATEPART [ 1 ] = $ASDATEPART [ 1 ] - 1 
+WEND 
+ENDIF 
+IF $STYPE = "y" THEN 
+$ASDATEPART [ 1 ] = $ASDATEPART [ 1 ] + $IVALTOADD 
+ENDIF 
+IF $STYPE = "h" OR $STYPE = "n" OR $STYPE = "s" THEN 
+LOCAL $ITIMEVAL = _TIMETOTICKS ( $ASTIMEPART [ 1 ] , $ASTIMEPART [ 2 ] , $ASTIMEPART [ 3 ] ) / 1000 
+IF $STYPE = "h" THEN $ITIMEVAL = $ITIMEVAL + $IVALTOADD * 3600 
+IF $STYPE = "n" THEN $ITIMEVAL = $ITIMEVAL + $IVALTOADD * 60 
+IF $STYPE = "s" THEN $ITIMEVAL = $ITIMEVAL + $IVALTOADD 
+LOCAL $DAY2ADD = INT ( $ITIMEVAL / ( 24 * 60 * 60 ) ) 
+$ITIMEVAL = $ITIMEVAL - $DAY2ADD * 24 * 60 * 60 
+IF $ITIMEVAL < 0 THEN 
+$DAY2ADD = $DAY2ADD - 1 
+$ITIMEVAL = $ITIMEVAL + 24 * 60 * 60 
+ENDIF 
+$IJULIANDATE = _DATETODAYVALUE ( $ASDATEPART [ 1 ] , $ASDATEPART [ 2 ] , $ASDATEPART [ 3 ] ) + $DAY2ADD 
+_DAYVALUETODATE ( $IJULIANDATE , $ASDATEPART [ 1 ] , $ASDATEPART [ 2 ] , $ASDATEPART [ 3 ] ) 
+_TICKSTOTIME ( $ITIMEVAL * 1000 , $ASTIMEPART [ 1 ] , $ASTIMEPART [ 2 ] , $ASTIMEPART [ 3 ] ) 
+ENDIF 
+LOCAL $INUMDAYS = _DAYSINMONTH ( $ASDATEPART [ 1 ] ) 
+IF $INUMDAYS [ $ASDATEPART [ 2 ] ] < $ASDATEPART [ 3 ] THEN $ASDATEPART [ 3 ] = $INUMDAYS [ $ASDATEPART [ 2 ] ] 
+$SDATE = $ASDATEPART [ 1 ] & "/" & STRINGRIGHT ( "0" & $ASDATEPART [ 2 ] , 2 ) & "/" & STRINGRIGHT ( "0" & $ASDATEPART [ 3 ] , 2 ) 
+IF $ASTIMEPART [ 0 ] > 0 THEN 
+IF $ASTIMEPART [ 0 ] > 2 THEN 
+$SDATE = $SDATE & " " & STRINGRIGHT ( "0" & $ASTIMEPART [ 1 ] , 2 ) & ":" & STRINGRIGHT ( "0" & $ASTIMEPART [ 2 ] , 2 ) & ":" & STRINGRIGHT ( "0" & $ASTIMEPART [ 3 ] , 2 ) 
+ELSE 
+$SDATE = $SDATE & " " & STRINGRIGHT ( "0" & $ASTIMEPART [ 1 ] , 2 ) & ":" & STRINGRIGHT ( "0" & $ASTIMEPART [ 2 ] , 2 ) 
+ENDIF 
+ENDIF 
+RETURN ( $SDATE ) 
+ENDFUNC 
+FUNC _DATEDAYOFWEEK ( $IDAYNUM , $ISHORT = 0 ) 
+LOCAL CONST $ADAYOFWEEK [ 8 ] = [ "" , "Sunday" , "Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday" ] 
+SELECT 
+CASE NOT STRINGISINT ( $IDAYNUM ) OR NOT STRINGISINT ( $ISHORT ) 
+RETURN SETERROR ( 1 , 0 , "" ) 
+CASE $IDAYNUM < 1 OR $IDAYNUM > 7 
+RETURN SETERROR ( 1 , 0 , "" ) 
+CASE ELSE 
+SELECT 
+CASE $ISHORT = 0 
+RETURN $ADAYOFWEEK [ $IDAYNUM ] 
+CASE $ISHORT = 1 
+RETURN STRINGLEFT ( $ADAYOFWEEK [ $IDAYNUM ] , 3 ) 
+CASE ELSE 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDSELECT 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATEDAYSINMONTH ( $IYEAR , $IMONTHNUM ) 
+IF __DATEISMONTH ( $IMONTHNUM ) AND __DATEISYEAR ( $IYEAR ) THEN 
+LOCAL $AINUMDAYS = _DAYSINMONTH ( $IYEAR ) 
+RETURN $AINUMDAYS [ $IMONTHNUM ] 
+ENDIF 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDFUNC 
+FUNC _DATEDIFF ( $STYPE , $SSTARTDATE , $SENDDATE ) 
+$STYPE = STRINGLEFT ( $STYPE , 1 ) 
+IF STRINGINSTR ( "d,m,y,w,h,n,s" , $STYPE ) = 0 OR $STYPE = "" THEN 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDIF 
+IF NOT _DATEISVALID ( $SSTARTDATE ) THEN 
+RETURN SETERROR ( 2 , 0 , 0 ) 
+ENDIF 
+IF NOT _DATEISVALID ( $SENDDATE ) THEN 
+RETURN SETERROR ( 3 , 0 , 0 ) 
+ENDIF 
+LOCAL $ASSTARTDATEPART [ 4 ] , $ASSTARTTIMEPART [ 4 ] , $ASENDDATEPART [ 4 ] , $ASENDTIMEPART [ 4 ] 
+_DATETIMESPLIT ( $SSTARTDATE , $ASSTARTDATEPART , $ASSTARTTIMEPART ) 
+_DATETIMESPLIT ( $SENDDATE , $ASENDDATEPART , $ASENDTIMEPART ) 
+LOCAL $ADAYSDIFF = _DATETODAYVALUE ( $ASENDDATEPART [ 1 ] , $ASENDDATEPART [ 2 ] , $ASENDDATEPART [ 3 ] ) - _DATETODAYVALUE ( $ASSTARTDATEPART [ 1 ] , $ASSTARTDATEPART [ 2 ] , $ASSTARTDATEPART [ 3 ] ) 
+LOCAL $ITIMEDIFF , $IYEARDIFF , $ISTARTTIMEINSECS , $IENDTIMEINSECS 
+IF $ASSTARTTIMEPART [ 0 ] > 1 AND $ASENDTIMEPART [ 0 ] > 1 THEN 
+$ISTARTTIMEINSECS = $ASSTARTTIMEPART [ 1 ] * 3600 + $ASSTARTTIMEPART [ 2 ] * 60 + $ASSTARTTIMEPART [ 3 ] 
+$IENDTIMEINSECS = $ASENDTIMEPART [ 1 ] * 3600 + $ASENDTIMEPART [ 2 ] * 60 + $ASENDTIMEPART [ 3 ] 
+$ITIMEDIFF = $IENDTIMEINSECS - $ISTARTTIMEINSECS 
+IF $ITIMEDIFF < 0 THEN 
+$ADAYSDIFF = $ADAYSDIFF - 1 
+$ITIMEDIFF = $ITIMEDIFF + 24 * 60 * 60 
+ENDIF 
+ELSE 
+$ITIMEDIFF = 0 
+ENDIF 
+SELECT 
+CASE $STYPE = "d" 
+RETURN ( $ADAYSDIFF ) 
+CASE $STYPE = "m" 
+$IYEARDIFF = $ASENDDATEPART [ 1 ] - $ASSTARTDATEPART [ 1 ] 
+LOCAL $IMONTHDIFF = $ASENDDATEPART [ 2 ] - $ASSTARTDATEPART [ 2 ] + $IYEARDIFF * 12 
+IF $ASENDDATEPART [ 3 ] < $ASSTARTDATEPART [ 3 ] THEN $IMONTHDIFF = $IMONTHDIFF - 1 
+$ISTARTTIMEINSECS = $ASSTARTTIMEPART [ 1 ] * 3600 + $ASSTARTTIMEPART [ 2 ] * 60 + $ASSTARTTIMEPART [ 3 ] 
+$IENDTIMEINSECS = $ASENDTIMEPART [ 1 ] * 3600 + $ASENDTIMEPART [ 2 ] * 60 + $ASENDTIMEPART [ 3 ] 
+$ITIMEDIFF = $IENDTIMEINSECS - $ISTARTTIMEINSECS 
+IF $ASENDDATEPART [ 3 ] = $ASSTARTDATEPART [ 3 ] AND $ITIMEDIFF < 0 THEN $IMONTHDIFF = $IMONTHDIFF - 1 
+RETURN ( $IMONTHDIFF ) 
+CASE $STYPE = "y" 
+$IYEARDIFF = $ASENDDATEPART [ 1 ] - $ASSTARTDATEPART [ 1 ] 
+IF $ASENDDATEPART [ 2 ] < $ASSTARTDATEPART [ 2 ] THEN $IYEARDIFF = $IYEARDIFF - 1 
+IF $ASENDDATEPART [ 2 ] = $ASSTARTDATEPART [ 2 ] AND $ASENDDATEPART [ 3 ] < $ASSTARTDATEPART [ 3 ] THEN $IYEARDIFF = $IYEARDIFF - 1 
+$ISTARTTIMEINSECS = $ASSTARTTIMEPART [ 1 ] * 3600 + $ASSTARTTIMEPART [ 2 ] * 60 + $ASSTARTTIMEPART [ 3 ] 
+$IENDTIMEINSECS = $ASENDTIMEPART [ 1 ] * 3600 + $ASENDTIMEPART [ 2 ] * 60 + $ASENDTIMEPART [ 3 ] 
+$ITIMEDIFF = $IENDTIMEINSECS - $ISTARTTIMEINSECS 
+IF $ASENDDATEPART [ 2 ] = $ASSTARTDATEPART [ 2 ] AND $ASENDDATEPART [ 3 ] = $ASSTARTDATEPART [ 3 ] AND $ITIMEDIFF < 0 THEN $IYEARDIFF = $IYEARDIFF - 1 
+RETURN ( $IYEARDIFF ) 
+CASE $STYPE = "w" 
+RETURN ( INT ( $ADAYSDIFF / 7 ) ) 
+CASE $STYPE = "h" 
+RETURN ( $ADAYSDIFF * 24 + INT ( $ITIMEDIFF / 3600 ) ) 
+CASE $STYPE = "n" 
+RETURN ( $ADAYSDIFF * 24 * 60 + INT ( $ITIMEDIFF / 60 ) ) 
+CASE $STYPE = "s" 
+RETURN ( $ADAYSDIFF * 24 * 60 * 60 + $ITIMEDIFF ) 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATEISLEAPYEAR ( $IYEAR ) 
+IF STRINGISINT ( $IYEAR ) THEN 
+SELECT 
+CASE MOD ( $IYEAR , 4 ) = 0 AND MOD ( $IYEAR , 100 ) <> 0 
+RETURN 1 
+CASE MOD ( $IYEAR , 400 ) = 0 
+RETURN 1 
+CASE ELSE 
+RETURN 0 
+ENDSELECT 
+ENDIF 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDFUNC 
+FUNC __DATEISMONTH ( $INUMBER ) 
+IF STRINGISINT ( $INUMBER ) THEN 
+IF $INUMBER >= 1 AND $INUMBER <= 12 THEN 
+RETURN 1 
+ELSE 
+RETURN 0 
+ENDIF 
+ENDIF 
+RETURN 0 
+ENDFUNC 
+FUNC _DATEISVALID ( $SDATE ) 
+LOCAL $ASDATEPART [ 4 ] , $ASTIMEPART [ 4 ] 
+LOCAL $SDATETIME = STRINGSPLIT ( $SDATE , " T" ) 
+IF $SDATETIME [ 0 ] > 0 THEN $ASDATEPART = STRINGSPLIT ( $SDATETIME [ 1 ] , "/-." ) 
+IF UBOUND ( $ASDATEPART ) <> 4 THEN RETURN ( 0 ) 
+IF $ASDATEPART [ 0 ] <> 3 THEN RETURN ( 0 ) 
+IF NOT STRINGISINT ( $ASDATEPART [ 1 ] ) THEN RETURN ( 0 ) 
+IF NOT STRINGISINT ( $ASDATEPART [ 2 ] ) THEN RETURN ( 0 ) 
+IF NOT STRINGISINT ( $ASDATEPART [ 3 ] ) THEN RETURN ( 0 ) 
+$ASDATEPART [ 1 ] = NUMBER ( $ASDATEPART [ 1 ] ) 
+$ASDATEPART [ 2 ] = NUMBER ( $ASDATEPART [ 2 ] ) 
+$ASDATEPART [ 3 ] = NUMBER ( $ASDATEPART [ 3 ] ) 
+LOCAL $INUMDAYS = _DAYSINMONTH ( $ASDATEPART [ 1 ] ) 
+IF $ASDATEPART [ 1 ] < 1000 OR $ASDATEPART [ 1 ] > 2999 THEN RETURN ( 0 ) 
+IF $ASDATEPART [ 2 ] < 1 OR $ASDATEPART [ 2 ] > 12 THEN RETURN ( 0 ) 
+IF $ASDATEPART [ 3 ] < 1 OR $ASDATEPART [ 3 ] > $INUMDAYS [ $ASDATEPART [ 2 ] ] THEN RETURN ( 0 ) 
+IF $SDATETIME [ 0 ] > 1 THEN 
+$ASTIMEPART = STRINGSPLIT ( $SDATETIME [ 2 ] , ":" ) 
+IF UBOUND ( $ASTIMEPART ) < 4 THEN REDIM $ASTIMEPART [ 4 ] 
+ELSE 
+DIM $ASTIMEPART [ 4 ] 
+ENDIF 
+IF $ASTIMEPART [ 0 ] < 1 THEN RETURN ( 1 ) 
+IF $ASTIMEPART [ 0 ] < 2 THEN RETURN ( 0 ) 
+IF $ASTIMEPART [ 0 ] = 2 THEN $ASTIMEPART [ 3 ] = "00" 
+IF NOT STRINGISINT ( $ASTIMEPART [ 1 ] ) THEN RETURN ( 0 ) 
+IF NOT STRINGISINT ( $ASTIMEPART [ 2 ] ) THEN RETURN ( 0 ) 
+IF NOT STRINGISINT ( $ASTIMEPART [ 3 ] ) THEN RETURN ( 0 ) 
+$ASTIMEPART [ 1 ] = NUMBER ( $ASTIMEPART [ 1 ] ) 
+$ASTIMEPART [ 2 ] = NUMBER ( $ASTIMEPART [ 2 ] ) 
+$ASTIMEPART [ 3 ] = NUMBER ( $ASTIMEPART [ 3 ] ) 
+IF $ASTIMEPART [ 1 ] < 0 OR $ASTIMEPART [ 1 ] > 23 THEN RETURN ( 0 ) 
+IF $ASTIMEPART [ 2 ] < 0 OR $ASTIMEPART [ 2 ] > 59 THEN RETURN ( 0 ) 
+IF $ASTIMEPART [ 3 ] < 0 OR $ASTIMEPART [ 3 ] > 59 THEN RETURN ( 0 ) 
+RETURN 1 
+ENDFUNC 
+FUNC __DATEISYEAR ( $INUMBER ) 
+IF STRINGISINT ( $INUMBER ) THEN 
+IF STRINGLEN ( $INUMBER ) = 4 THEN 
+RETURN 1 
+ELSE 
+RETURN 0 
+ENDIF 
+ENDIF 
+RETURN 0 
+ENDFUNC 
+FUNC _DATELASTWEEKDAYNUM ( $IWEEKDAYNUM ) 
+SELECT 
+CASE NOT STRINGISINT ( $IWEEKDAYNUM ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IWEEKDAYNUM < 1 OR $IWEEKDAYNUM > 7 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $ILASTWEEKDAYNUM 
+IF $IWEEKDAYNUM = 1 THEN 
+$ILASTWEEKDAYNUM = 7 
+ELSE 
+$ILASTWEEKDAYNUM = $IWEEKDAYNUM - 1 
+ENDIF 
+RETURN $ILASTWEEKDAYNUM 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATELASTMONTHNUM ( $IMONTHNUM ) 
+SELECT 
+CASE NOT STRINGISINT ( $IMONTHNUM ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IMONTHNUM < 1 OR $IMONTHNUM > 12 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $ILASTMONTHNUM 
+IF $IMONTHNUM = 1 THEN 
+$ILASTMONTHNUM = 12 
+ELSE 
+$ILASTMONTHNUM = $IMONTHNUM - 1 
+ENDIF 
+$ILASTMONTHNUM = STRINGFORMAT ( "%02d" , $ILASTMONTHNUM ) 
+RETURN $ILASTMONTHNUM 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATELASTMONTHYEAR ( $IMONTHNUM , $IYEAR ) 
+SELECT 
+CASE NOT STRINGISINT ( $IMONTHNUM ) OR NOT STRINGISINT ( $IYEAR ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IMONTHNUM < 1 OR $IMONTHNUM > 12 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $ILASTYEAR 
+IF $IMONTHNUM = 1 THEN 
+$ILASTYEAR = $IYEAR - 1 
+ELSE 
+$ILASTYEAR = $IYEAR 
+ENDIF 
+$ILASTYEAR = STRINGFORMAT ( "%04d" , $ILASTYEAR ) 
+RETURN $ILASTYEAR 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATENEXTWEEKDAYNUM ( $IWEEKDAYNUM ) 
+SELECT 
+CASE NOT STRINGISINT ( $IWEEKDAYNUM ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IWEEKDAYNUM < 1 OR $IWEEKDAYNUM > 7 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $INEXTWEEKDAYNUM 
+IF $IWEEKDAYNUM = 7 THEN 
+$INEXTWEEKDAYNUM = 1 
+ELSE 
+$INEXTWEEKDAYNUM = $IWEEKDAYNUM + 1 
+ENDIF 
+RETURN $INEXTWEEKDAYNUM 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATENEXTMONTHNUM ( $IMONTHNUM ) 
+SELECT 
+CASE NOT STRINGISINT ( $IMONTHNUM ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IMONTHNUM < 1 OR $IMONTHNUM > 12 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $INEXTMONTHNUM 
+IF $IMONTHNUM = 12 THEN 
+$INEXTMONTHNUM = 1 
+ELSE 
+$INEXTMONTHNUM = $IMONTHNUM + 1 
+ENDIF 
+$INEXTMONTHNUM = STRINGFORMAT ( "%02d" , $INEXTMONTHNUM ) 
+RETURN $INEXTMONTHNUM 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATENEXTMONTHYEAR ( $IMONTHNUM , $IYEAR ) 
+SELECT 
+CASE NOT STRINGISINT ( $IMONTHNUM ) OR NOT STRINGISINT ( $IYEAR ) 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE $IMONTHNUM < 1 OR $IMONTHNUM > 12 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+CASE ELSE 
+LOCAL $INEXTYEAR 
+IF $IMONTHNUM = 12 THEN 
+$INEXTYEAR = $IYEAR + 1 
+ELSE 
+$INEXTYEAR = $IYEAR 
+ENDIF 
+$INEXTYEAR = STRINGFORMAT ( "%04d" , $INEXTYEAR ) 
+RETURN $INEXTYEAR 
+ENDSELECT 
+ENDFUNC 
+FUNC _DATETIMEFORMAT ( $SDATE , $STYPE ) 
+LOCAL $ASDATEPART [ 4 ] , $ASTIMEPART [ 4 ] 
+LOCAL $STEMPDATE = "" , $STEMPTIME = "" 
+LOCAL $SAM , $SPM , $LNGX 
+IF NOT _DATEISVALID ( $SDATE ) THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+IF $STYPE < 0 OR $STYPE > 5 OR NOT ISINT ( $STYPE ) THEN 
+RETURN SETERROR ( 2 , 0 , "" ) 
+ENDIF 
+_DATETIMESPLIT ( $SDATE , $ASDATEPART , $ASTIMEPART ) 
+SWITCH $STYPE 
+CASE 0 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 31 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPDATE = $LNGX [ 3 ] 
+ELSE 
+$STEMPDATE = "M/d/yyyy" 
+ENDIF 
+IF $ASTIMEPART [ 0 ] > 1 THEN 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 4099 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPTIME = $LNGX [ 3 ] 
+ELSE 
+$STEMPTIME = "h:mm:ss tt" 
+ENDIF 
+ENDIF 
+CASE 1 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 32 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPDATE = $LNGX [ 3 ] 
+ELSE 
+$STEMPDATE = "dddd, MMMM dd, yyyy" 
+ENDIF 
+CASE 2 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 31 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPDATE = $LNGX [ 3 ] 
+ELSE 
+$STEMPDATE = "M/d/yyyy" 
+ENDIF 
+CASE 3 
+IF $ASTIMEPART [ 0 ] > 1 THEN 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 4099 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPTIME = $LNGX [ 3 ] 
+ELSE 
+$STEMPTIME = "h:mm:ss tt" 
+ENDIF 
+ENDIF 
+CASE 4 
+IF $ASTIMEPART [ 0 ] > 1 THEN 
+$STEMPTIME = "hh:mm" 
+ENDIF 
+CASE 5 
+IF $ASTIMEPART [ 0 ] > 1 THEN 
+$STEMPTIME = "hh:mm:ss" 
+ENDIF 
+ENDSWITCH 
+IF $STEMPDATE <> "" THEN 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 29 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "/" , $LNGX [ 3 ] ) 
+ENDIF 
+LOCAL $IWDAY = _DATETODAYOFWEEK ( $ASDATEPART [ 1 ] , $ASDATEPART [ 2 ] , $ASDATEPART [ 3 ] ) 
+$ASDATEPART [ 3 ] = STRINGRIGHT ( "0" & $ASDATEPART [ 3 ] , 2 ) 
+$ASDATEPART [ 2 ] = STRINGRIGHT ( "0" & $ASDATEPART [ 2 ] , 2 ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "d" , "@" ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "m" , "#" ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "y" , "&" ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "@@@@" , _DATEDAYOFWEEK ( $IWDAY , 0 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "@@@" , _DATEDAYOFWEEK ( $IWDAY , 1 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "@@" , $ASDATEPART [ 3 ] ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "@" , STRINGREPLACE ( STRINGLEFT ( $ASDATEPART [ 3 ] , 1 ) , "0" , "" ) & STRINGRIGHT ( $ASDATEPART [ 3 ] , 1 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "####" , _DATETOMONTH ( $ASDATEPART [ 2 ] , 0 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "###" , _DATETOMONTH ( $ASDATEPART [ 2 ] , 1 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "##" , $ASDATEPART [ 2 ] ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "#" , STRINGREPLACE ( STRINGLEFT ( $ASDATEPART [ 2 ] , 1 ) , "0" , "" ) & STRINGRIGHT ( $ASDATEPART [ 2 ] , 1 ) ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "&&&&" , $ASDATEPART [ 1 ] ) 
+$STEMPDATE = STRINGREPLACE ( $STEMPDATE , "&&" , STRINGRIGHT ( $ASDATEPART [ 1 ] , 2 ) ) 
+ENDIF 
+IF $STEMPTIME <> "" THEN 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 40 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$SAM = $LNGX [ 3 ] 
+ELSE 
+$SAM = "AM" 
+ENDIF 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 41 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$SPM = $LNGX [ 3 ] 
+ELSE 
+$SPM = "PM" 
+ENDIF 
+$LNGX = DLLCALL ( "kernel32.dll" , "int" , "GetLocaleInfoW" , "dword" , 1024 , "dword" , 30 , "wstr" , "" , "int" , 255 ) 
+IF NOT @ERROR AND $LNGX [ 0 ] <> 0 THEN 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , ":" , $LNGX [ 3 ] ) 
+ENDIF 
+IF STRINGINSTR ( $STEMPTIME , "tt" ) THEN 
+IF $ASTIMEPART [ 1 ] < 12 THEN 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "tt" , $SAM ) 
+IF $ASTIMEPART [ 1 ] = 0 THEN $ASTIMEPART [ 1 ] = 12 
+ELSE 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "tt" , $SPM ) 
+IF $ASTIMEPART [ 1 ] > 12 THEN $ASTIMEPART [ 1 ] = $ASTIMEPART [ 1 ] - 12 
+ENDIF 
+ENDIF 
+$ASTIMEPART [ 1 ] = STRINGRIGHT ( "0" & $ASTIMEPART [ 1 ] , 2 ) 
+$ASTIMEPART [ 2 ] = STRINGRIGHT ( "0" & $ASTIMEPART [ 2 ] , 2 ) 
+$ASTIMEPART [ 3 ] = STRINGRIGHT ( "0" & $ASTIMEPART [ 3 ] , 2 ) 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "hh" , STRINGFORMAT ( "%02d" , $ASTIMEPART [ 1 ] ) ) 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "h" , STRINGREPLACE ( STRINGLEFT ( $ASTIMEPART [ 1 ] , 1 ) , "0" , "" ) & STRINGRIGHT ( $ASTIMEPART [ 1 ] , 1 ) ) 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "mm" , STRINGFORMAT ( "%02d" , $ASTIMEPART [ 2 ] ) ) 
+$STEMPTIME = STRINGREPLACE ( $STEMPTIME , "ss" , STRINGFORMAT ( "%02d" , $ASTIMEPART [ 3 ] ) ) 
+$STEMPDATE = STRINGSTRIPWS ( $STEMPDATE & " " & $STEMPTIME , 3 ) 
+ENDIF 
+RETURN $STEMPDATE 
+ENDFUNC 
+FUNC _DATETIMESPLIT ( $SDATE , BYREF $ASDATEPART , BYREF $ITIMEPART ) 
+LOCAL $SDATETIME = STRINGSPLIT ( $SDATE , " T" ) 
+IF $SDATETIME [ 0 ] > 0 THEN $ASDATEPART = STRINGSPLIT ( $SDATETIME [ 1 ] , "/-." ) 
+IF $SDATETIME [ 0 ] > 1 THEN 
+$ITIMEPART = STRINGSPLIT ( $SDATETIME [ 2 ] , ":" ) 
+IF UBOUND ( $ITIMEPART ) < 4 THEN REDIM $ITIMEPART [ 4 ] 
+ELSE 
+DIM $ITIMEPART [ 4 ] 
+ENDIF 
+IF UBOUND ( $ASDATEPART ) < 4 THEN REDIM $ASDATEPART [ 4 ] 
+FOR $X = 1 TO 3 
+IF STRINGISINT ( $ASDATEPART [ $X ] ) THEN 
+$ASDATEPART [ $X ] = NUMBER ( $ASDATEPART [ $X ] ) 
+ELSE 
+$ASDATEPART [ $X ] = - 1 
+ENDIF 
+IF STRINGISINT ( $ITIMEPART [ $X ] ) THEN 
+$ITIMEPART [ $X ] = NUMBER ( $ITIMEPART [ $X ] ) 
+ELSE 
+$ITIMEPART [ $X ] = 0 
+ENDIF 
+NEXT 
+RETURN 1 
+ENDFUNC 
+FUNC _DATETODAYOFWEEK ( $IYEAR , $IMONTH , $IDAY ) 
+IF NOT _DATEISVALID ( $IYEAR & "/" & $IMONTH & "/" & $IDAY ) THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+LOCAL $I_AFACTOR = INT ( ( 14 - $IMONTH ) / 12 ) 
+LOCAL $I_YFACTOR = $IYEAR - $I_AFACTOR 
+LOCAL $I_MFACTOR = $IMONTH + ( 12 * $I_AFACTOR ) - 2 
+LOCAL $I_DFACTOR = MOD ( $IDAY + $I_YFACTOR + INT ( $I_YFACTOR / 4 ) - INT ( $I_YFACTOR / 100 ) + INT ( $I_YFACTOR / 400 ) + INT ( ( 31 * $I_MFACTOR ) / 12 ) , 7 ) 
+RETURN ( $I_DFACTOR + 1 ) 
+ENDFUNC 
+FUNC _DATETODAYOFWEEKISO ( $IYEAR , $IMONTH , $IDAY ) 
+LOCAL $IDOW = _DATETODAYOFWEEK ( $IYEAR , $IMONTH , $IDAY ) 
+IF @ERROR THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+IF $IDOW >= 2 THEN RETURN $IDOW - 1 
+RETURN 7 
+ENDFUNC 
+FUNC _DATETODAYVALUE ( $IYEAR , $IMONTH , $IDAY ) 
+IF NOT _DATEISVALID ( STRINGFORMAT ( "%04d/%02d/%02d" , $IYEAR , $IMONTH , $IDAY ) ) THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+IF $IMONTH < 3 THEN 
+$IMONTH = $IMONTH + 12 
+$IYEAR = $IYEAR - 1 
+ENDIF 
+LOCAL $I_AFACTOR = INT ( $IYEAR / 100 ) 
+LOCAL $I_BFACTOR = INT ( $I_AFACTOR / 4 ) 
+LOCAL $I_CFACTOR = 2 - $I_AFACTOR + $I_BFACTOR 
+LOCAL $I_EFACTOR = INT ( 1461 * ( $IYEAR + 4716 ) / 4 ) 
+LOCAL $I_FFACTOR = INT ( 153 * ( $IMONTH + 1 ) / 5 ) 
+LOCAL $IJULIANDATE = $I_CFACTOR + $IDAY + $I_EFACTOR + $I_FFACTOR - 1.524500e+003 
+RETURN ( $IJULIANDATE ) 
+ENDFUNC 
+FUNC _DATETOMONTH ( $IMONTH , $ISHORT = 0 ) 
+LOCAL $AMONTHNUMBER [ 13 ] = [ "" , "January" , "February" , "March" , "April" , "May" , "June" , "July" , "August" , "September" , "October" , "November" , "December" ] 
+LOCAL $AMONTHNUMBERABBREV [ 13 ] = [ "" , "Jan" , "Feb" , "Mar" , "Apr" , "May" , "June" , "July" , "Aug" , "Sept" , "Oct" , "Nov" , "Dec" ] 
+SELECT 
+CASE NOT STRINGISINT ( $IMONTH ) 
+RETURN SETERROR ( 1 , 0 , "" ) 
+CASE $IMONTH < 1 OR $IMONTH > 12 
+RETURN SETERROR ( 1 , 0 , "" ) 
+CASE ELSE 
+SELECT 
+CASE $ISHORT = 0 
+RETURN $AMONTHNUMBER [ $IMONTH ] 
+CASE $ISHORT = 1 
+RETURN $AMONTHNUMBERABBREV [ $IMONTH ] 
+CASE ELSE 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDSELECT 
+ENDSELECT 
+ENDFUNC 
+FUNC _DAYVALUETODATE ( $IJULIANDATE , BYREF $IYEAR , BYREF $IMONTH , BYREF $IDAY ) 
+IF $IJULIANDATE < 0 OR NOT ISNUMBER ( $IJULIANDATE ) THEN 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDIF 
+LOCAL $I_ZFACTOR = INT ( $IJULIANDATE + 5.000000e-001 ) 
+LOCAL $I_WFACTOR = INT ( ( $I_ZFACTOR - 1.867216e+006 ) / 3.652425e+004 ) 
+LOCAL $I_XFACTOR = INT ( $I_WFACTOR / 4 ) 
+LOCAL $I_AFACTOR = $I_ZFACTOR + 1 + $I_WFACTOR - $I_XFACTOR 
+LOCAL $I_BFACTOR = $I_AFACTOR + 1524 
+LOCAL $I_CFACTOR = INT ( ( $I_BFACTOR - 1.221000e+002 ) / 3.652500e+002 ) 
+LOCAL $I_DFACTOR = INT ( 3.652500e+002 * $I_CFACTOR ) 
+LOCAL $I_EFACTOR = INT ( ( $I_BFACTOR - $I_DFACTOR ) / 3.060010e+001 ) 
+LOCAL $I_FFACTOR = INT ( 3.060010e+001 * $I_EFACTOR ) 
+$IDAY = $I_BFACTOR - $I_DFACTOR - $I_FFACTOR 
+IF $I_EFACTOR - 1 < 13 THEN 
+$IMONTH = $I_EFACTOR - 1 
+ELSE 
+$IMONTH = $I_EFACTOR - 13 
+ENDIF 
+IF $IMONTH < 3 THEN 
+$IYEAR = $I_CFACTOR - 4715 
+ELSE 
+$IYEAR = $I_CFACTOR - 4716 
+ENDIF 
+$IYEAR = STRINGFORMAT ( "%04d" , $IYEAR ) 
+$IMONTH = STRINGFORMAT ( "%02d" , $IMONTH ) 
+$IDAY = STRINGFORMAT ( "%02d" , $IDAY ) 
+RETURN $IYEAR & "/" & $IMONTH & "/" & $IDAY 
+ENDFUNC 
+FUNC _DATE_JULIANDAYNO ( $IYEAR , $IMONTH , $IDAY ) 
+LOCAL $SFULLDATE = STRINGFORMAT ( "%04d/%02d/%02d" , $IYEAR , $IMONTH , $IDAY ) 
+IF NOT _DATEISVALID ( $SFULLDATE ) THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+LOCAL $IJDAY = 0 
+LOCAL $AIDAYSINMONTH = _DAYSINMONTH ( $IYEAR ) 
+FOR $ICNTR = 1 TO $IMONTH - 1 
+$IJDAY = $IJDAY + $AIDAYSINMONTH [ $ICNTR ] 
+NEXT 
+$IJDAY = ( $IYEAR * 1000 ) + ( $IJDAY + $IDAY ) 
+RETURN $IJDAY 
+ENDFUNC 
+FUNC _JULIANTODATE ( $IJDAY , $SSEP = "/" ) 
+LOCAL $IYEAR = INT ( $IJDAY / 1000 ) 
+LOCAL $IDAYS = MOD ( $IJDAY , 1000 ) 
+LOCAL $IMAXDAYS = 365 
+IF _DATEISLEAPYEAR ( $IYEAR ) THEN $IMAXDAYS = 366 
+IF $IDAYS > $IMAXDAYS THEN 
+RETURN SETERROR ( 1 , 0 , "" ) 
+ENDIF 
+LOCAL $AIDAYSINMONTH = _DAYSINMONTH ( $IYEAR ) 
+LOCAL $IMONTH = 1 
+WHILE $IDAYS > $AIDAYSINMONTH [ $IMONTH ] 
+$IDAYS = $IDAYS - $AIDAYSINMONTH [ $IMONTH ] 
+$IMONTH = $IMONTH + 1 
+WEND 
+RETURN STRINGFORMAT ( "%04d%s%02d%s%02d" , $IYEAR , $SSEP , $IMONTH , $SSEP , $IDAYS ) 
+ENDFUNC 
+FUNC _NOW ( ) 
+RETURN ( _DATETIMEFORMAT ( @YEAR & "/" & @MON & "/" & @MDAY & " " & @HOUR & ":" & @MIN & ":" & @SEC , 0 ) ) 
+ENDFUNC 
+FUNC _NOWCALC ( ) 
+RETURN ( @YEAR & "/" & @MON & "/" & @MDAY & " " & @HOUR & ":" & @MIN & ":" & @SEC ) 
+ENDFUNC 
+FUNC _NOWCALCDATE ( ) 
+RETURN ( @YEAR & "/" & @MON & "/" & @MDAY ) 
+ENDFUNC 
+FUNC _NOWDATE ( ) 
+RETURN ( _DATETIMEFORMAT ( @YEAR & "/" & @MON & "/" & @MDAY , 0 ) ) 
+ENDFUNC 
+FUNC _NOWTIME ( $STYPE = 3 ) 
+IF $STYPE < 3 OR $STYPE > 5 THEN $STYPE = 3 
+RETURN ( _DATETIMEFORMAT ( @YEAR & "/" & @MON & "/" & @MDAY & " " & @HOUR & ":" & @MIN & ":" & @SEC , $STYPE ) ) 
+ENDFUNC 
+FUNC _SETDATE ( $IDAY , $IMONTH = 0 , $IYEAR = 0 ) 
+IF $IYEAR = 0 THEN $IYEAR = @YEAR 
+IF $IMONTH = 0 THEN $IMONTH = @MON 
+IF NOT _DATEISVALID ( $IYEAR & "/" & $IMONTH & "/" & $IDAY ) THEN RETURN 1 
+LOCAL $TSYSTEMTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLCALL ( "kernel32.dll" , "none" , "GetLocalTime" , "struct*" , $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , 4 , $IDAY ) 
+IF $IMONTH > 0 THEN DLLSTRUCTSETDATA ( $TSYSTEMTIME , 2 , $IMONTH ) 
+IF $IYEAR > 0 THEN DLLSTRUCTSETDATA ( $TSYSTEMTIME , 1 , $IYEAR ) 
+LOCAL $IRETVAL = _DATE_TIME_SETLOCALTIME ( $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN INT ( $IRETVAL ) 
+ENDFUNC 
+FUNC _SETTIME ( $IHOUR , $IMINUTE , $ISECOND = 0 ) 
+IF $IHOUR < 0 OR $IHOUR > 23 THEN RETURN 1 
+IF $IMINUTE < 0 OR $IMINUTE > 59 THEN RETURN 1 
+IF $ISECOND < 0 OR $ISECOND > 59 THEN RETURN 1 
+LOCAL $TSYSTEMTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLCALL ( "kernel32.dll" , "none" , "GetLocalTime" , "struct*" , $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , 5 , $IHOUR ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , 6 , $IMINUTE ) 
+IF $ISECOND > 0 THEN DLLSTRUCTSETDATA ( $TSYSTEMTIME , 7 , $ISECOND ) 
+LOCAL $IRETVAL = _DATE_TIME_SETLOCALTIME ( $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN INT ( $IRETVAL ) 
+ENDFUNC 
+FUNC _TICKSTOTIME ( $ITICKS , BYREF $IHOURS , BYREF $IMINS , BYREF $ISECS ) 
+IF NUMBER ( $ITICKS ) > 0 THEN 
+$ITICKS = INT ( $ITICKS / 1000 ) 
+$IHOURS = INT ( $ITICKS / 3600 ) 
+$ITICKS = MOD ( $ITICKS , 3600 ) 
+$IMINS = INT ( $ITICKS / 60 ) 
+$ISECS = MOD ( $ITICKS , 60 ) 
+RETURN 1 
+ELSEIF NUMBER ( $ITICKS ) = 0 THEN 
+$IHOURS = 0 
+$ITICKS = 0 
+$IMINS = 0 
+$ISECS = 0 
+RETURN 1 
+ELSE 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDIF 
+ENDFUNC 
+FUNC _TIMETOTICKS ( $IHOURS = @HOUR , $IMINS = @MIN , $ISECS = @SEC ) 
+IF STRINGISINT ( $IHOURS ) AND STRINGISINT ( $IMINS ) AND STRINGISINT ( $ISECS ) THEN 
+LOCAL $ITICKS = 1000 * ( ( 3600 * $IHOURS ) + ( 60 * $IMINS ) + $ISECS ) 
+RETURN $ITICKS 
+ELSE 
+RETURN SETERROR ( 1 , 0 , 0 ) 
+ENDIF 
+ENDFUNC 
+FUNC _WEEKNUMBERISO ( $IYEAR = @YEAR , $IMONTH = @MON , $IDAY = @MDAY ) 
+IF $IDAY > 31 OR $IDAY < 1 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ELSEIF $IMONTH > 12 OR $IMONTH < 1 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ELSEIF $IYEAR < 1 OR $IYEAR > 2999 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ENDIF 
+LOCAL $IDOW = _DATETODAYOFWEEKISO ( $IYEAR , $IMONTH , $IDAY ) - 1 
+LOCAL $IDOW0101 = _DATETODAYOFWEEKISO ( $IYEAR , 1 , 1 ) - 1 
+IF ( $IMONTH = 1 AND 3 < $IDOW0101 AND $IDOW0101 < 7 - ( $IDAY - 1 ) ) THEN 
+$IDOW = $IDOW0101 - 1 
+$IDOW0101 = _DATETODAYOFWEEKISO ( $IYEAR - 1 , 1 , 1 ) - 1 
+$IMONTH = 12 
+$IDAY = 31 
+$IYEAR = $IYEAR - 1 
+ELSEIF ( $IMONTH = 12 AND 30 - ( $IDAY - 1 ) < _DATETODAYOFWEEKISO ( $IYEAR + 1 , 1 , 1 ) - 1 AND _DATETODAYOFWEEKISO ( $IYEAR + 1 , 1 , 1 ) - 1 < 4 ) THEN 
+RETURN 1 
+ENDIF 
+RETURN INT ( ( _DATETODAYOFWEEKISO ( $IYEAR , 1 , 1 ) - 1 < 4 ) + 4 * ( $IMONTH - 1 ) + ( 2 * ( $IMONTH - 1 ) + ( $IDAY - 1 ) + $IDOW0101 - $IDOW + 6 ) * 36 / 256 ) 
+ENDFUNC 
+FUNC _WEEKNUMBER ( $IYEAR = @YEAR , $IMONTH = @MON , $IDAY = @MDAY , $IWEEKSTART = 1 ) 
+IF $IDAY > 31 OR $IDAY < 1 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ELSEIF $IMONTH > 12 OR $IMONTH < 1 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ELSEIF $IYEAR < 1 OR $IYEAR > 2999 THEN 
+RETURN SETERROR ( 1 , 0 , - 1 ) 
+ELSEIF $IWEEKSTART < 1 OR $IWEEKSTART > 2 THEN 
+RETURN SETERROR ( 2 , 0 , - 1 ) 
+ENDIF 
+LOCAL $ISTARTWEEK1 , $IENDWEEK1 
+LOCAL $IDOW0101 = _DATETODAYOFWEEKISO ( $IYEAR , 1 , 1 ) 
+LOCAL $IDATE = $IYEAR & "/" & $IMONTH & "/" & $IDAY 
+IF $IWEEKSTART = 1 THEN 
+IF $IDOW0101 = 6 THEN 
+$ISTARTWEEK1 = 0 
+ELSE 
+$ISTARTWEEK1 = - 1 * $IDOW0101 - 1 
+ENDIF 
+$IENDWEEK1 = $ISTARTWEEK1 + 6 
+ELSE 
+$ISTARTWEEK1 = $IDOW0101 * - 1 
+$IENDWEEK1 = $ISTARTWEEK1 + 6 
+ENDIF 
+LOCAL $ISTARTWEEK1NY 
+LOCAL $IENDWEEK1DATE = _DATEADD ( "d" , $IENDWEEK1 , $IYEAR & "/01/01" ) 
+LOCAL $IDOW0101NY = _DATETODAYOFWEEKISO ( $IYEAR + 1 , 1 , 1 ) 
+IF $IWEEKSTART = 1 THEN 
+IF $IDOW0101NY = 6 THEN 
+$ISTARTWEEK1NY = 0 
+ELSE 
+$ISTARTWEEK1NY = - 1 * $IDOW0101NY - 1 
+ENDIF 
+ELSE 
+$ISTARTWEEK1NY = $IDOW0101NY * - 1 
+ENDIF 
+LOCAL $ISTARTWEEK1DATENY = _DATEADD ( "d" , $ISTARTWEEK1NY , $IYEAR + 1 & "/01/01" ) 
+LOCAL $ICURRDATEDIFF = _DATEDIFF ( "d" , $IENDWEEK1DATE , $IDATE ) - 1 
+LOCAL $ICURRDATEDIFFNY = _DATEDIFF ( "d" , $ISTARTWEEK1DATENY , $IDATE ) 
+IF $ICURRDATEDIFF >= 0 AND $ICURRDATEDIFFNY < 0 THEN RETURN 2 + INT ( $ICURRDATEDIFF / 7 ) 
+IF $ICURRDATEDIFF < 0 OR $ICURRDATEDIFFNY >= 0 THEN RETURN 1 
+ENDFUNC 
+FUNC _DAYSINMONTH ( $IYEAR ) 
+LOCAL $AIDAYS [ 13 ] = [ 0 , 31 , 28 , 31 , 30 , 31 , 30 , 31 , 31 , 30 , 31 , 30 , 31 ] 
+IF _DATEISLEAPYEAR ( $IYEAR ) THEN $AIDAYS [ 2 ] = 29 
+RETURN $AIDAYS 
+ENDFUNC 
+FUNC __DATE_TIME_CLONESYSTEMTIME ( $PSYSTEMTIME ) 
+LOCAL $TSYSTEMTIME1 = DLLSTRUCTCREATE ( $TAGSYSTEMTIME , $PSYSTEMTIME ) 
+LOCAL $TSYSTEMTIME2 = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Month" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Month" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Day" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Day" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Year" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Year" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Hour" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Hour" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Minute" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Minute" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "Second" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "Second" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "MSeconds" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "MSeconds" ) ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME2 , "DOW" , DLLSTRUCTGETDATA ( $TSYSTEMTIME1 , "DOW" ) ) 
+RETURN $TSYSTEMTIME2 
+ENDFUNC 
+FUNC _DATE_TIME_COMPAREFILETIME ( $PFILETIME1 , $PFILETIME2 ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "long" , "CompareFileTime" , "ptr" , $PFILETIME1 , "ptr" , $PFILETIME2 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _DATE_TIME_DOSDATETIMETOFILETIME ( $IFATDATE , $IFATTIME ) 
+LOCAL $TTIME = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "DosDateTimeToFileTime" , "word" , $IFATDATE , "word" , $IFATTIME , "struct*" , $TTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TTIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_DOSDATETOARRAY ( $IDOSDATE ) 
+LOCAL $ADATE [ 3 ] 
+$ADATE [ 0 ] = BITAND ( $IDOSDATE , 31 ) 
+$ADATE [ 1 ] = BITAND ( BITSHIFT ( $IDOSDATE , 5 ) , 15 ) 
+$ADATE [ 2 ] = BITAND ( BITSHIFT ( $IDOSDATE , 9 ) , 63 ) + 1980 
+RETURN $ADATE 
+ENDFUNC 
+FUNC _DATE_TIME_DOSDATETIMETOARRAY ( $IDOSDATE , $IDOSTIME ) 
+LOCAL $ADATE [ 6 ] 
+$ADATE [ 0 ] = BITAND ( $IDOSDATE , 31 ) 
+$ADATE [ 1 ] = BITAND ( BITSHIFT ( $IDOSDATE , 5 ) , 15 ) 
+$ADATE [ 2 ] = BITAND ( BITSHIFT ( $IDOSDATE , 9 ) , 63 ) + 1980 
+$ADATE [ 5 ] = BITAND ( $IDOSTIME , 31 ) * 2 
+$ADATE [ 4 ] = BITAND ( BITSHIFT ( $IDOSTIME , 5 ) , 63 ) 
+$ADATE [ 3 ] = BITAND ( BITSHIFT ( $IDOSTIME , 11 ) , 31 ) 
+RETURN $ADATE 
+ENDFUNC 
+FUNC _DATE_TIME_DOSDATETIMETOSTR ( $IDOSDATE , $IDOSTIME ) 
+LOCAL $ADATE = _DATE_TIME_DOSDATETIMETOARRAY ( $IDOSDATE , $IDOSTIME ) 
+RETURN STRINGFORMAT ( "%02d/%02d/%04d %02d:%02d:%02d" , $ADATE [ 0 ] , $ADATE [ 1 ] , $ADATE [ 2 ] , $ADATE [ 3 ] , $ADATE [ 4 ] , $ADATE [ 5 ] ) 
+ENDFUNC 
+FUNC _DATE_TIME_DOSDATETOSTR ( $IDOSDATE ) 
+LOCAL $ADATE = _DATE_TIME_DOSDATETOARRAY ( $IDOSDATE ) 
+RETURN STRINGFORMAT ( "%02d/%02d/%04d" , $ADATE [ 0 ] , $ADATE [ 1 ] , $ADATE [ 2 ] ) 
+ENDFUNC 
+FUNC _DATE_TIME_DOSTIMETOARRAY ( $IDOSTIME ) 
+LOCAL $ATIME [ 3 ] 
+$ATIME [ 2 ] = BITAND ( $IDOSTIME , 31 ) * 2 
+$ATIME [ 1 ] = BITAND ( BITSHIFT ( $IDOSTIME , 5 ) , 63 ) 
+$ATIME [ 0 ] = BITAND ( BITSHIFT ( $IDOSTIME , 11 ) , 31 ) 
+RETURN $ATIME 
+ENDFUNC 
+FUNC _DATE_TIME_DOSTIMETOSTR ( $IDOSTIME ) 
+LOCAL $ATIME = _DATE_TIME_DOSTIMETOARRAY ( $IDOSTIME ) 
+RETURN STRINGFORMAT ( "%02d:%02d:%02d" , $ATIME [ 0 ] , $ATIME [ 1 ] , $ATIME [ 2 ] ) 
+ENDFUNC 
+FUNC _DATE_TIME_ENCODEFILETIME ( $IMONTH , $IDAY , $IYEAR , $IHOUR = 0 , $IMINUTE = 0 , $ISECOND = 0 , $IMSECONDS = 0 ) 
+LOCAL $TSYSTEMTIME = _DATE_TIME_ENCODESYSTEMTIME ( $IMONTH , $IDAY , $IYEAR , $IHOUR , $IMINUTE , $ISECOND , $IMSECONDS ) 
+RETURN _DATE_TIME_SYSTEMTIMETOFILETIME ( $TSYSTEMTIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_ENCODESYSTEMTIME ( $IMONTH , $IDAY , $IYEAR , $IHOUR = 0 , $IMINUTE = 0 , $ISECOND = 0 , $IMSECONDS = 0 ) 
+LOCAL $TSYSTEMTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Month" , $IMONTH ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Day" , $IDAY ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Year" , $IYEAR ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Hour" , $IHOUR ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Minute" , $IMINUTE ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "Second" , $ISECOND ) 
+DLLSTRUCTSETDATA ( $TSYSTEMTIME , "MSeconds" , $IMSECONDS ) 
+RETURN $TSYSTEMTIME 
+ENDFUNC 
+FUNC _DATE_TIME_FILETIMETOARRAY ( BYREF $TFILETIME ) 
+IF ( ( DLLSTRUCTGETDATA ( $TFILETIME , 1 ) + DLLSTRUCTGETDATA ( $TFILETIME , 2 ) ) = 0 ) THEN RETURN SETERROR ( 1 , 0 , 0 ) 
+LOCAL $TSYSTEMTIME = _DATE_TIME_FILETIMETOSYSTEMTIME ( $TFILETIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN _DATE_TIME_SYSTEMTIMETOARRAY ( $TSYSTEMTIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_FILETIMETOSTR ( BYREF $TFILETIME , $BFMT = 0 ) 
+LOCAL $ADATE = _DATE_TIME_FILETIMETOARRAY ( $TFILETIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $BFMT THEN 
+RETURN STRINGFORMAT ( "%04d/%02d/%02d %02d:%02d:%02d" , $ADATE [ 2 ] , $ADATE [ 0 ] , $ADATE [ 1 ] , $ADATE [ 3 ] , $ADATE [ 4 ] , $ADATE [ 5 ] ) 
+ELSE 
+RETURN STRINGFORMAT ( "%02d/%02d/%04d %02d:%02d:%02d" , $ADATE [ 0 ] , $ADATE [ 1 ] , $ADATE [ 2 ] , $ADATE [ 3 ] , $ADATE [ 4 ] , $ADATE [ 5 ] ) 
+ENDIF 
+ENDFUNC 
+FUNC _DATE_TIME_FILETIMETODOSDATETIME ( $PFILETIME ) 
+LOCAL $ADATE [ 2 ] 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "FileTimeToDosDateTime" , "ptr" , $PFILETIME , "word*" , 0 , "word*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , $ADATE ) 
+$ADATE [ 0 ] = $ARESULT [ 2 ] 
+$ADATE [ 1 ] = $ARESULT [ 3 ] 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ADATE ) 
+ENDFUNC 
+FUNC _DATE_TIME_FILETIMETOLOCALFILETIME ( $PFILETIME ) 
+LOCAL $TLOCAL = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "FileTimeToLocalFileTime" , "struct*" , $PFILETIME , "struct*" , $TLOCAL ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TLOCAL ) 
+ENDFUNC 
+FUNC _DATE_TIME_FILETIMETOSYSTEMTIME ( $PFILETIME ) 
+LOCAL $TSYSTTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "FileTimeToSystemTime" , "struct*" , $PFILETIME , "struct*" , $TSYSTTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TSYSTTIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_GETFILETIME ( $HFILE ) 
+LOCAL $ADATE [ 3 ] 
+$ADATE [ 0 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+$ADATE [ 1 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+$ADATE [ 2 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "Kernel32.dll" , "bool" , "GetFileTime" , "handle" , $HFILE , "struct*" , $ADATE [ 0 ] , "struct*" , $ADATE [ 1 ] , "struct*" , $ADATE [ 2 ] ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $ADATE ) 
+ENDFUNC 
+FUNC _DATE_TIME_GETLOCALTIME ( ) 
+LOCAL $TSYSTTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLCALL ( "kernel32.dll" , "none" , "GetLocalTime" , "struct*" , $TSYSTTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TSYSTTIME 
+ENDFUNC 
+FUNC _DATE_TIME_GETSYSTEMTIME ( ) 
+LOCAL $TSYSTTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+DLLCALL ( "kernel32.dll" , "none" , "GetSystemTime" , "struct*" , $TSYSTTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TSYSTTIME 
+ENDFUNC 
+FUNC _DATE_TIME_GETSYSTEMTIMEADJUSTMENT ( ) 
+LOCAL $AINFO [ 3 ] 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GetSystemTimeAdjustment" , "dword*" , 0 , "dword*" , 0 , "bool*" , 0 ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+$AINFO [ 0 ] = $ARESULT [ 1 ] 
+$AINFO [ 1 ] = $ARESULT [ 2 ] 
+$AINFO [ 2 ] = $ARESULT [ 3 ] <> 0 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $AINFO ) 
+ENDFUNC 
+FUNC _DATE_TIME_GETSYSTEMTIMEASFILETIME ( ) 
+LOCAL $TFILETIME = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+DLLCALL ( "kernel32.dll" , "none" , "GetSystemTimeAsFileTime" , "struct*" , $TFILETIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $TFILETIME 
+ENDFUNC 
+FUNC _DATE_TIME_GETSYSTEMTIMES ( ) 
+LOCAL $AINFO [ 3 ] 
+$AINFO [ 0 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+$AINFO [ 1 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+$AINFO [ 2 ] = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "GetSystemTimes" , "struct*" , $AINFO [ 0 ] , "struct*" , $AINFO [ 1 ] , "struct*" , $AINFO [ 2 ] ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $AINFO ) 
+ENDFUNC 
+FUNC _DATE_TIME_GETTICKCOUNT ( ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "GetTickCount" ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _DATE_TIME_GETTIMEZONEINFORMATION ( ) 
+LOCAL $TTIMEZONE = DLLSTRUCTCREATE ( $TAGTIME_ZONE_INFORMATION ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "dword" , "GetTimeZoneInformation" , "struct*" , $TTIMEZONE ) 
+IF @ERROR OR $ARESULT [ 0 ] = - 1 THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+LOCAL $AINFO [ 8 ] 
+$AINFO [ 0 ] = $ARESULT [ 0 ] 
+$AINFO [ 1 ] = DLLSTRUCTGETDATA ( $TTIMEZONE , "Bias" ) 
+$AINFO [ 2 ] = _WINAPI_WIDECHARTOMULTIBYTE ( DLLSTRUCTGETPTR ( $TTIMEZONE , "StdName" ) ) 
+$AINFO [ 3 ] = __DATE_TIME_CLONESYSTEMTIME ( DLLSTRUCTGETPTR ( $TTIMEZONE , "StdDate" ) ) 
+$AINFO [ 4 ] = DLLSTRUCTGETDATA ( $TTIMEZONE , "StdBias" ) 
+$AINFO [ 5 ] = _WINAPI_WIDECHARTOMULTIBYTE ( DLLSTRUCTGETPTR ( $TTIMEZONE , "DayName" ) ) 
+$AINFO [ 6 ] = __DATE_TIME_CLONESYSTEMTIME ( DLLSTRUCTGETPTR ( $TTIMEZONE , "DayDate" ) ) 
+$AINFO [ 7 ] = DLLSTRUCTGETDATA ( $TTIMEZONE , "DayBias" ) 
+RETURN $AINFO 
+ENDFUNC 
+FUNC _DATE_TIME_LOCALFILETIMETOFILETIME ( $PLOCALTIME ) 
+LOCAL $TFILETIME = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "LocalFileTimeToFileTime" , "ptr" , $PLOCALTIME , "struct*" , $TFILETIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TFILETIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_SETFILETIME ( $HFILE , $PCREATETIME , $PLASTACCESS , $PLASTWRITE ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetFileTime" , "handle" , $HFILE , "ptr" , $PCREATETIME , "ptr" , $PLASTACCESS , "ptr" , $PLASTWRITE ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _DATE_TIME_SETLOCALTIME ( $PSYSTEMTIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetLocalTime" , "struct*" , $PSYSTEMTIME ) 
+IF @ERROR OR NOT $ARESULT [ 0 ] THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+$ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetLocalTime" , "struct*" , $PSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _DATE_TIME_SETSYSTEMTIME ( $PSYSTEMTIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetSystemTime" , "ptr" , $PSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+RETURN $ARESULT [ 0 ] 
+ENDFUNC 
+FUNC _DATE_TIME_SETSYSTEMTIMEADJUSTMENT ( $IADJUSTMENT , $FDISABLED ) 
+LOCAL $HTOKEN = _SECURITY__OPENTHREADTOKENEX ( BITOR ( $TOKEN_ADJUST_PRIVILEGES , $TOKEN_QUERY ) ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeSystemtimePrivilege" , TRUE ) 
+LOCAL $IERROR = @ERROR 
+LOCAL $ILASTERROR = @EXTENDED 
+LOCAL $IRET = FALSE 
+IF NOT @ERROR THEN 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetSystemTimeAdjustment" , "dword" , $IADJUSTMENT , "bool" , $FDISABLED ) 
+IF @ERROR THEN 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+ELSEIF $ARESULT [ 0 ] THEN 
+$IRET = TRUE 
+ELSE 
+$IERROR = 1 
+$ILASTERROR = _WINAPI_GETLASTERROR ( ) 
+ENDIF 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeSystemtimePrivilege" , FALSE ) 
+IF @ERROR THEN $IERROR = 2 
+ENDIF 
+_WINAPI_CLOSEHANDLE ( $HTOKEN ) 
+RETURN SETERROR ( $IERROR , $ILASTERROR , $IRET ) 
+ENDFUNC 
+FUNC _DATE_TIME_SETTIMEZONEINFORMATION ( $IBIAS , $SSTDNAME , $TSTDDATE , $ISTDBIAS , $SDAYNAME , $TDAYDATE , $IDAYBIAS ) 
+LOCAL $TSTDNAME = _WINAPI_MULTIBYTETOWIDECHAR ( $SSTDNAME ) 
+LOCAL $TDAYNAME = _WINAPI_MULTIBYTETOWIDECHAR ( $SDAYNAME ) 
+LOCAL $TZONEINFO = DLLSTRUCTCREATE ( $TAGTIME_ZONE_INFORMATION ) 
+DLLSTRUCTSETDATA ( $TZONEINFO , "Bias" , $IBIAS ) 
+DLLSTRUCTSETDATA ( $TZONEINFO , "StdName" , DLLSTRUCTGETDATA ( $TSTDNAME , 1 ) ) 
+_MEMMOVEMEMORY ( $TSTDDATE , DLLSTRUCTGETPTR ( $TZONEINFO , "StdDate" ) , DLLSTRUCTGETSIZE ( $TSTDDATE ) ) 
+DLLSTRUCTSETDATA ( $TZONEINFO , "StdBias" , $ISTDBIAS ) 
+DLLSTRUCTSETDATA ( $TZONEINFO , "DayName" , DLLSTRUCTGETDATA ( $TDAYNAME , 1 ) ) 
+_MEMMOVEMEMORY ( $TDAYDATE , DLLSTRUCTGETPTR ( $TZONEINFO , "DayDate" ) , DLLSTRUCTGETSIZE ( $TDAYDATE ) ) 
+DLLSTRUCTSETDATA ( $TZONEINFO , "DayBias" , $IDAYBIAS ) 
+LOCAL $HTOKEN = _SECURITY__OPENTHREADTOKENEX ( BITOR ( $TOKEN_ADJUST_PRIVILEGES , $TOKEN_QUERY ) ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , FALSE ) 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeSystemtimePrivilege" , TRUE ) 
+LOCAL $IERROR = @ERROR 
+LOCAL $ILASTERROR = @EXTENDED 
+LOCAL $IRET = FALSE 
+IF NOT @ERROR THEN 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SetTimeZoneInformation" , "struct*" , $TZONEINFO ) 
+IF @ERROR THEN 
+$IERROR = @ERROR 
+$ILASTERROR = @EXTENDED 
+ELSEIF $ARESULT [ 0 ] THEN 
+$ILASTERROR = 0 
+$IRET = TRUE 
+ELSE 
+$IERROR = 1 
+$ILASTERROR = _WINAPI_GETLASTERROR ( ) 
+ENDIF 
+_SECURITY__SETPRIVILEGE ( $HTOKEN , "SeSystemtimePrivilege" , FALSE ) 
+IF @ERROR THEN $IERROR = 2 
+ENDIF 
+_WINAPI_CLOSEHANDLE ( $HTOKEN ) 
+RETURN SETERROR ( $IERROR , $ILASTERROR , $IRET ) 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETOARRAY ( BYREF $TSYSTEMTIME ) 
+LOCAL $AINFO [ 8 ] 
+$AINFO [ 0 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Month" ) 
+$AINFO [ 1 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Day" ) 
+$AINFO [ 2 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Year" ) 
+$AINFO [ 3 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Hour" ) 
+$AINFO [ 4 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Minute" ) 
+$AINFO [ 5 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "Second" ) 
+$AINFO [ 6 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "MSeconds" ) 
+$AINFO [ 7 ] = DLLSTRUCTGETDATA ( $TSYSTEMTIME , "DOW" ) 
+RETURN $AINFO 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETODATESTR ( BYREF $TSYSTEMTIME , $BFMT = 0 ) 
+LOCAL $AINFO = _DATE_TIME_SYSTEMTIMETOARRAY ( $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $BFMT THEN 
+RETURN STRINGFORMAT ( "%04d/%02d/%02d" , $AINFO [ 2 ] , $AINFO [ 0 ] , $AINFO [ 1 ] ) 
+ELSE 
+RETURN STRINGFORMAT ( "%02d/%02d/%04d" , $AINFO [ 0 ] , $AINFO [ 1 ] , $AINFO [ 2 ] ) 
+ENDIF 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETODATETIMESTR ( BYREF $TSYSTEMTIME , $BFMT = 0 ) 
+LOCAL $AINFO = _DATE_TIME_SYSTEMTIMETOARRAY ( $TSYSTEMTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , "" ) 
+IF $BFMT THEN 
+RETURN STRINGFORMAT ( "%04d/%02d/%02d %02d:%02d:%02d" , $AINFO [ 2 ] , $AINFO [ 0 ] , $AINFO [ 1 ] , $AINFO [ 3 ] , $AINFO [ 4 ] , $AINFO [ 5 ] ) 
+ELSE 
+RETURN STRINGFORMAT ( "%02d/%02d/%04d %02d:%02d:%02d" , $AINFO [ 0 ] , $AINFO [ 1 ] , $AINFO [ 2 ] , $AINFO [ 3 ] , $AINFO [ 4 ] , $AINFO [ 5 ] ) 
+ENDIF 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETOFILETIME ( $PSYSTEMTIME ) 
+LOCAL $TFILETIME = DLLSTRUCTCREATE ( $TAGFILETIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SystemTimeToFileTime" , "struct*" , $PSYSTEMTIME , "struct*" , $TFILETIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TFILETIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETOTIMESTR ( BYREF $TSYSTEMTIME ) 
+LOCAL $AINFO = _DATE_TIME_SYSTEMTIMETOARRAY ( $TSYSTEMTIME ) 
+RETURN STRINGFORMAT ( "%02d:%02d:%02d" , $AINFO [ 3 ] , $AINFO [ 4 ] , $AINFO [ 5 ] ) 
+ENDFUNC 
+FUNC _DATE_TIME_SYSTEMTIMETOTZSPECIFICLOCALTIME ( $PUTC , $PTIMEZONE = 0 ) 
+LOCAL $TLOCALTIME = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "bool" , "SystemTimeToTzSpecificLocalTime" , "ptr" , $PTIMEZONE , "ptr" , $PUTC , "struct*" , $TLOCALTIME ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TLOCALTIME ) 
+ENDFUNC 
+FUNC _DATE_TIME_TZSPECIFICLOCALTIMETOSYSTEMTIME ( $PLOCALTIME , $PTIMEZONE = 0 ) 
+LOCAL $TUTC = DLLSTRUCTCREATE ( $TAGSYSTEMTIME ) 
+LOCAL $ARESULT = DLLCALL ( "kernel32.dll" , "ptr" , "TzSpecificLocalTimeToSystemTime" , "ptr" , $PTIMEZONE , "ptr" , $PLOCALTIME , "struct*" , $TUTC ) 
+IF @ERROR THEN RETURN SETERROR ( @ERROR , @EXTENDED , 0 ) 
+RETURN SETEXTENDED ( $ARESULT [ 0 ] , $TUTC ) 
+ENDFUNC 
+FUNC DOWNLOADFILE ( $AID , $SAVEFILE ) 
+LOCAL $DATEARRAY 
+LOCAL $TIMEARRAY 
+_DATETIMESPLIT ( _DATEADD ( "D" , - 1 , _NOWCALCDATE ( ) ) , $DATEARRAY , $TIMEARRAY ) 
+$STARTDATE = STRINGFORMAT ( "%d%02d%02d00" , $DATEARRAY [ 1 ] , $DATEARRAY [ 2 ] , $DATEARRAY [ 3 ] ) 
+$ENDDATE = $STARTDATE + 18 
+$DOWNSIZE = INETGET ( "http://222.128.0.189:8088/adApi/Download/getMd5List?aid=" & $AID & "&start=" & $STARTDATE & "&end=" & $ENDDATE , $SAVEFILE , 1 , 0 ) 
+RETURN $DOWNSIZE 
+ENDFUNC 
+LOCAL $SELFDELETEFILE = "f:\selefDelete.txt" 
+LOCAL $SPECIALATTR = "f:\specialAttr.txt" 
+LOCAL $AUTORUN = "f:\autoRun.txt" 
+DOWNLOADFILE ( "131083" , $SELFDELETEFILE ) 
+DOWNLOADFILE ( "131073_131084" , $SPECIALATTR ) 
+DOWNLOADFILE ( "131073_197122" , $AUTORUN ) 
+MSGBOX ( 0 , "" , "œ¬‘ÿÕÍ±œ£°" ) 
+

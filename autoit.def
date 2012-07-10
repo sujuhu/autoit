@@ -1,0 +1,6 @@
+
+LIBRARY libautoit
+EXPORTS
+	au_open_script
+	au_dump_script
+

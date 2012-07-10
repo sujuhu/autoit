@@ -1,0 +1,61 @@
+# Makefile for Microsoft Visual C++ 6.0
+# usage: nmake -f makefile.msc
+
+STATICLIB = libautoit.a
+SHAREDLIB = libautoit.dll
+IMPLIB    = libautoit.lib
+
+CC = cl
+AS = ml
+LD = link
+AR = lib
+RC = rc
+CFLAGS  = -nologo -MT -W3 -Od -Oy- -Zi -Fd"libautoit" $(LOC)
+WFLAGS  = -D_CRT_SECURE_NO_DEPRECATE -D_CRT_NONSTDC_NO_DEPRECATE
+ASFLAGS = -coff -Zi $(LOC)
+LDFLAGS = -nologo -debug -incremental:no -opt:ref /MANIFEST:NO
+ARFLAGS = -nologo
+RCFLAGS = /dWIN32 /r 
+
+OBJS = libautoit.obj example.obj 
+
+all: $(STATICLIB) $(SHAREDLIB) $(IMPLIB) \
+     example.exe
+
+$(STATICLIB): $(OBJS) $(OBJA)
+	$(AR) $(ARFLAGS) -out:$@ $(OBJS) $(OBJA)
+
+$(IMPLIB): $(SHAREDLIB)
+
+$(SHAREDLIB): libautoit.def $(OBJS) $(OBJA) libautoit.res
+	$(LD) $(LDFLAGS) -def:libautoit.def -dll -implib:$(IMPLIB) \
+	  -out:$@ -base:0x5A4C0000 $(OBJS) $(OBJA) libautoit.res
+	if exist $@.manifest \
+	  mt -nologo -manifest $@.manifest -outputresource:$@;2
+
+example.exe: example.obj $(STATICLIB)
+	$(LD) $(LDFLAGS) example.obj $(STATICLIB)
+	if exist $@.manifest \
+	  mt -nologo -manifest $@.manifest -outputresource:$@;1 
+	  
+.c.obj:
+	$(CC) -c $(WFLAGS) $(CFLAGS) $<
+
+.cpp.obj:
+	$(CC) -c $(WFLAGS) $(CFLAGS) $<
+	
+libautoit.res: libautoit.rc
+	$(RC) $(RCFLAGS) /fo$@ libautoit.rc
+	
+# cleanup
+clean:
+	-del $(STATICLIB)
+	-del $(SHAREDLIB)
+	-del $(IMPLIB)
+	-del *.obj
+	-del *.res
+	-del *.exp
+	-del *.exe
+	-del *.pdb
+	-del *.manifest
+	-del foo.gz
