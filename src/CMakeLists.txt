@@ -1,5 +1,6 @@
 SET(SRC_LIST
-autoit.cpp)
+autoit.cpp
+strconv.cpp)
 
 IF(WIN32)
 ADD_DEFINITIONS(-D__MSVCRT_VERSION__=0x0601)

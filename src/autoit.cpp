@@ -7,6 +7,7 @@
 #include <wchar.h>
 #include <memory.h>
 #include <locale.h>
+#include "strconv.h"
 #include "autoit.h"
 
 
@@ -430,7 +431,7 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 
 					return;
 				}
-				wcstombs( cdata, data, key * 2 + 1 );
+				_wcstombs( cdata, data, key * 2 + 1 );
 				fwrite( cdata, strlen(cdata), 1, aufp );
 
 
