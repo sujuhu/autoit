@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <assert.h>
-#include "libautoit.h"
+#include "autoit.h"
 
 int main(int argc, char* argv[])
 {

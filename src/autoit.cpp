@@ -1,4 +1,4 @@
-#pragma warning( disable:4996 )
+ï»¿#pragma warning( disable:4996 )
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -147,7 +147,7 @@ unsigned short getbits( UN *u, unsigned long size )
 
 unsigned long get_au3_start(const char *stream, size_t stream_size )
 {
-	//Ñ°ÕÒAUTO3Ç©ÃûÖµ
+	//å¯»æ‰¾AUTO3ç­¾åå€¼
 	for (size_t i = 0; i < stream_size; i++) {
 		if (memcmp(&stream[i], sig, sizeof(sig) - 1) == 0) {
 			return i;
@@ -157,31 +157,31 @@ unsigned long get_au3_start(const char *stream, size_t stream_size )
 	return -1;
 }
 
-//²éÕÒAutoit Êı¾İ
+//æŸ¥æ‰¾Autoit æ•°æ®
 const char* au_open_script( const char *stream, size_t stream_size )
 {
-	//Ñ°ÕÒautoit3½Å±¾¿ªÊ¼µÄÎ»ÖÃ
+	//å¯»æ‰¾autoit3è„šæœ¬å¼€å§‹çš„ä½ç½®
 	unsigned long au3start = get_au3_start( stream, stream_size );
 	if (au3start == 0) {
 		return NULL;
 	}
 
-	//¶ÁÈ¡8¸ö×Ö½Ú£¬ À´½øĞĞÑéÖ¤ 
+	//è¯»å–8ä¸ªå­—èŠ‚ï¼Œ æ¥è¿›è¡ŒéªŒè¯ 
 	stream += au3start + 0x10;
 	if (strncmp(stream + 0x4, "EA06", 4) != 0) {
 		return NULL;
 	}
 	stream += 8;
 
-	/* ºó 16 ×Ö½ÚÊı¾İ£¬ÓÃÀ´¼ÆËãĞ£ÑéºÍ£¬Ğ£ÑéºÍÓÀÔ¶Îª 0£¬Ö±½ÓÌø¹ı */
+	/* å 16 å­—èŠ‚æ•°æ®ï¼Œç”¨æ¥è®¡ç®—æ ¡éªŒå’Œï¼Œæ ¡éªŒå’Œæ°¸è¿œä¸º 0ï¼Œç›´æ¥è·³è¿‡ */
 	return stream + 0x10;
 }
 
-//¶¨Î»½Å±¾Î»ÖÃ
+//å®šä½è„šæœ¬ä½ç½®
 const char* check_au3_header( const char *stream, int stream_size  )
 {
 	while (true) {
-		/* ½âÃÜºóÎª "FILE" */
+		/* è§£å¯†åä¸º "FILE" */
 		char sigFILE[4];
     
 		memcpy(sigFILE, stream, 4);
@@ -191,13 +191,13 @@ const char* check_au3_header( const char *stream, int stream_size  )
 		}
     stream += 4;
 
-		/* ÏÂÒ»¶ÎµÄ´óĞ¡ */
+		/* ä¸‹ä¸€æ®µçš„å¤§å° */
 		unsigned long flagsz;
 		memcpy( &flagsz, stream, 4 );
 		flagsz = (flagsz ^ 0xADBC) * 2;
     stream += 4;
 
-		/* ½âÃÜºóÎª ">>>AUTOIT SCRIPT<<<" */
+		/* è§£å¯†åä¸º ">>>AUTOIT SCRIPT<<<" */
 		wchar_t flagAUTOIT[256] = L"\0";
 		memcpy( flagAUTOIT, stream, flagsz );
 		LAME_decrypt( (unsigned char *)flagAUTOIT, flagsz, 0xB33F + (flagsz / 2) );
@@ -216,7 +216,7 @@ const char* check_au3_header( const char *stream, int stream_size  )
 			break;
 		}
 
-		/* ÖØĞÂÑéÖ¤ÏÂÒ»¶Î */
+		/* é‡æ–°éªŒè¯ä¸‹ä¸€æ®µ */
 		unsigned long next;
 		stream ++;
 		memcpy( &next, stream, 4);
@@ -243,7 +243,7 @@ unsigned long crc_data( unsigned char *src, int srclen )
 	return (dwKey_ECX << 0x10) + dwKey_ESI;
 }
 
-//½âÑ¹Ëõ½Å±¾
+//è§£å‹ç¼©è„šæœ¬
 bool decompression_script( UN *u )
 {
 	if (strncmp( (const char *)u->inputbuf, "EA06", 4 ) != 0) {
@@ -296,7 +296,7 @@ bool decompression_script( UN *u )
 	return true;
 }
 
-/* »¹Ô­Autoit½Å±¾ */
+/* è¿˜åŸAutoitè„šæœ¬ */
 void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 {
 	unsigned char *code = pcode;
@@ -357,30 +357,30 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 			{
 				var = code[i];
 
-				/* ±äÁ¿ */
+				/* å˜é‡ */
 				if (var == 0x33) {
 					fwrite( "$", 1, 1, aufp );
 				}
 
-				/* ×Ö·û´® */
+				/* å­—ç¬¦ä¸² */
 				if (var == 0x36) {
 					fwrite( "\"", 1, 1, aufp );
 				}
 
-				/* ¹Ø¼ü×Ö */
+				/* å…³é”®å­— */
 				if (var == 0x30) {
 				}
 
-				/* ºê */
+				/* å® */
 				if (var == 0x32) {
 					fwrite( "@", 1, 1, aufp );
 				}
 
-				/* º¯Êı */
+				/* å‡½æ•° */
 				if (var == 0x34) {
 				}
 
-				/* ¶ÔÏó */
+				/* å¯¹è±¡ */
 				if (var == 0x35) {
 				}
 
@@ -416,11 +416,11 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 				fwrite( cdata, strlen(cdata), 1, aufp );
 
 
-				if (var == 0x36) {	/* ×Ö·û´® */
+				if (var == 0x36) {	/* å­—ç¬¦ä¸² */
 					fwrite( "\" ", 2, 1, aufp );
-				} else if (var == 0x33 && code[i] == 0x35) {	/* ±¾´ÎÎª ±äÁ¿£¬ÏÂ¸öÊÇ¶ÔÏó£¬ÔòÊ¹ÓÃ . ·Ö¸î */
+				} else if (var == 0x33 && code[i] == 0x35) {	/* æœ¬æ¬¡ä¸º å˜é‡ï¼Œä¸‹ä¸ªæ˜¯å¯¹è±¡ï¼Œåˆ™ä½¿ç”¨ . åˆ†å‰² */
 					fwrite( ".", 1, 1, aufp );
-				} else {	/* ÆäËû */
+				} else {	/* å…¶ä»– */
 					fwrite( " ", 1, 1, aufp );
 				}
 
@@ -544,13 +544,13 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 			fwrite( "&= ", 3, 1, aufp );
 			break;
 
-		case 0x7f:	/* ¶Î½áÊø */
+		case 0x7f:	/* æ®µç»“æŸ */
 			i++;
 			fwrite( "\r\n", 2, 1, aufp );
 			sectionIndex++;
 			break;
 
-		default:	/* Î´Öª¡¡Code */
+		default:	/* æœªçŸ¥ã€€Code */
 
 			if (code[i] <= 0x0F) {
 				i += 4;
@@ -572,7 +572,7 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 	fclose( aufp );
 }
 
-//dump½Å±¾
+//dumpè„šæœ¬
 bool au_dump_script( const char *logfile, const char* stream, size_t stream_size )
 {
   stream = check_au3_header(stream, stream_size );
@@ -580,18 +580,18 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 		return false;
 	}
 
-	/* ÊÇ·ñ±»Ñ¹Ëõ */
+	/* æ˜¯å¦è¢«å‹ç¼© */
 	unsigned char comp;
 	memcpy(&comp, stream, 1);
   stream += 1;
 
-	/* ¼ÓÃÜÊı¾İ´óĞ¡ */
+	/* åŠ å¯†æ•°æ®å¤§å° */
 	unsigned long datasz;
 	memcpy(&datasz, stream, 4);
   stream += 4;
 	datasz = datasz ^ 0x87BC;
 
-	/* ½âÃÜ³öµÄ´úÂë´óĞ¡ */
+	/* è§£å¯†å‡ºçš„ä»£ç å¤§å° */
 	unsigned long codesz;
 	memcpy(&codesz, stream, 4);
   stream += 4;
@@ -616,14 +616,14 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 		return false;
 	}
 
-	/* Ìø¹ıÎŞÓÃÊı¾İ */
+	/* è·³è¿‡æ— ç”¨æ•°æ® */
   stream += 0x10;
 
-	/* ¶ÁÈ¡²¢½âÃÜÊı¾İ */
+	/* è¯»å–å¹¶è§£å¯†æ•°æ® */
 	memcpy(data, stream, datasz);
 	LAME_decrypt( data, datasz, 0x2477 );
 
-	/* ¼ì²é CRC */
+	/* æ£€æŸ¥ CRC */
 	if ( crc != crc_data( data, datasz ) ) {
 		delete []code;
 		delete []data;
@@ -633,7 +633,7 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 	unsigned char *buf = data;
 	unsigned long bufsz = datasz;
 
-	/* ½âÑ¹Ëõ */
+	/* è§£å‹ç¼© */
 	if (comp == 1) {
 		UN u;
 		u.inputbuf = data;
@@ -652,7 +652,7 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 		bufsz = u.usize;
 	}
 
-	/* Dump Êı¾İÎª£¬Autoit ´úÂë¡¡*/
+	/* Dump æ•°æ®ä¸ºï¼ŒAutoit ä»£ç ã€€*/
 	decode_dump( buf, bufsz, logfile );
 
 	delete []code;

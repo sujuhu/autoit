@@ -1,19 +1,22 @@
-
-import os
 from distutils.core import setup, Extension
-from distutils.sysconfig import get_python_inc
+import platform 
+osname = platform.system()
 
-incdir = os.path.join(get_python_inc(plat_specific=1))
+if osname == "Windows":
+    shared_libs = []
+else:
+    shared_libs = []
 
 module = Extension('pyautoit',
-	include_dirs = [incdir],
-	libraries = [],
+	sources = ['pyautoit.cpp'],
+	libraries = shared_libs,
 	library_dirs = [],
-	sources = ['../libautoit.cpp', 'pyautoit.cpp'])
+	extra_objects = ["../build/lib/libautoit.a"],
+)
 
 setup(name = 'pyautoit',
     version = '0.2.0',
     description = 'Python module wrapping libautoit',
-    author = 'Zhang Xiaokang',
+    author = 'kimzhang',
     author_email = 'analyst004@gmail.com',
     ext_modules = [module])

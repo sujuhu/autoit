@@ -3,8 +3,8 @@
 #pragma warning( disable:4996 )
 #include <stdlib.h>
 #include <windows.h>
-#include <python.h>
-#include "../libautoit.h"
+#include <Python.h>
+#include "../src/autoit.h"
 
 /*
 Check whether we got a Python Object
@@ -24,7 +24,7 @@ PyObject *check_object(PyObject *pObject)
 }
 
 extern "C"
-static PyObject* pyautoit_dump_script(PyObject* self, PyObject* args) 
+PyObject* pyautoit_dump_script(PyObject* self, PyObject* args) 
 { 
   if(!args || PyObject_Length(args)!=3) {
     PyErr_SetString(PyExc_TypeError,
