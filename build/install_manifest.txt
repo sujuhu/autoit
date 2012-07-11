@@ -1,9 +1,0 @@
-/usr/local/lib/libautoit.a
-/usr/local/bin/libautoit.so.0.3
-/usr/local/bin/libautoit.so.1
-/usr/local/bin/libautoit.so
-/usr/local/include/autoit.h
-/usr/local/bin/au3dump
-/usr/lib/python2.6/dist-packages/pyautoit.so
-/usr/local/bin/testautoit
-/usr/local/bin/testautoit.config/test.bin

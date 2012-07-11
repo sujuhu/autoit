@@ -1,16 +1,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
-#ifdef __MSC_VER__
+
+#ifdef __GNUC__
+
+#ifdef __MINGW32__
+//mingw on windows
 
 #else
+//linux or linux
 #include <locale.h>
 #include <iconv.h>
+#endif //end __MINGW32__
+
+#else 
+//windows
+
 #endif
 
 int _mbstowcs(wchar_t* wcs, char*mbs, size_t max_wc_count)
 {
-#ifdef  __MSC_VER__
+#ifdef  __MINGW32__
   return mbstowcs(wcs, mbs, max_wc_count);
 #else
   iconv_t cd = iconv_open("UCS-2", "ASCII");
@@ -41,7 +51,7 @@ int _mbstowcs(wchar_t* wcs, char*mbs, size_t max_wc_count)
 
 int _wcstombs(char *mbs, const wchar_t* wcs, size_t max_mbs_count)
 {
-#ifdef __MSC_VER__
+#ifdef __MINGW32__
   return _wcstombs(mbs, wcs, max_mbs_count);
 #else
   iconv_t cd = iconv_open("ASCII", "UCS-2");
