@@ -1,0 +1,1 @@
+/usr/bin/c++    -O0 -g -ggdb   CMakeFiles/testautoit.dir/testautoit.cpp.o  -o testautoit -rdynamic -L/usr/local/lib ../lib/libautoit.a -lcppunit -lfilemap -ldl -Wl,-rpath,/usr/local/lib: 

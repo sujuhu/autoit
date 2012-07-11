@@ -2,7 +2,7 @@
 //
 #pragma warning( disable:4996 )
 #include <stdlib.h>
-#include <windows.h>
+//#include <windows.h>
 #include <Python.h>
 #include "../src/autoit.h"
 

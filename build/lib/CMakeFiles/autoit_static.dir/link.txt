@@ -1,0 +1,2 @@
+/usr/bin/ar cr libautoit.a  CMakeFiles/autoit_static.dir/autoit.cpp.o
+/usr/bin/ranlib libautoit.a

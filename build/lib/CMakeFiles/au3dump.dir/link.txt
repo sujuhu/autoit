@@ -1,0 +1,1 @@
+/usr/bin/c++    -O0 -g -ggdb   CMakeFiles/au3dump.dir/au3dump.cpp.o  -o au3dump -rdynamic -L/usr/local/lib libautoit.a -lfilemap -Wl,-rpath,/usr/local/lib: 

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/analyst004/autoit/src/au3dump.cpp
+stdio.h
+-
+stdlib.h
+-
+windows.h
+-
+assert.h
+-
+autoit.h
+/home/analyst004/autoit/src/autoit.h
+
+/home/analyst004/autoit/src/autoit.h
+

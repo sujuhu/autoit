@@ -1,0 +1,5 @@
+/home/analyst004/autoit/build/lib/CMakeFiles/au3dump.dir
+/home/analyst004/autoit/build/lib/CMakeFiles/autoit_dynamic.dir
+/home/analyst004/autoit/build/lib/CMakeFiles/autoit_static.dir
+/home/analyst004/autoit/build/pywrap/CMakeFiles/python.dir
+/home/analyst004/autoit/build/test/CMakeFiles/testautoit.dir

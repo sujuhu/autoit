@@ -1,7 +1,9 @@
 SET(SRC_LIST
 autoit.cpp)
 
+IF(WIN32)
 ADD_DEFINITIONS(-D__MSVCRT_VERSION__=0x0601)
+ENDIF(WIN32)
 
 #static library
 ADD_LIBRARY(autoit_static STATIC ${SRC_LIST})

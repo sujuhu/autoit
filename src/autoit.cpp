@@ -4,9 +4,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <wchar.h>
 #include <memory.h>
 #include <locale.h>
 #include "autoit.h"
+
+
+#ifdef __GNUC__
+#ifdef __MINGW32__
+//mingw on windows
+
+#else
+//linux or linux
+#define w 32
+#define _rotl(x,y) (((x)<<(y&(w-1))) | ((x)>>(w-(y&(w-1)))))
+#define _rotr(x,y) (((x)>>(y&(w-1))) | ((x)<<(w-(y&(w-1)))))
+
+#define _snprintf snprintf
+#define _snwprintf swprintf
+#endif
+#endif
 
 typedef struct _LAME {
 
@@ -70,9 +87,10 @@ void LAME_srand( LAME *l, unsigned long seed )
 
 void LAME_init( LAME *l )
 {
-	__time64_t time = _time64( NULL );
+	//__time64_t time = _time64( NULL );
 
-	LAME_srand( l, (unsigned long)time );
+	time_t t = time(NULL);
+	LAME_srand( l, (unsigned long)t );
 }
 
 unsigned char LAME_getnext( LAME *l )
@@ -330,10 +348,10 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 
 		case 0x10: /* int64 */
 			{
-				__int64 x;
+				long long x;
 				char pp[1024];
 				i++;
-				x = *(__int64 *)&code[i];
+				x = *(long long *)&code[i];
 				_snprintf( pp, 1024, "0x%lx ", x );
 				fwrite( pp, strlen( pp ), 1, aufp );
 				i += 8;

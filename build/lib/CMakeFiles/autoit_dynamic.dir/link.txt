@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC  -O0 -g -ggdb  -shared -Wl,-soname,libautoit.so.1 -o libautoit.so.0.3 CMakeFiles/autoit_dynamic.dir/autoit.cpp.o -L/usr/local/lib 
