@@ -1,5 +1,5 @@
 ﻿#pragma warning( disable:4996 )
-
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,9 +7,8 @@
 #include <wchar.h>
 #include <memory.h>
 #include <locale.h>
-#include "strconv.h"
+#include <strconv.h>
 #include "autoit.h"
-
 
 #ifdef __GNUC__
 #ifdef __MINGW32__
@@ -28,12 +27,12 @@
 
 typedef struct _LAME {
 
-	unsigned long c0;
-	unsigned long c1;
-	unsigned long grp1[17];
-	unsigned long grp2[17];
-	unsigned long grp3[17];
-	unsigned long field_D4;
+	uint32_t c0;
+	uint32_t c1;
+	uint32_t grp1[17];
+	uint32_t grp2[17];
+	uint32_t grp3[17];
+	uint32_t field_D4;
 } LAME;
 
 double LAME_fpusht( LAME *l )
@@ -43,13 +42,13 @@ double LAME_fpusht( LAME *l )
 		double as_double;
 
 		struct {
-			unsigned long lo;
-			unsigned long hi;
+			uint32_t lo;
+			uint32_t hi;
 		} as_uint;
 
 	} ret;
 
-	unsigned long rolled = _rotl( l->grp1[l->c0], 9 ) + _rotl( l->grp1[l->c1], 13 );
+	uint32_t rolled = _rotl( l->grp1[l->c0], 9 ) + _rotl( l->grp1[l->c1], 13 );
 	l->grp1[l->c0] = rolled;
 
 	if (l->c0-- == 0) {
@@ -65,7 +64,7 @@ double LAME_fpusht( LAME *l )
 	return ret.as_double - 1.0;
 }
 
-void LAME_srand( LAME *l, unsigned long seed )
+void LAME_srand( LAME *l, uint32_t seed )
 {
 	for (int i = 0; i < 17; i++)
 	{
@@ -77,8 +76,8 @@ void LAME_srand( LAME *l, unsigned long seed )
 	l->c0 = 0;
 	l->c1 = 10;
 
-	memcpy( l->grp2, l->grp1, 17 * sizeof(unsigned long) );
-	memcpy( l->grp3, l->grp1, 17 * sizeof(unsigned long) );
+	memcpy( l->grp2, l->grp1, 17 * sizeof(uint32_t) );
+	memcpy( l->grp3, l->grp1, 17 * sizeof(uint32_t) );
 
 	for (int i = 0; i < 9; i++)
 	{
@@ -91,20 +90,20 @@ void LAME_init( LAME *l )
 	//__time64_t time = _time64( NULL );
 
 	time_t t = time(NULL);
-	LAME_srand( l, (unsigned long)t );
+	LAME_srand( l, (uint32_t)t );
 }
 
-unsigned char LAME_getnext( LAME *l )
+uint8_t LAME_getnext( LAME *l )
 {
 	double x;
-	unsigned char ret;
+	uint8_t ret;
 
 	LAME_fpusht( l );
 
 	x = LAME_fpusht(l) * 256.0;
 
-	if ((unsigned long)x < 256) {
-		ret = (unsigned char)x;
+	if ((uint32_t)x < 256) {
+		ret = (uint8_t)x;
 	} else {
 		ret = 0xff;
 	}
@@ -112,7 +111,7 @@ unsigned char LAME_getnext( LAME *l )
 	return ret;
 }
 
-void LAME_decrypt( unsigned char *data, size_t size, unsigned long seed )
+void LAME_decrypt(uint8_t *data, size_t size, uint32_t seed )
 {
 	LAME lame;
 
@@ -125,29 +124,29 @@ void LAME_decrypt( unsigned char *data, size_t size, unsigned long seed )
 	}
 }
 
-unsigned char sig[] = { 0xA3, 0x48, 0x4B, 0xBE, 0x98, 0x6C, 0x4A, 
+uint8_t sig[] = { 0xA3, 0x48, 0x4B, 0xBE, 0x98, 0x6C, 0x4A, 
                         0xA9, 0x99, 0x4C, 0x53, 0x0A, 0x86, 0xD6, 
                         0x48, 0x7D };
 
 typedef struct _UN {
-	unsigned char *outputbuf;
-	unsigned char *inputbuf;
-	unsigned long cur_output;
-	unsigned long cur_input;
-	unsigned long usize;
+	uint8_t *outputbuf;
+	uint8_t *inputbuf;
+	uint32_t cur_output;
+	uint32_t cur_input;
+	uint32_t usize;
 
 	union {
-		unsigned long full;
+		uint32_t full;
 		struct {
 
-			unsigned short l;
-			unsigned short h;
+			uint16_t l;
+			uint16_t h;
 		} half;
 	} bitmap;
-	unsigned long bits_avail;
+	uint32_t bits_avail;
 } UN;
 
-unsigned short getbits( UN *u, unsigned long size )
+uint16_t getbits( UN *u, uint32_t size )
 {
 	u->bitmap.half.h = 0;
 
@@ -161,10 +160,10 @@ unsigned short getbits( UN *u, unsigned long size )
 		u->bits_avail--;
 		size--;
 	}
-	return (unsigned short)u->bitmap.half.h;
+	return (uint16_t)u->bitmap.half.h;
 }
 
-unsigned long get_au3_start(const char *stream, size_t stream_size )
+uint32_t get_au3_start(const char *stream, size_t stream_size )
 {
 	//寻找AUTO3签名值
 	for (size_t i = 0; i < stream_size; i++) {
@@ -180,7 +179,7 @@ unsigned long get_au3_start(const char *stream, size_t stream_size )
 const char* au_open_script( const char *stream, size_t stream_size )
 {
 	//寻找autoit3脚本开始的位置
-	unsigned long au3start = get_au3_start( stream, stream_size );
+	uint32_t au3start = get_au3_start( stream, stream_size );
 	if (au3start == 0) {
 		return NULL;
 	}
@@ -204,59 +203,59 @@ const char* check_au3_header( const char *stream, int stream_size  )
 		char sigFILE[4];
     
 		memcpy(sigFILE, stream, 4);
-		LAME_decrypt( (unsigned char *)sigFILE, 4, 0x18EE );
+		LAME_decrypt( (uint8_t *)sigFILE, 4, 0x18EE );
 		if (strncmp( sigFILE, "FILE", 4 ) != 0) {
 			return NULL;
 		}
-    stream += 4;
+    	stream += 4;
 
 		/* 下一段的大小 */
-		unsigned long flagsz;
+		uint32_t flagsz;
 		memcpy( &flagsz, stream, 4 );
 		flagsz = (flagsz ^ 0xADBC) * 2;
-    stream += 4;
+    	stream += 4;
 
 		/* 解密后为 ">>>AUTOIT SCRIPT<<<" */
 		wchar_t flagAUTOIT[256] = L"\0";
 		memcpy( flagAUTOIT, stream, flagsz );
-		LAME_decrypt( (unsigned char *)flagAUTOIT, flagsz, 0xB33F + (flagsz / 2) );
-    stream += flagsz;
+		LAME_decrypt( (uint8_t *)flagAUTOIT, flagsz, 0xB33F + (flagsz / 2) );
+    	stream += flagsz;
 
-		unsigned long pathsz;
+		uint32_t pathsz;
 		memcpy( &pathsz, stream, 4);
 		pathsz = (pathsz ^ 0xF820) * 2;
-    stream += 4;
+    	stream += 4;
 
 		wchar_t path[256] = L"\0";
 		memcpy(path, stream, pathsz);
-		LAME_decrypt( (unsigned char *)path, pathsz, 0xF479 + (pathsz / 2) );
+		LAME_decrypt( (uint8_t *)path, pathsz, 0xF479 + (pathsz / 2) );
 		stream += pathsz;
 		if (wcsncmp( flagAUTOIT, L">>>AUTOIT SCRIPT<<<", 19 ) == 0) {
 			break;
 		}
 
 		/* 重新验证下一段 */
-		unsigned long next;
+		uint32_t next;
 		stream ++;
 		memcpy( &next, stream, 4);
-    stream += 4;
+    	stream += 4;
 
 		next = (next ^ 0x87BC) + 0x18;
-    stream += next;
+    	stream += next;
 	}
 
 	return stream;
 }
 
-unsigned long crc_data( unsigned char *src, int srclen )
+uint32_t crc_data(uint8_t *src, int srclen)
 {
 	if (srclen == 0) return 0;
 
-	unsigned long dwKey_ECX = 0;
-	unsigned long dwKey_ESI = 1;
+	uint32_t dwKey_ECX = 0;
+	uint32_t dwKey_ESI = 1;
 	for (int i= 0; i < srclen; i++)	{
 
-		dwKey_ESI = ((unsigned long)src[i] + dwKey_ESI) % 0xFFF1;
+		dwKey_ESI = ((uint32_t)src[i] + dwKey_ESI) % 0xFFF1;
 		dwKey_ECX = (dwKey_ECX + dwKey_ESI) % 0xFFF1;
 	}
 	return (dwKey_ECX << 0x10) + dwKey_ESI;
@@ -276,12 +275,12 @@ bool decompression_script( UN *u )
 
 		if (getbits( u, 1 ) == 1) {
 
-			u->outputbuf[u->cur_output] = (unsigned char)getbits( u, 8 );
+			u->outputbuf[u->cur_output] = (uint8_t)getbits( u, 8 );
 			u->cur_output++;
 
 		} else {
 
-			unsigned long bb, bs, addme = 0;
+			uint32_t bb, bs, addme = 0;
 
 			bb = getbits( u, 15 );
 
@@ -302,7 +301,7 @@ bool decompression_script( UN *u )
 			}
 			bs += (3 + addme);
 
-			unsigned long i = u->cur_output - bb;
+			uint32_t i = u->cur_output - bb;
 
 			while (bs--) {
 				u->outputbuf[u->cur_output] = u->outputbuf[i];
@@ -316,9 +315,9 @@ bool decompression_script( UN *u )
 }
 
 /* 还原Autoit脚本 */
-void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
+void decode_dump(uint8_t *pcode, size_t size, const char *logfile )
 {
-	unsigned char *code = pcode;
+	uint8_t* code = pcode;
 	int sectionIndex = 0;
 	int sectionNum = *(int *)pcode;
 	int i, var = 0;
@@ -337,10 +336,10 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 
 		case 0x05:	/* int32 */
 			{
-				unsigned long x;
+				uint32_t x;
 				char pp[1024];
 				i++;
-				x = *(unsigned long *)&code[i];
+				x = *(uint32_t *)&code[i];
 				_snprintf( pp, 1024, "%d ", x );
 				fwrite( pp, strlen( pp ), 1, aufp );
 				i += 4;
@@ -371,8 +370,10 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 			}
 			break;
 
-		case 0x31: case 0x36: case 0x32: case 0x37: case 0x30: case 0x33: case 0x34: case 0x35:
-		case 0x38: case 0x39: case 0x3a: case 0x3b: case 0x3c: case 0x3d: case 0x3e: case 0x3f:	/* 0x31-0x3f */
+		case 0x31: case 0x36: case 0x32: case 0x37: 
+		case 0x30: case 0x33: case 0x34: case 0x35:
+		case 0x38: case 0x39: case 0x3a: case 0x3b: 
+		case 0x3c: case 0x3d: case 0x3e: case 0x3f:	/* 0x31-0x3f */
 			{
 				var = code[i];
 
@@ -403,7 +404,7 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 				if (var == 0x35) {
 				}
 
-				unsigned long n;
+				uint32_t n;
 				wchar_t key; 
 				char m;
 				n = 0;
@@ -417,7 +418,7 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 					return;
 				}
 				i = i + 4;
-				for (unsigned long j = 0 ; j < key ; j++) {
+				for (uint32_t j = 0 ; j < key ; j++) {
 					wchar_t xxtmp = *(wchar_t*)&code[i];
 					data[n] = key ^ xxtmp;
 					i = i + 2;
@@ -431,16 +432,15 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 
 					return;
 				}
-				_wcstombs( cdata, data, key * 2 + 1 );
-				fwrite( cdata, strlen(cdata), 1, aufp );
-
+				_wcstombs(cdata, data, key * 2 + 1);
+				fwrite(cdata, strlen(cdata), 1, aufp);
 
 				if (var == 0x36) {	/* 字符串 */
-					fwrite( "\" ", 2, 1, aufp );
+					fwrite("\" ", 2, 1, aufp);
 				} else if (var == 0x33 && code[i] == 0x35) {	/* 本次为 变量，下个是对象，则使用 . 分割 */
-					fwrite( ".", 1, 1, aufp );
+					fwrite(".", 1, 1, aufp);
 				} else {	/* 其他 */
-					fwrite( " ", 1, 1, aufp );
+					fwrite(" ", 1, 1, aufp);
 				}
 
 				delete []data;
@@ -592,7 +592,7 @@ void decode_dump( unsigned char *pcode, size_t size, const char *logfile )
 }
 
 //dump脚本
-bool au_dump_script( const char *logfile, const char* stream, size_t stream_size )
+bool au_dump_script(const char *logfile, const char* stream, size_t stream_size )
 {
   stream = check_au3_header(stream, stream_size );
 	if (stream == NULL) {
@@ -600,36 +600,36 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 	}
 
 	/* 是否被压缩 */
-	unsigned char comp;
+	uint8_t comp;
 	memcpy(&comp, stream, 1);
   stream += 1;
 
 	/* 加密数据大小 */
-	unsigned long datasz;
+	uint32_t datasz;
 	memcpy(&datasz, stream, 4);
   stream += 4;
 	datasz = datasz ^ 0x87BC;
 
 	/* 解密出的代码大小 */
-	unsigned long codesz;
+	uint32_t codesz;
 	memcpy(&codesz, stream, 4);
   stream += 4;
 	codesz = codesz ^ 0x87BC;
 
-	unsigned long crc;
+	uint32_t crc;
 	memcpy(&crc, stream, 4);
   stream += 4;
 	crc = crc ^ 0xA685;
 
-	unsigned char *data;
-	unsigned char *code;
+	uint8_t *data;
+	uint8_t *code;
 
-	data = new unsigned char[datasz];
+	data = new uint8_t[datasz];
 	if (data == NULL) {
 		return false;
 	}
 
-	code = new unsigned char[codesz];
+	code = new uint8_t[codesz];
 	if (code == NULL) {
 		delete []data;
 		return false;
@@ -649,8 +649,8 @@ bool au_dump_script( const char *logfile, const char* stream, size_t stream_size
 		return false;
 	}
 
-	unsigned char *buf = data;
-	unsigned long bufsz = datasz;
+	uint8_t *buf = data;
+	uint32_t bufsz = datasz;
 
 	/* 解压缩 */
 	if (comp == 1) {
